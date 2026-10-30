@@ -1,0 +1,640 @@
+<title>Iframely Palette Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=EB+Garamond:ital,wght@0,400..600;1,400..600&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Hedvig+Letters+Serif:opsz@12..24&family=Young+Serif&family=Inter:wght@400..700&family=Figtree:wght@400..700&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a sticky control bar, then the demo homepage rendered from tokens. Single light theme by design: the exploration is about off-white backgrounds. */
+:root {
+  color-scheme: light;
+  --bg: #f7f5f0; --bg2: #efece5; --surface: #fffdf9; --line: #e3dfd6;
+  --ink: #1c1b18; --ink2: #5b5750; --ink3: #8a857c;
+  --accent: #1f3fe0; --accent-hover: #172fb8; --on-accent: #ffffff; --link: #1a35c4; --logo: #1f3fe0;
+  --p1: #e4e3fb; --p2: #d8e7ff; --p3: #fbe3d2; --p4: #dcefe2; --p5: #f6ebc8;
+  --dark: #1c1b18; --dark2: #2b2a26; --on-dark: #f7f5f0; --on-dark2: #b9b4a9;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+  --dw: 400; --dt: -0.01em; --ds: 1.08; --dlh: 1.02;
+  --pat: color-mix(in srgb, var(--ink) 16%, transparent);
+  --radius: 14px; --radius-s: 8px;
+  --max: 1152px;
+}
+:root[data-palette="linen"] {
+  --bg: #fcfbf8; --bg2: #f1efe9; --surface: #ffffff; --line: #e1dfd8;
+  --ink: #0b1f3a; --ink2: #44526a; --ink3: #7b8699;
+  --accent: #1e5ea7; --accent-hover: #174b86; --on-accent: #ffffff; --link: #1b4f8f; --logo: #1e5ea7;
+  --p1: #dccfff; --p2: #c8ddfd; --p3: #ffd9cf; --p4: #c4eee8; --p5: #f5e9c2;
+  --dark: #0b1f3a; --dark2: #16304f; --on-dark: #f4f3ee; --on-dark2: #a8b4c8;
+}
+:root[data-palette="butter"] {
+  --bg: #fffbe8; --bg2: #f6f0d6; --surface: #fffdf4; --line: #e7e0c2;
+  --ink: #1a1a1a; --ink2: #56544b; --ink3: #878476;
+  --accent: #5b47c9; --accent-hover: #4a38ad; --on-accent: #ffffff; --link: #4b39b3; --logo: #5b47c9;
+  --p1: #eedcff; --p2: #d8e6ff; --p3: #ffc9b6; --p4: #e1e5cb; --p5: #fff0a6;
+  --dark: #0a4f46; --dark2: #13635a; --on-dark: #fffbe8; --on-dark2: #a6cdc4;
+}
+:root[data-palette="stone"] {
+  --bg: #efedea; --bg2: #e6e3df; --surface: #f8f7f4; --line: #d8d4ce;
+  --ink: #1a1716; --ink2: #534e49; --ink3: #837d76;
+  --accent: #e8552f; --accent-hover: #c9441f; --on-accent: #ffffff; --link: #b53c1a; --logo: #e8552f;
+  --p1: #e3dcef; --p2: #d6e2ee; --p3: #fbe0d0; --p4: #dfe3d6; --p5: #efd5c3;
+  --dark: #2a1f1b; --dark2: #3a2c27; --on-dark: #f3efe9; --on-dark2: #bfb2a9;
+}
+:root[data-font="fraunces"] { --font-display: 'Fraunces', Georgia, serif; --dw: 400; --dt: -0.02em; --ds: 1; --dlh: 1.04; }
+:root[data-font="newsreader"] { --font-display: 'Newsreader', Georgia, serif; --dw: 400; --dt: -0.015em; --ds: 1.04; --dlh: 1.04; }
+:root[data-font="garamond"] { --font-display: 'EB Garamond', Garamond, Georgia, serif; --dw: 400; --dt: -0.01em; --ds: 1.07; --dlh: 1.04; }
+:root[data-font="dmserif"] { --font-display: 'DM Serif Display', Georgia, serif; --dw: 400; --dt: -0.01em; --ds: 0.98; --dlh: 1.05; }
+:root[data-font="cormorant"] { --font-display: 'Cormorant Garamond', Garamond, Georgia, serif; --dw: 500; --dt: -0.005em; --ds: 1.12; --dlh: 1.02; }
+:root[data-font="hedvig"] { --font-display: 'Hedvig Letters Serif', Georgia, serif; --dw: 400; --dt: -0.015em; --ds: 0.98; --dlh: 1.06; }
+:root[data-font="young"] { --font-display: 'Young Serif', Georgia, serif; --dw: 400; --dt: -0.015em; --ds: 0.93; --dlh: 1.08; }
+:root[data-body="figtree"] { --font-body: 'Figtree', system-ui, sans-serif; }
+:root[data-body="geist"] { --font-body: 'Geist', system-ui, sans-serif; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+img { max-width: 100%; }
+code, pre { font-family: var(--font-mono); }
+h1, h2, h3, .display { font-family: var(--font-display); font-weight: var(--dw); letter-spacing: var(--dt); line-height: var(--dlh); text-wrap: balance; margin: 0; }
+h1 { font-size: calc(3.6rem * var(--ds)); }
+h2 { font-size: calc(2.35rem * var(--ds)); }
+h3 { font-size: calc(1.45rem * var(--ds)); line-height: 1.15; }
+p { margin: 0; }
+.wrap { max-width: var(--max); margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink2); }
+.eyebrow.chip { display: inline-block; padding: 4px 9px; border-radius: 999px; background: var(--chip, var(--p1)); color: var(--ink); }
+.muted { color: var(--ink2); }
+.small { font-size: 14px; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: var(--radius-s); font-weight: 500; font-size: 15px; line-height: 1; border: 1px solid transparent; cursor: pointer; font-family: inherit; text-decoration: none; transition: background .15s, border-color .15s, color .15s; }
+.btn:hover { text-decoration: none; }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn-secondary:hover { border-color: var(--ink3); }
+.btn-quiet { background: transparent; color: var(--link); padding-inline: 4px; }
+.btn-quiet:hover { text-decoration: underline; text-underline-offset: 3px; }
+.btn-invert { background: color-mix(in srgb, var(--on-dark) 12%, transparent); color: var(--on-dark); border-color: color-mix(in srgb, var(--on-dark) 25%, transparent); }
+.btn-invert:hover { background: color-mix(in srgb, var(--on-dark) 20%, transparent); }
+.btn-onaccent { background: var(--on-accent); color: var(--accent); }
+.btn-onaccent:hover { background: color-mix(in srgb, var(--on-accent) 90%, var(--accent)); }
+
+/* Control bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--dark) 96%, transparent); color: var(--on-dark); backdrop-filter: blur(8px); border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 12%, transparent); font-size: 13px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--dark); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; padding-block: 10px; }
+.bar .title { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--on-dark2); margin-right: auto; }
+.ctl { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.ctl > span { color: var(--on-dark2); margin-right: 2px; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 3px; background: color-mix(in srgb, var(--on-dark) 8%, transparent); border-radius: 8px; padding: 3px; }
+.seg button { font: inherit; font-size: 12.5px; color: var(--on-dark); background: transparent; border: 0; padding: 5px 9px; border-radius: 6px; cursor: pointer; line-height: 1.2; }
+.seg button[aria-pressed="true"] { background: var(--on-dark); color: var(--dark); font-weight: 600; }
+.seg button:hover:not([aria-pressed="true"]) { background: color-mix(in srgb, var(--on-dark) 14%, transparent); }
+.bar .combo { font-family: var(--font-mono); font-size: 11.5px; color: var(--on-dark2); width: 100%; }
+
+/* Board sections: swatches and type lineup */
+.board { background: var(--bg2); border-bottom: 1px solid var(--line); }
+.board .wrap { padding-block: 22px; display: grid; gap: 18px; }
+.board h2 { font-size: calc(1.5rem * var(--ds)); }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+.sw { width: 96px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); overflow: hidden; font-size: 11px; }
+.sw i { display: block; height: 44px; }
+.sw b { display: block; padding: 5px 7px 0; font-weight: 600; }
+.sw code { display: block; padding: 0 7px 6px; color: var(--ink2); font-size: 10.5px; }
+.lineup { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+.lineup button { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px 12px; cursor: pointer; color: var(--ink); font-family: inherit; display: grid; gap: 8px; }
+.lineup button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
+.lineup .sample { font-size: 30px; line-height: 1.05; letter-spacing: -0.01em; text-wrap: balance; }
+.lineup .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink2); letter-spacing: .04em; }
+
+/* Header */
+.site-header { border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(6px); }
+.site-header .wrap { display: flex; align-items: center; gap: 24px; height: 64px; }
+.logo { display: inline-flex; align-items: flex-end; gap: 10px; }
+.logo .mark { width: 24px; height: 24px; }
+.logo .word { width: 96px; height: auto; fill: var(--ink); }
+.nav { display: flex; gap: 2px; flex: 1; }
+.nav a { color: var(--ink2); padding: 8px 10px; border-radius: 6px; font-size: 15px; }
+.nav a:hover { color: var(--ink); background: var(--bg2); text-decoration: none; }
+.nav a span { color: var(--ink3); font-size: 11px; margin-left: 3px; }
+.actions { display: flex; align-items: center; gap: 4px; }
+.actions a:not(.btn) { color: var(--ink2); padding: 8px 10px; font-size: 14px; }
+@media (max-width: 900px) { .nav, .actions a:not(.btn) { display: none; } .actions { margin-left: auto; } }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; isolation: isolate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 1; pointer-events: none; }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding-block: 72px 64px; }
+.hero .tagline { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); margin-bottom: 18px; }
+.hero .sub { font-size: 19px; line-height: 1.5; color: var(--ink2); margin-top: 20px; max-width: 34em; text-wrap: pretty; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; align-items: center; }
+.hero .proof { margin-top: 22px; font-size: 13.5px; color: var(--ink3); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.hero .proof span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+.hero em { font-style: italic; }
+.hero .visual { position: relative; }
+.hero .panel { background: var(--p2); border-radius: 22px; padding: 22px; position: relative; }
+.hero .panel::after { content: ""; position: absolute; inset: 14px -10px -10px 14px; border-radius: 22px; background: var(--p1); z-index: -1; }
+.demo-box { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; box-shadow: 0 10px 30px -18px color-mix(in srgb, var(--ink) 35%, transparent); }
+.urlrow { display: flex; gap: 8px; }
+.urlrow .in { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; padding: 9px 11px; font-family: var(--font-mono); font-size: 12.5px; color: var(--ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.urlrow .btn { padding: 9px 14px; font-size: 13.5px; }
+.result { display: grid; grid-template-columns: 104px 1fr; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: var(--surface); }
+.result .lab { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink3); padding-left: 2px; }
+.result .thumb { aspect-ratio: 16/10; border-radius: 6px; display: grid; place-items: center; }
+.result .body { min-width: 0; font-size: 13px; }
+.result .body b { display: block; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.result .body span { color: var(--ink2); font-size: 12px; }
+.play { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-size: 11px; }
+.json { font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5; color: var(--ink2); white-space: pre; overflow: hidden; }
+.json .k { color: var(--ink); }
+.json .ok { color: var(--accent); font-weight: 500; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink2); }
+.toggle i { width: 30px; height: 18px; border-radius: 999px; background: var(--accent); position: relative; display: inline-block; }
+.toggle i::after { content: ""; position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+
+/* Hero treatments */
+:root[data-hero="band"] .hero { background: var(--p2); }
+:root[data-hero="band"] .hero .panel { background: var(--surface); }
+:root[data-hero="band"] .hero .panel::after { background: var(--p1); }
+:root[data-hero="bold"] .hero { background: var(--accent); color: var(--on-accent); --pat: color-mix(in srgb, var(--on-accent) 22%, transparent); }
+:root[data-hero="bold"] .hero .tagline, :root[data-hero="bold"] .hero .sub, :root[data-hero="bold"] .hero .proof { color: color-mix(in srgb, var(--on-accent) 82%, var(--accent)); }
+:root[data-hero="bold"] .hero .proof span::before { background: var(--on-accent); }
+:root[data-hero="bold"] .hero .btn-primary { background: var(--on-accent); color: var(--accent); }
+:root[data-hero="bold"] .hero .btn-secondary { background: transparent; color: var(--on-accent); border-color: color-mix(in srgb, var(--on-accent) 45%, transparent); }
+:root[data-hero="bold"] .hero .btn-quiet { color: var(--on-accent); }
+:root[data-hero="bold"] .hero .panel { background: color-mix(in srgb, var(--on-accent) 18%, transparent); }
+:root[data-hero="bold"] .hero .panel::after { background: color-mix(in srgb, var(--on-accent) 10%, transparent); }
+:root[data-hero="bold"] .hero .demo-box { color: var(--ink); }
+:root[data-hero="bold"] .hero .demo-box .json .ok { color: var(--accent); }
+
+/* Patterns, applied to the hero and to the two dark bands */
+:root[data-pattern="dots"] .pat::before { background-image: radial-gradient(var(--pat) 1.1px, transparent 1.3px); background-size: 18px 18px; }
+:root[data-pattern="grid"] .pat::before { background-image: linear-gradient(var(--pat) 1px, transparent 1px), linear-gradient(90deg, var(--pat) 1px, transparent 1px); background-size: 48px 48px; background-position: center top; }
+:root[data-pattern="hatch"] .pat::before { background-image: repeating-linear-gradient(-45deg, var(--pat) 0 1px, transparent 1px 9px); }
+:root[data-pattern="blobs"] .pat::before { background-image: radial-gradient(42% 60% at 85% 20%, var(--p1) 0, transparent 70%), radial-gradient(38% 50% at 10% 90%, var(--p3) 0, transparent 70%), radial-gradient(30% 40% at 60% 100%, var(--p4) 0, transparent 70%); }
+:root[data-pattern="dots"] .hero::before, :root[data-pattern="grid"] .hero::before, :root[data-pattern="hatch"] .hero::before { mask-image: radial-gradient(80% 90% at 70% 40%, #000 30%, transparent 100%); -webkit-mask-image: radial-gradient(80% 90% at 70% 40%, #000 30%, transparent 100%); }
+:root[data-pattern="blobs"][data-hero="bold"] .hero::before { opacity: .35; }
+.band-dark { position: relative; isolation: isolate; overflow: hidden; }
+.band-dark::before { content: ""; position: absolute; inset: 0; z-index: -1; --pat: color-mix(in srgb, var(--on-dark) 10%, transparent); opacity: .9; pointer-events: none; }
+:root[data-pattern="blobs"] .band-dark::before { opacity: .18; }
+
+/* Sections */
+.section { padding-block: 80px; }
+.section.tint { background: var(--tint, var(--bg2)); }
+.section .head { max-width: 40em; display: grid; gap: 12px; margin-bottom: 40px; }
+.section .head.center { margin-inline: auto; text-align: center; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.two .copy { display: grid; gap: 16px; }
+.two .copy p { color: var(--ink2); font-size: 17px; text-wrap: pretty; }
+.two .copy .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.two .copy h2 { margin-bottom: 6px; }
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 20px; display: grid; gap: 10px; align-content: start; color: var(--ink); transition: border-color .15s, transform .15s; }
+a.card:hover { text-decoration: none; border-color: var(--ink3); transform: translateY(-2px); }
+.card p { color: var(--ink2); font-size: 15px; }
+.card .more { margin-top: auto; padding-top: 10px; color: var(--link); font-size: 14px; font-weight: 500; }
+.card.rich { --chip: var(--p3); } .card.preview { --chip: var(--p2); } .card.data { --chip: var(--p1); } .card.pub { --chip: var(--p4); }
+.card .eyebrow.chip { justify-self: start; }
+
+/* Mock visuals */
+.mock { border-radius: var(--radius); padding: 20px; display: grid; gap: 12px; }
+.mock.rich { background: var(--p3); grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; }
+.tile { background: var(--surface); border-radius: 10px; border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
+.tile.video { grid-row: span 2; display: grid; grid-template-rows: 1fr auto; min-height: 220px; }
+.tile.video .screen { background: linear-gradient(135deg, var(--p1), var(--p2)); display: grid; place-items: center; }
+.tile .cap { padding: 10px 12px; font-size: 12.5px; color: var(--ink2); display: flex; justify-content: space-between; gap: 8px; }
+.tile.post { padding: 12px; display: grid; gap: 8px; font-size: 12.5px; }
+.tile.post .who { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.tile.post .who i { width: 22px; height: 22px; border-radius: 50%; background: var(--p4); display: inline-block; }
+.tile.post .line { height: 7px; border-radius: 4px; background: var(--bg2); }
+.tile.map { background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 8%, transparent) 0 1px, transparent 1px 22px), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 8%, transparent) 0 1px, transparent 1px 22px), var(--p4); min-height: 96px; position: relative; }
+.tile.map::after { content: ""; position: absolute; left: 50%; top: 45%; width: 14px; height: 14px; border-radius: 50% 50% 50% 0; background: var(--accent); transform: translate(-50%, -50%) rotate(-45deg); }
+.mock.chat { background: var(--p2); }
+.bubble { max-width: 78%; background: var(--surface); border-radius: 14px; padding: 10px 14px; font-size: 14px; }
+.bubble.me { margin-left: auto; background: var(--accent); color: var(--on-accent); }
+.bubble a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.linkcard { display: grid; grid-template-columns: 84px 1fr; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px; max-width: 78%; font-size: 13px; align-items: center; }
+.linkcard i { display: block; aspect-ratio: 1; border-radius: 6px; background: linear-gradient(135deg, var(--p3), var(--p5)); }
+.linkcard b { display: block; font-weight: 600; }
+.linkcard span { color: var(--ink2); font-size: 12px; }
+.mock.console { background: var(--p4); }
+.table { background: var(--surface); border-radius: 10px; border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; font-size: 13px; }
+.table .row { display: grid; grid-template-columns: 1.2fr 1.1fr .9fr auto; gap: 10px; padding: 10px 14px; border-top: 1px solid var(--line); align-items: center; }
+.table .row:first-child { border-top: 0; background: var(--bg2); font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); }
+.table .row span.pill { font-size: 11.5px; padding: 3px 8px; border-radius: 999px; background: var(--p1); justify-self: start; }
+.table .row span.pill.no { background: var(--p3); }
+
+/* Data API dark block */
+.dark { background: var(--dark); color: var(--on-dark); }
+.dark .eyebrow { color: var(--on-dark2); }
+.dark .two .copy p { color: var(--on-dark2); }
+.dark .two .copy p.lead { color: var(--on-dark); font-size: 20px; }
+.dark .btn-primary { background: var(--on-dark); color: var(--dark); }
+.dark .btn-primary:hover { background: color-mix(in srgb, var(--on-dark) 88%, var(--dark)); }
+.code { background: var(--dark2); border: 1px solid color-mix(in srgb, var(--on-dark) 14%, transparent); border-radius: 12px; overflow: hidden; min-width: 0; }
+.code .top { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 12%, transparent); font-family: var(--font-mono); font-size: 11.5px; color: var(--on-dark2); }
+.code pre { margin: 0; padding: 16px; font-size: 13px; line-height: 1.55; overflow-x: auto; color: var(--on-dark); }
+.code .k { color: var(--on-dark2); }
+.code .ok { color: var(--p4); }
+.code .hl { background: color-mix(in srgb, var(--on-dark) 8%, transparent); display: inline-block; width: 100%; }
+
+/* Trust */
+.trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.trust a { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; color: var(--ink); display: grid; gap: 8px; align-content: start; }
+.trust a:hover { border-color: var(--ink3); text-decoration: none; }
+.trust h3 { font-family: var(--font-body); font-weight: 600; font-size: 16px; letter-spacing: 0; }
+.trust p { color: var(--ink2); font-size: 14.5px; }
+.trust .more { color: var(--link); font-size: 14px; font-weight: 500; }
+.logos { display: flex; flex-wrap: wrap; gap: 10px 36px; margin-top: 36px; align-items: center; justify-content: center; color: var(--ink3); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; }
+.logos span { opacity: .75; }
+.logos small { width: 100%; text-align: center; font-weight: 400; font-size: 12px; color: var(--ink3); }
+
+/* Pricing */
+.price { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.price > div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 8px; }
+.price .num { font-family: var(--font-display); font-size: calc(2.4rem * var(--ds)); line-height: 1; letter-spacing: var(--dt); }
+.price .num span { font-family: var(--font-body); font-size: 15px; color: var(--ink2); letter-spacing: 0; }
+.price h3 { font-family: var(--font-body); font-weight: 600; font-size: 16px; letter-spacing: 0; }
+.price p { color: var(--ink2); font-size: 15px; }
+
+/* CTA */
+.cta-band { background: var(--dark); color: var(--on-dark); }
+.cta-band .wrap { padding-block: 72px; display: grid; gap: 14px; }
+.cta-band p { color: var(--on-dark2); font-size: 18px; max-width: 36em; }
+.cta-band .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.cta-band .btn-primary { background: var(--on-dark); color: var(--dark); }
+.cta-band .btn-primary:hover { background: color-mix(in srgb, var(--on-dark) 88%, var(--dark)); }
+
+/* Footer */
+footer { background: var(--bg2); border-top: 1px solid var(--line); font-size: 14px; }
+footer .wrap { padding-block: 44px 32px; display: grid; gap: 32px; }
+.cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.cols b { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 10px; font-family: var(--font-mono); font-weight: 500; }
+.cols a { display: block; color: var(--ink2); padding: 3px 0; }
+.cols a:hover { color: var(--ink); }
+footer .bottom { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: var(--ink3); font-size: 13px; align-items: center; }
+
+@media (max-width: 1000px) {
+  h1 { font-size: calc(2.7rem * var(--ds)); }
+  h2 { font-size: calc(1.9rem * var(--ds)); }
+  .hero .wrap { grid-template-columns: 1fr; gap: 36px; padding-block: 48px; }
+  .two { grid-template-columns: 1fr; gap: 28px; }
+  .two.flip .visual { order: -1; }
+  .cards, .trust { grid-template-columns: 1fr 1fr; }
+  .cols { grid-template-columns: 1fr 1fr; }
+  .section { padding-block: 56px; }
+}
+@media (max-width: 560px) {
+  .cards, .trust, .price { grid-template-columns: 1fr; }
+  .mock.rich { grid-template-columns: 1fr; }
+  .tile.video { grid-row: auto; }
+  .hero .panel { padding: 12px; }
+  .result { grid-template-columns: 84px 1fr; }
+  .table .row { grid-template-columns: 1fr 1fr; }
+  .table .row > :nth-child(n+3) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="bar" role="region" aria-label="Exploration controls">
+  <div class="wrap">
+    <span class="title">Palette board</span>
+    <div class="ctl"><span>Palette</span><div class="seg" data-key="palette">
+      <button type="button" data-v="paper">Paper + cobalt</button>
+      <button type="button" data-v="linen">Linen + navy</button>
+      <button type="button" data-v="butter">Butter + violet</button>
+      <button type="button" data-v="stone">Stone + rust</button>
+    </div></div>
+    <div class="ctl"><span>Headings</span><div class="seg" data-key="font">
+      <button type="button" data-v="instrument">Instrument Serif</button>
+      <button type="button" data-v="fraunces">Fraunces</button>
+      <button type="button" data-v="newsreader">Newsreader</button>
+      <button type="button" data-v="garamond">EB Garamond</button>
+      <button type="button" data-v="dmserif">DM Serif</button>
+      <button type="button" data-v="cormorant">Cormorant</button>
+      <button type="button" data-v="hedvig">Hedvig</button>
+      <button type="button" data-v="young">Young Serif</button>
+    </div></div>
+    <div class="ctl"><span>Body</span><div class="seg" data-key="body">
+      <button type="button" data-v="inter">Inter</button>
+      <button type="button" data-v="figtree">Figtree</button>
+      <button type="button" data-v="geist">Geist</button>
+    </div></div>
+    <div class="ctl"><span>Hero</span><div class="seg" data-key="hero">
+      <button type="button" data-v="soft">Soft</button>
+      <button type="button" data-v="band">Pastel band</button>
+      <button type="button" data-v="bold">Bold accent</button>
+    </div></div>
+    <div class="ctl"><span>Pattern</span><div class="seg" data-key="pattern">
+      <button type="button" data-v="none">None</button>
+      <button type="button" data-v="dots">Dots</button>
+      <button type="button" data-v="grid">Grid</button>
+      <button type="button" data-v="hatch">Hatch</button>
+      <button type="button" data-v="blobs">Blobs</button>
+    </div></div>
+    <div class="combo" id="combo"></div>
+  </div>
+</div>
+
+<section class="board" aria-label="Current palette and type">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" style="margin-bottom:8px">Palette in use</div>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:8px">Heading font lineup, click to apply</div>
+      <div class="lineup" id="lineup"></div>
+    </div>
+  </div>
+</section>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Iframely">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="var(--logo)"/><path fill="#fff" d="m5.62 13.511 5.451-4.355V6L4 12.178zm1.037.845L11.07 18v-3.156L8.504 12.8zm11.351-4.578L13.594 6v3.2l2.612 2.044zm.991.8-5.36 4.31V18l7.027-6z"/></svg>
+      <svg class="word" viewBox="0 0 79 16" aria-hidden="true"><path d="M69.027 3.596h2.421l2.216 7.14h.309l2.215-7.14h2.42l-2.884 8.86h-.721v1.98c0 .47-.155.886-.412 1.147-.31.313-.67.417-1.133.417h-3.606v-2.137h2.472c.31 0 .464-.156.464-.521v-.886h-.721zM0 0h8.294v2.241H5.306v8.026h2.988v2.241H0v-2.241h2.988V2.241H0zM9.272 3.648h2.524V1.824c0-.521.155-.938.515-1.303S13.084 0 13.6 0h3.555v2.137h-2.68c-.308 0-.463.156-.463.521v.99h3.451v2.137h-3.45v6.723h-2.216V5.785H9.323V3.648zM18.75 3.649h3.71v1.303h.309c.154-.47.464-.886.824-1.147.412-.26.876-.417 1.442-.417.876 0 1.597.26 2.113.834.515.573.772 1.407.772 2.554v.417l-2.318.208v-.26c0-.47-.103-.886-.36-1.147-.258-.313-.619-.417-1.134-.417s-.875.156-1.185.521c-.257.365-.412.834-.412 1.512v2.866h2.01v2.137h-5.976v-2.137h1.803V5.89H18.75zM35.699 11.258c-.258.573-.567.938-.98 1.198a3.3 3.3 0 0 1-1.493.365c-.515 0-1.03-.104-1.494-.312a4.2 4.2 0 0 1-1.236-.886c-.36-.417-.618-.886-.825-1.408-.206-.573-.309-1.198-.309-1.928v-.26q0-1.095.31-1.877c.206-.52.463-1.042.824-1.407.36-.417.72-.677 1.184-.886a3.4 3.4 0 0 1 1.443-.313c.618 0 1.133.105 1.494.313.36.209.67.573.927.99h.309V3.753h2.215v6.202c0 .365.155.52.464.52h.36v2.138h-1.545c-.412 0-.721-.104-.979-.365-.257-.26-.36-.573-.36-.938h-.31zm-2.01-.626c.67 0 1.185-.208 1.546-.677.412-.417.566-1.043.566-1.772v-.209c0-.73-.206-1.355-.566-1.772-.412-.417-.927-.677-1.545-.677-.67 0-1.185.208-1.546.677-.412.417-.567 1.043-.567 1.772v.209c0 .73.206 1.355.567 1.772.36.469.876.677 1.546.677M49.658 12.56h-2.215V6.306c0-.26-.051-.417-.206-.573a.76.76 0 0 0-.463-.209c-.258 0-.412.052-.567.209-.154.156-.206.364-.206.625v6.098h-2.267V6.202c0-.261-.051-.417-.206-.574-.154-.104-.309-.208-.463-.208-.206 0-.412.052-.515.208-.155.157-.206.365-.206.626v6.097h-2.215v-8.86h2.215v1.043h.309c.051-.313.257-.573.463-.782.258-.208.567-.313.979-.313s.721.105.979.313c.257.209.463.47.566.782h.31q.154-.469.618-.782c.309-.208.67-.313 1.133-.313.567 0 1.082.209 1.39.626.361.417.516.938.516 1.668v6.827zM53.625 8.86c0 .26.051.521.206.73.103.208.258.417.464.573s.412.26.67.365c.257.104.514.156.824.156.566 0 .978-.104 1.287-.312.31-.209.516-.417.619-.73l1.905 1.094a4.2 4.2 0 0 1-.463.73c-.206.26-.412.47-.721.678-.31.208-.67.364-1.082.52s-.927.21-1.494.21c-.67 0-1.288-.105-1.803-.314-.515-.208-1.03-.52-1.39-.938a3.7 3.7 0 0 1-.928-1.511c-.206-.573-.309-1.25-.309-1.98v-.105c0-.677.103-1.303.36-1.876.207-.573.567-1.042.928-1.407.412-.417.876-.678 1.39-.938a4.7 4.7 0 0 1 1.7-.313c.773 0 1.391.157 1.958.417s.979.626 1.34 1.042c.36.417.618.886.772 1.355.155.522.258.99.258 1.46v1.198h-6.491zm2.112-3.387c-.567 0-1.03.156-1.39.417-.361.312-.567.625-.67.99h4.12c-.05-.417-.308-.782-.67-1.043-.36-.26-.823-.364-1.39-.364M60.888 10.371h3.09V2.137h-2.987V0h5.203v10.371h2.885v2.137h-8.191z"/></svg>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#products">Products <span>▾</span></a>
+      <a href="#products">Solutions <span>▾</span></a>
+      <a href="#data-api">Developers <span>▾</span></a>
+      <a href="#pricing">Pricing</a>
+      <a href="#trust">Resources <span>▾</span></a>
+    </nav>
+    <div class="actions">
+      <a href="#hero">Check a URL</a>
+      <a href="#hero">Sign in</a>
+      <a class="btn btn-primary" href="#hero" style="padding:9px 14px;font-size:14px">Get an API key</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero pat" id="hero">
+  <div class="wrap">
+    <div>
+      <p class="tagline">Holding the web together since 2012</p>
+      <h1>Iframely makes URLs work <em>inside</em> other products</h1>
+      <p class="sub">Embed rich media from 1,900 providers. Show previews of any link your users share. Read web content for your automated systems. Decide how other apps use your own content.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#pricing">Get an API key</a>
+        <a class="btn btn-secondary" href="#data-api">Read the docs</a>
+        <a class="btn btn-quiet" href="#hero">Check a URL →</a>
+      </div>
+      <p class="proof"><span>6.5 billion requests a month</span><span>99.99% uptime</span><span>SOC 2 Type II</span></p>
+    </div>
+    <div class="visual" aria-label="One URL, four results (sample)">
+      <div class="panel">
+        <div class="demo-box">
+          <div class="urlrow"><div class="in">https://www.youtube.com/watch?v=dQw4w9WgXcQ</div><span class="btn btn-primary">Check</span></div>
+          <div class="result"><div><div class="lab">Rich Media</div><div class="thumb" style="background:linear-gradient(135deg,var(--p1),var(--p2))"><span class="play">▶</span></div></div><div class="body"><b>Responsive player, click to play</b><span>YouTube · oEmbed · consent-aware</span></div></div>
+          <div class="result"><div><div class="lab">Preview</div><div class="thumb" style="background:linear-gradient(135deg,var(--p3),var(--p5))"></div></div><div class="body"><b>Elton John, Dua Lipa – Cold Heart</b><span>youtube.com · 3:22 · thumbnail 1280×720</span></div></div>
+          <div class="result"><div><div class="lab">Data API</div><div class="json"><span class="k">"access"</span>: {
+  mode: <span class="k">"assist"</span>
+  fulltext: <span class="ok">allowed</span>
+}</div></div><div class="body"><b>Readable content with permissions</b><span>robots.txt read · signed request · logged</span></div></div>
+          <div class="result"><div><div class="lab">Publisher Console</div><div style="padding:6px 2px"><span class="toggle"><i></i>Allow assist</span></div></div><div class="body"><b>youtube.com settings apply</b><span>per domain, path and app</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="wrap">
+    <div class="head center"><h2>Connecting developers and publishers, one URL at a time</h2></div>
+    <div class="cards">
+      <a class="card rich" href="#rich"><span class="eyebrow chip">For content platforms</span><h3>Rich Media</h3><p>Embeds for over 1,900 providers and growing, through one API. Tracking provider changes since 2012.</p><span class="more">See providers →</span></a>
+      <a class="card preview" href="#preview"><span class="eyebrow chip">For collaboration apps</span><h3>Preview API</h3><p>Link previews and cards for public URLs, across the formats publishers use. One API to connect to.</p><span class="more">See the Preview API →</span></a>
+      <a class="card data" href="#data-api"><span class="eyebrow chip">For automated systems</span><h3>Data API</h3><p>Readable content, entities, Markdown and publisher permissions data for automated processing and logging.</p><span class="more">See the Data API →</span></a>
+      <a class="card pub" href="#console"><span class="eyebrow chip">For publishers</span><h3>Publisher Console</h3><p>A free account to see who fetches your pages, and to set how your content is used, per domain, path and app.</p><span class="more">Claim your domain →</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="section tint" id="rich" style="--tint: color-mix(in srgb, var(--p3) 45%, var(--bg))">
+  <div class="wrap two">
+    <div class="copy">
+      <span class="eyebrow">Rich Media</span>
+      <h2>Rich media from 1,900 providers, kept up to date</h2>
+      <p>Send a URL, get a responsive embed: video, audio, social posts, maps, documents and more.</p>
+      <p>When a new provider is added, you get it. When X, Meta or YouTube change their embed codes, we change ours. You keep getting the working embed codes.</p>
+      <p class="small muted">The embed engine behind Canva and thousands of other apps.</p>
+      <div class="cta"><a class="btn btn-primary" href="#rich">More about Rich Media</a><a class="btn btn-secondary" href="#rich">Supported media providers</a></div>
+    </div>
+    <div class="visual">
+      <div class="mock rich" aria-label="Three embeds: a video player, a social post, a map (sample)">
+        <div class="tile video"><div class="screen"><span class="play" style="width:44px;height:44px;font-size:15px">▶</span></div><div class="cap"><span>Material 3 Design Kit · YouTube</span><span>12:40</span></div></div>
+        <div class="tile post"><div class="who"><i></i>@iframely · X</div><div class="line" style="width:92%"></div><div class="line" style="width:70%"></div><div class="line" style="width:40%"></div></div>
+        <div class="tile map"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="preview">
+  <div class="wrap two flip">
+    <div class="visual">
+      <div class="mock chat" aria-label="A chat thread with a link preview card (sample)">
+        <div class="bubble">Found the doc on verified fetchers, it answers your question</div>
+        <div class="bubble me">Link? <a href="#preview">iframely.com/docs/verification</a></div>
+        <div class="linkcard"><i></i><div><b>Verify Iframely's agents</b><span>iframely.com · Key directory, IP ranges, reverse DNS and a self-check</span></div></div>
+        <div class="bubble" style="width:40%"><span class="line" style="display:block;height:7px;border-radius:4px;background:var(--bg2)"></span></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="eyebrow">Preview API</span>
+      <h2>A preview for every link your users share</h2>
+      <p>Send any public URL, get the title, source, author, thumbnails and a ready summary card. Keep Rich Media on for players, or turn it off for metadata only.</p>
+      <p class="small muted">The product behind link previews in Atlassian, Notion, GitBook and thousands of other apps.</p>
+      <div class="cta"><a class="btn btn-primary" href="#preview">More about the Preview API</a><a class="btn btn-secondary" href="#hero">Check a URL</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark band-dark pat" id="data-api">
+  <div class="wrap two">
+    <div class="copy">
+      <span class="eyebrow">Data API</span>
+      <h2>Machine-ready URL data processing: declared, signed and logged</h2>
+      <p class="lead">Iframely works with publishers, not around them.</p>
+      <p>Declare why you're reading a URL. We fetch it with a signed, named agent, check robots.txt, Content Signals, the licence and Publisher Console settings, and return what fits both your purpose and the publisher's signals, in five fixed content types: metadata, media links, entities, an excerpt or Markdown full text.</p>
+      <p>No brute force. The <code>access</code> object shows which publisher signals were found and how each was applied: an audit trail for your legal team, and a debug view for publishers.</p>
+      <div class="cta"><a class="btn btn-primary" href="#data-api">How the Data API works</a><a class="btn btn-invert" href="#pricing">Free trial</a></div>
+    </div>
+    <div class="code" aria-label="Data API response, shortened">
+      <div class="top"><span>GET /api/data?mode=assist&amp;use=reference</span><span>200</span></div>
+<pre>{
+  <span class="k">"meta"</span>:     { "title": "…", "site": "Wikipedia", "author": "…" },
+  <span class="k">"links"</span>:    { "thumbnail": [ … ] },
+  <span class="k">"entities"</span>: [ … ],
+  <span class="k">"excerpt"</span>:  "…",
+  <span class="k">"fulltext"</span>: "…",
+  <span class="k">"access"</span>: {
+    "requested": { "modes": ["assist"], "use": "reference" },
+    "signals": {
+      "license":    { "common_name": "CC BY-SA 4.0" },
+      "robots.txt": { "status": 200 }
+    },
+    "decision": {
+<span class="hl">      "meta":     { "allowed": <span class="ok">true</span> },</span>
+<span class="hl">      "links":    { "allowed": <span class="ok">true</span> },</span>
+<span class="hl">      "entities": { "allowed": <span class="ok">true</span> },</span>
+<span class="hl">      "excerpt":  { "allowed": <span class="ok">true</span> },</span>
+<span class="hl">      "fulltext": { "allowed": <span class="ok">true</span> }</span>
+    }
+  }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<section class="section tint" id="console" style="--tint: color-mix(in srgb, var(--p4) 50%, var(--bg))">
+  <div class="wrap two flip">
+    <div class="visual">
+      <div class="mock console" aria-label="Publisher Console: requests by agent, policy by path (sample)">
+        <div class="table">
+          <div class="row"><span>Agent</span><span>Path</span><span>Requests, 7d</span><span>Policy</span></div>
+          <div class="row"><span>Preview Agent</span><span>/*</span><span>412,908</span><span class="pill">previews</span></div>
+          <div class="row"><span>Processing Agent</span><span>/articles/*</span><span>38,120</span><span class="pill">assist, excerpt</span></div>
+          <div class="row"><span>Processing Agent</span><span>/premium/*</span><span>2,004</span><span class="pill no">fulltext blocked</span></div>
+          <div class="row"><span>Training Agent</span><span>/*</span><span>0</span><span class="pill no">opt-in only</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="eyebrow">Publisher Console</span>
+      <h2>See who reads your pages, and how your settings apply</h2>
+      <p>For your own web domains, see which products fetch your pages and why. Set a processing policy and other rules for the whole domain, a path or an individual Iframely customer. Test any declared use on your own pages and see what each would receive.</p>
+      <p>Free. Read-only access with email verification, admin rights with DNS verification.</p>
+      <div class="cta"><a class="btn btn-primary" href="#console">For publishers</a><a class="btn btn-secondary" href="#console">Claim your domain</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="section tint" id="trust">
+  <div class="wrap">
+    <div class="head"><h2>Trusted on both sides of the URL</h2></div>
+    <div class="trust">
+      <a href="#trust"><h3>Signed requests</h3><p>Every request is signed with Web Bot Auth. Check our key directory and IP ranges.</p><span class="more">Verify our agents →</span></a>
+      <a href="#trust"><h3>Allowed by publishers</h3><p>Cloudflare and AWS verify our preview agent. DataDome customers authorize us 100% of the time.</p><span class="more">How to allow Iframely →</span></a>
+      <a href="#trust"><h3>Trusted by developers</h3><p>Canva, Notion and Circle point their users to Iframely in their own docs.</p><span class="more">Read the quotes →</span></a>
+      <a href="#trust"><h3>Audited and transparent</h3><p>SOC 2 Type II, Automated Processing Terms, a public Publisher Policy and uptime status.</p><span class="more">Trust center →</span></a>
+    </div>
+    <div class="logos"><span>Canva</span><span>Atlassian</span><span>Notion</span><span>Circle</span><span>GitBook</span><small>Wordmarks stand in for customer logos; permission needed before launch.</small></div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Pricing</span><h2>Pay per hit, or per read</h2></div>
+    <div class="price">
+      <div><h3>Rich Media and Preview API</h3><div class="num">$0 <span>to start</span></div><p>2,000 hits a month free. Paid plans from $49 a month.</p></div>
+      <div><h3>Data API</h3><div class="num">$1.00 <span>per 1,000 reads</span></div><p>1,000 reads a month free. $0.80 above 100,000, $0.60 above 500,000. Sample prices, under revision.</p></div>
+    </div>
+    <p style="margin-top:20px"><a class="btn btn-quiet" href="#pricing">See pricing and the calculator →</a></p>
+  </div>
+</section>
+
+<section class="cta-band band-dark pat">
+  <div class="wrap">
+    <h2>Start with one URL</h2>
+    <p>Get a free key and try your first URL in a minute, or check a link without signing up.</p>
+    <div class="row"><a class="btn btn-primary" href="#pricing">Get an API key</a><a class="btn btn-invert" href="#data-api">Read the docs</a><a class="btn btn-invert" href="#hero">Check a URL</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><b>Products</b><a href="#rich">Rich Media</a><a href="#preview">Preview API</a><a href="#data-api">Data API</a><a href="#console">Publisher Console</a><a href="#products">Integrations</a><a href="#products">WordPress plugin</a><a href="#pricing">Pricing</a></div>
+      <div><b>Free tools</b><a href="#hero">Embed code generator</a><a href="#hero">URL debugger</a><a href="#hero">All free tools</a><a href="#rich">Supported providers</a><a href="#rich">Domains widget</a></div>
+      <div><b>Developers</b><a href="#data-api">Docs</a><a href="#data-api">For agents</a><a href="#data-api">MCP server</a><a href="#data-api">Changelog and provider news</a><a href="#trust">Verify our agents</a><a href="#trust">Help center</a><a href="#trust">Status</a></div>
+      <div><b>Company</b><a href="#trust">About</a><a href="#trust">Careers</a><a href="#trust">Compare</a><a href="#trust">Trust center</a><a href="#trust">Contact support</a></div>
+      <div><b>Legal</b><a href="#trust">Terms</a><a href="#trust">Automated Processing Terms</a><a href="#trust">Privacy</a><a href="#trust">GDPR</a></div>
+    </div>
+    <div class="bottom"><span>© 2026 Itteco Software Corp.</span><span class="eyebrow">Exploration board · copy from the demo homepage · visuals are samples</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var defaults = { palette: 'paper', font: 'instrument', body: 'inter', hero: 'soft', pattern: 'dots' };
+  var labels = {
+    palette: { paper: 'Paper + cobalt', linen: 'Linen + navy', butter: 'Butter + violet', stone: 'Stone + rust' },
+    font: { instrument: 'Instrument Serif', fraunces: 'Fraunces', newsreader: 'Newsreader', garamond: 'EB Garamond', dmserif: 'DM Serif Display', cormorant: 'Cormorant Garamond', hedvig: 'Hedvig Letters Serif', young: 'Young Serif' },
+    body: { inter: 'Inter', figtree: 'Figtree', geist: 'Geist' },
+    hero: { soft: 'soft hero', band: 'pastel band', bold: 'bold accent' },
+    pattern: { none: 'no pattern', dots: 'dots', grid: 'grid', hatch: 'hatch', blobs: 'blobs' }
+  };
+  var fonts = [
+    ['instrument', "'Instrument Serif', serif", 'Google · free · high contrast, condensed'],
+    ['fraunces', "'Fraunces', serif", 'Google · free · soft, warm, variable'],
+    ['newsreader', "'Newsreader', serif", 'Google · free · editorial, optical sizes'],
+    ['garamond', "'EB Garamond', serif", 'Google · free · classic old-style'],
+    ['dmserif', "'DM Serif Display', serif", 'Google · free · sharp display'],
+    ['cormorant', "'Cormorant Garamond', serif", 'Google · free · tall, elegant'],
+    ['hedvig', "'Hedvig Letters Serif', serif", 'Google · free · compact, friendly'],
+    ['young', "'Young Serif', serif", 'Google · free · chunky, warm']
+  ];
+  var swatchKeys = [['--bg', 'bg'], ['--bg2', 'bg 2'], ['--surface', 'surface'], ['--line', 'line'], ['--ink', 'ink'], ['--ink2', 'ink 2'], ['--ink3', 'ink 3'], ['--accent', 'accent'], ['--link', 'link'], ['--logo', 'logo'], ['--dark', 'dark band'], ['--p1', 'pastel 1'], ['--p2', 'pastel 2'], ['--p3', 'pastel 3'], ['--p4', 'pastel 4'], ['--p5', 'pastel 5']];
+  var state = {};
+  function load() {
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem('iframely-board') || '{}'); } catch (e) { saved = {}; }
+    for (var k in defaults) state[k] = (saved[k] && labels[k][saved[k]]) ? saved[k] : defaults[k];
+  }
+  function save() { try { localStorage.setItem('iframely-board', JSON.stringify(state)); } catch (e) {} }
+  function apply() {
+    for (var k in state) root.setAttribute('data-' + k, state[k]);
+    document.querySelectorAll('.seg').forEach(function (seg) {
+      var key = seg.getAttribute('data-key');
+      seg.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === state[key])); });
+    });
+    document.querySelectorAll('#lineup button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-v') === state.font)); });
+    document.getElementById('combo').textContent = 'Combination: ' + labels.palette[state.palette] + ' / ' + labels.font[state.font] + ' headings / ' + labels.body[state.body] + ' body / ' + labels.hero[state.hero] + ' / ' + labels.pattern[state.pattern];
+    renderSwatches();
+  }
+  function renderSwatches() {
+    var cs = getComputedStyle(root);
+    var host = document.getElementById('swatches');
+    host.innerHTML = '';
+    swatchKeys.forEach(function (pair) {
+      var v = cs.getPropertyValue(pair[0]).trim();
+      var el = document.createElement('div');
+      el.className = 'sw';
+      el.innerHTML = '<i style="background:' + v + '"></i><b></b><code></code>';
+      el.querySelector('b').textContent = pair[1];
+      el.querySelector('code').textContent = v;
+      host.appendChild(el);
+    });
+  }
+  function renderLineup() {
+    var host = document.getElementById('lineup');
+    fonts.forEach(function (f) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('data-v', f[0]);
+      b.innerHTML = '<span class="sample" style="font-family:' + f[1] + '">Iframely makes URLs work <em>inside</em> other products</span><span class="meta"></span>';
+      b.querySelector('.meta').textContent = labels.font[f[0]] + ' · ' + f[2];
+      b.addEventListener('click', function () { state.font = f[0]; save(); apply(); });
+      host.appendChild(b);
+    });
+  }
+  document.querySelectorAll('.seg').forEach(function (seg) {
+    var key = seg.getAttribute('data-key');
+    seg.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () { state[key] = b.getAttribute('data-v'); save(); apply(); });
+    });
+  });
+  load();
+  renderLineup();
+  apply();
+})();
+</script>

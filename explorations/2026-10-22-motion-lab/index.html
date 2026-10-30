@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iframely Motion Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
+<link rel="stylesheet" href="lib/demos.css">
+<style>
+.shell { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+.side { position: sticky; top: 0; height: 100vh; overflow: auto; display: flex; flex-direction: column; gap: 22px; padding: 28px 18px 24px max(18px, env(safe-area-inset-left, 0px)); border-right: 1px solid var(--line); background: var(--bg2); }
+.brand .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+/* lab chrome: the sidebar title stays in the base face, only the demos follow the heading choice */
+.brand .title { font: 600 22px/1.1 var(--sans); letter-spacing: -.01em; margin-top: 4px; }
+.brand .date { font: 11px var(--mono); color: var(--ink3); margin-top: 6px; }
+nav { display: flex; flex-direction: column; gap: 2px; }
+nav a { text-decoration: none; color: var(--ink2); }
+nav a.pg { display: block; padding: 7px 10px; border-radius: 8px; font: 500 14px var(--sans); color: var(--ink); }
+nav a.pg:hover { background: var(--bg); }
+nav a.pg.on { background: var(--ink); color: var(--bg); }
+nav .sub { display: flex; flex-direction: column; gap: 1px; margin: 4px 0 10px; }
+nav .sub a { display: flex; gap: 8px; align-items: baseline; padding: 5px 10px; border-radius: 6px; font: 12px/1.35 var(--sans); color: var(--ink2); }
+nav .sub a:hover { color: var(--ink); background: var(--bg); }
+nav .sub a.on { color: var(--ink); }
+nav .sub code { font: 11px var(--mono); color: var(--accent); flex: none; }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; font: 11px/1.5 var(--mono); color: var(--ink3); }
+.side-foot button { height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font: 500 12px var(--sans); cursor: pointer; align-self: flex-start; }
+.side-foot button:hover { border-color: var(--ink3); }
+.side-foot a { color: var(--link); }
+.main { padding: 40px clamp(16px, 4vw, 56px) 60px; padding-right: max(clamp(16px, 4vw, 56px), env(safe-area-inset-right, 0px)); max-width: 1314px; min-width: 0; }
+.main h1 { font-family: var(--serif); font-weight: var(--fl-serif-weight, 400); font-style: var(--fl-serif-style, normal); font-size: calc(clamp(34px, 4.5vw, 54px) * var(--fl-serif-scale, 1)); line-height: var(--fl-serif-lh, 1.02); margin: 0 0 10px; letter-spacing: var(--fl-serif-tracking, -.01em); text-wrap: balance; }
+.main .intro { color: var(--ink2); max-width: 72ch; margin: 0 0 28px; }
+.cards { display: grid; gap: 40px; }
+.card header { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline; margin-bottom: 10px; }
+.card h3 { font: 500 15px var(--sans); margin: 0; }
+.card h3 code { font: 12px var(--mono); color: var(--accent); margin-right: 8px; }
+.card h3 .pick { display: inline-block; margin-left: 10px; padding: 2px 8px; border-radius: 6px; background: #0055ff; color: #fff; font: 500 11px var(--mono); vertical-align: 2px; }
+.card h3 .pick.maybe { background: var(--bg2); color: var(--ink2); }
+nav .sub .pk { margin-left: auto; color: #0055ff; font-size: 11px; flex: none; }
+nav .sub .pk.maybe { color: var(--ink3); }
+.card header p { grid-column: 1; margin: 0; color: var(--ink2); font-size: 13px; max-width: 84ch; }
+.card header a { font: 12px var(--mono); color: var(--link); white-space: nowrap; }
+.frame { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); container-type: inline-size; }
+.frame.g-bg { aspect-ratio: 16 / 10; }
+.frame.g-hero { aspect-ratio: 16 / 9; }
+.frame.g-pd { min-height: 320px; }
+.frame.g-logo { aspect-ratio: 16 / 9; }
+.frame.g-ill, .frame.g-pdw, .frame.g-sec, .frame.g-pal { background: #fff; }
+/* scenes keep their desktop layout: at least 1200 px wide, scrolling sideways in a narrower window */
+.frame.g-pd, .frame.g-pdp, .frame.g-pdw, .frame.g-sec, .frame.g-pal { overflow-x: auto; }
+.frame.g-pd > .demo, .frame.g-pdp > .demo, .frame.g-pdw > .demo, .frame.g-sec > .demo, .frame.g-pal > .demo { min-width: 1200px; }
+@media (max-width: 880px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); gap: 12px; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px)); }
+  .brand .title { font-size: 24px; }
+  nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  nav .sub { display: none; }
+  .side-foot { margin-top: 0; flex-direction: row; align-items: center; }
+  .main { padding: 24px max(16px, env(safe-area-inset-right, 0px)) 40px max(16px, env(safe-area-inset-left, 0px)); }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="brand"><div class="eyebrow">iframely.com redesign</div><div class="title">Motion lab</div><div class="date">2026-10-22 · Paper + cobalt</div></div>
+    <nav id="nav" aria-label="Pages"></nav>
+    <div class="side-foot"><button id="pause">Pause all</button><div id="note"></div><div>Hover a demo to pause its loop. Move the pointer over a background to interact. The Type panel switches heading, base and mono faces; Copy link shares the set. <a href="demo.html">Full-screen viewer ↗</a></div></div>
+  </aside>
+  <main id="main" class="main"></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+<script src="lib/motion-shim.js"></script>
+<script src="fonts/local.js"></script>
+<script src="lib/fontlab.js"></script>
+<script>FontLab.init({ aliases: { serif: '--serif', sans: '--sans', mono: '--mono' }, apply: false });</script>
+<script src="lib/demos.js"></script>
+<script src="lib/dither.js"></script>
+<script src="lib/blobs.js"></script>
+<script src="demos/hero-stack.js"></script>
+<script src="demos/hero-shape.js"></script>
+<script src="demos/hero-paste.js"></script>
+<script src="demos/hero-terminal.js"></script>
+<script src="demos/hero-window.js"></script>
+<script src="demos/hero-blocks-url.js"></script>
+<script src="demos/hero-globe.js"></script>
+<script src="demos/bg-dither.js"></script>
+<script src="demos/bg-ascii.js"></script>
+<script src="demos/bg-halftone.js"></script>
+<script src="demos/bg-blobs.js"></script>
+<script src="demos/bg-ripple.js"></script>
+<script src="demos/bg-marquee.js"></script>
+<script src="demos/bg-teeth.js"></script>
+<script src="demos/bg-grid.js"></script>
+<script src="demos/bg-contours.js"></script>
+<script src="demos/bg-hatch.js"></script>
+<script src="demos/bg-moire.js"></script>
+<script src="demos/bg-tape.js"></script>
+<script src="demos/bg-network.js"></script>
+<script src="demos/bg-filings.js"></script>
+<script src="demos/bg-river.js"></script>
+<script src="demos/bg-ridges.js"></script>
+<script src="demos/pd-one-url.js"></script>
+<script src="demos/pd-camera.js"></script>
+<script src="demos/pd-lifecycle.js"></script>
+<script src="demos/pd-publisher.js"></script>
+<script src="demos/pd-extract.js"></script>
+<script src="demos/pd-formats.js"></script>
+<script src="demos/pd-terminal.js"></script>
+<script src="demos/pd-pastel.js"></script>
+<script src="demos/logo.js"></script>
+<script src="demos/logo2.js"></script>
+<script src="demos/logo3.js"></script>
+<script src="demos/logo4.js"></script>
+<script src="demos/logo5.js"></script>
+<script src="demos/logo6.js"></script>
+<script src="demos/logo7.js"></script>
+<script src="demos/logo8.js"></script>
+<script src="demos/logo9.js"></script>
+<script src="demos/logo10.js"></script>
+<script src="demos/logo11.js"></script>
+<script src="demos/logo12.js"></script>
+<script src="demos/logo13.js"></script>
+<script src="demos/logo14.js"></script>
+<script src="demos/logo15.js"></script>
+<script src="demos/ill.js"></script>
+<script src="demos/ill2.js"></script>
+<script src="demos/ill3.js"></script>
+<script src="demos/ill4.js"></script>
+<script src="demos/ill5.js"></script>
+<script src="demos/prod.js"></script>
+<script src="demos/sec.js"></script>
+<script src="demos/pal.js"></script>
+<script src="lib/site.js"></script>
+<script type="module">
+/* Type panel, floating in the top-right corner. Tweakpane 4 is an ES module on jsDelivr; without it (offline) the current set is printed in the sidebar instead. */
+try { const { Pane } = await import('https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js'); FontLab.pane(Pane, { title: 'Type', expanded: true }); }
+catch (e) { document.getElementById('note').textContent += ' · Type panel needs Tweakpane from jsDelivr. Current set: ' + FontLab.summary().replace('\n', ' · '); }
+</script>
+</body>
+</html>

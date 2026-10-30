@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+/* Font families and type roles (.t-hero, .t-h2, …) come from src/lib/type/type.ts, inlined by the root layout */
+
+/* Home01 (Figma "Design 2027", Wireframes, 2026-10-30): page #fafafa, text #111 / #333 / #666 / #777, line #f2f2f2,
+   Iframely blue #0055ff, one colour per product. The older scales (ink-*, brand-*) that the other pages use now map onto
+   the same palette: ink is pure grey (50 the page, 100 the rule, 600 / 700 / 950 the text greys), brand is the blue. */
+@theme {
+	--font-sans: var(--ff-base);
+	--font-mono: var(--ff-mono);
+	--font-display: var(--ff-heading);
+
+	--color-page: #fafafa;
+	--color-fg: #111111;
+	--color-body: #333333;
+	--color-mute: #666666;
+	--color-soft: #777777;
+	--color-faint: #7a7a7a;
+	--color-rule: #f2f2f2;
+	--color-blue: #0055ff;
+	--color-rich: #0055ff;
+	--color-preview: #6a3bff;
+	--color-data: #a52fd0;
+	--color-pub: #c81d77;
+
+	--color-white: #ffffff;
+	--color-paper: #fafafa;
+
+	--color-brand-50: #eef3ff;
+	--color-brand-100: #dce7ff;
+	--color-brand-200: #b8ceff;
+	--color-brand-300: #85aaff;
+	--color-brand-400: #5c8aff;
+	--color-brand-500: #2e6bff;
+	--color-brand-600: #0055ff;
+	--color-brand-700: #0055ff;
+	--color-brand-800: #0044cc;
+	--color-brand-900: #003399;
+
+	--color-ink-50: #fafafa;
+	--color-ink-100: #f2f2f2;
+	--color-ink-200: #e6e6e6;
+	--color-ink-300: #cccccc;
+	--color-ink-400: #999999;
+	--color-ink-500: #7a7a7a;
+	--color-ink-600: #666666;
+	--color-ink-700: #333333;
+	--color-ink-800: #222222;
+	--color-ink-900: #111111;
+	--color-ink-950: #111111;
+}
+
+/* Aeonik Fono, Cotype trial (static OTF, from C:\web\publicly-design\fonts). For design testing only. */
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Air.otf') format('opentype'); font-weight: 100; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Thin.otf') format('opentype'); font-weight: 200; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Aeonik Fono'; src: url('/fonts/AeonikFono/AeonikFonoTRIAL-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
+
+html {
+	-webkit-font-smoothing: antialiased;
+	color-scheme: light;
+	background: var(--color-page);
+}
+
+body {
+	background: var(--color-page);
+	color: var(--color-fg);
+	font-family: var(--ff-base);
+}
+
+/* The page container: 1200px of content, 20px gutters below that */
+.wrap {
+	max-width: calc(1200px + 2 * var(--gutter));
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+:root {
+	--gutter: 20px;
+	--header-h: 72px;
+}
+
+/* Grid and flex items holding code blocks must be allowed to shrink below their content width */
+.grid > * {
+	min-width: 0;
+}
+
+/* Inline links inside copy rendered with {@html} */
+.prose-links a {
+	@apply font-medium text-blue underline decoration-blue/30 underline-offset-2 hover:decoration-blue;
+}
+
+code:not(pre code) {
+	@apply rounded bg-rule px-1 py-0.5 font-mono text-[0.88em] text-body;
+}

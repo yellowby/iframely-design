@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iframely Motion Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap">
+<link rel="stylesheet" href="lib/demos.css">
+<style>
+body { overflow-x: hidden; }
+.nav { position: fixed; top: 12px; left: 12px; z-index: 9; display: flex; gap: 6px; align-items: center; font: 12px var(--mono); }
+.nav a, .nav span { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 7px; background: rgba(255, 253, 249, .85); border: 1px solid var(--line); color: var(--ink); text-decoration: none; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.nav a:hover { border-color: var(--ink3); }
+.frame { position: relative; height: 100vh; height: 100svh; container-type: inline-size; }
+.frame.g-pd { height: auto; min-height: 100svh; display: flex; align-items: center; padding: 60px max(16px, env(safe-area-inset-right, 0px)) 60px max(16px, env(safe-area-inset-left, 0px)); }
+.frame.g-pd .demo { width: 100%; max-width: 1200px; margin: 0 auto; }
+.frame.g-ill, .frame.g-pdw, .frame.g-sec, .frame.g-pal { height: auto; min-height: 100svh; padding: 60px max(16px, env(safe-area-inset-right, 0px)) 40px; background: #fff; }
+.frame.g-sec, .frame.g-pal { padding: 0; }
+.frame.g-ill .demo, .frame.g-pdw .demo, .frame.g-sec .demo, .frame.g-pal .demo { max-width: 1200px; margin: 0 auto; }
+/* scenes keep their desktop layout: at least 1200 px wide, scrolling sideways in a narrower window */
+.frame.g-pd, .frame.g-pdp, .frame.g-pdw, .frame.g-sec, .frame.g-pal { overflow-x: auto; }
+.frame.g-pd .demo, .frame.g-pdp .demo, .frame.g-pdw .demo, .frame.g-sec .demo, .frame.g-pal .demo { min-width: 1200px; }
+</style>
+</head>
+<body>
+<nav class="nav"><a id="back" href="index.html">← all demos</a><a id="prev" href="#" title="previous">‹</a><span id="name"></span><a id="next" href="#" title="next">›</a></nav>
+<div id="frame" class="frame"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+<script src="lib/motion-shim.js"></script>
+<script src="fonts/local.js"></script>
+<script src="lib/fontlab.js"></script>
+<script>FontLab.init({ aliases: { serif: '--serif', sans: '--sans', mono: '--mono' }, apply: false });</script>
+<script src="lib/demos.js"></script>
+<script src="lib/dither.js"></script>
+<script src="lib/blobs.js"></script>
+<script src="demos/hero-stack.js"></script>
+<script src="demos/hero-shape.js"></script>
+<script src="demos/hero-paste.js"></script>
+<script src="demos/hero-terminal.js"></script>
+<script src="demos/hero-window.js"></script>
+<script src="demos/hero-blocks-url.js"></script>
+<script src="demos/hero-globe.js"></script>
+<script src="demos/bg-dither.js"></script>
+<script src="demos/bg-ascii.js"></script>
+<script src="demos/bg-halftone.js"></script>
+<script src="demos/bg-blobs.js"></script>
+<script src="demos/bg-ripple.js"></script>
+<script src="demos/bg-marquee.js"></script>
+<script src="demos/bg-teeth.js"></script>
+<script src="demos/bg-grid.js"></script>
+<script src="demos/bg-contours.js"></script>
+<script src="demos/bg-hatch.js"></script>
+<script src="demos/bg-moire.js"></script>
+<script src="demos/bg-tape.js"></script>
+<script src="demos/bg-network.js"></script>
+<script src="demos/bg-filings.js"></script>
+<script src="demos/bg-river.js"></script>
+<script src="demos/bg-ridges.js"></script>
+<script src="demos/pd-one-url.js"></script>
+<script src="demos/pd-camera.js"></script>
+<script src="demos/pd-lifecycle.js"></script>
+<script src="demos/pd-publisher.js"></script>
+<script src="demos/pd-extract.js"></script>
+<script src="demos/pd-formats.js"></script>
+<script src="demos/pd-terminal.js"></script>
+<script src="demos/pd-pastel.js"></script>
+<script src="demos/logo.js"></script>
+<script src="demos/logo2.js"></script>
+<script src="demos/logo3.js"></script>
+<script src="demos/logo4.js"></script>
+<script src="demos/logo5.js"></script>
+<script src="demos/logo6.js"></script>
+<script src="demos/logo7.js"></script>
+<script src="demos/logo8.js"></script>
+<script src="demos/logo9.js"></script>
+<script src="demos/logo10.js"></script>
+<script src="demos/logo11.js"></script>
+<script src="demos/logo12.js"></script>
+<script src="demos/logo13.js"></script>
+<script src="demos/logo14.js"></script>
+<script src="demos/logo15.js"></script>
+<script src="demos/ill.js"></script>
+<script src="demos/ill2.js"></script>
+<script src="demos/ill3.js"></script>
+<script src="demos/ill4.js"></script>
+<script src="demos/ill5.js"></script>
+<script src="demos/prod.js"></script>
+<script src="demos/sec.js"></script>
+<script src="demos/pal.js"></script>
+<script>
+(() => {
+  const all = DEMOS.list(); let un = null;
+  function show() {
+    const name = (location.hash || '').slice(1) || all[0].name;
+    const i = Math.max(0, all.findIndex(d => d.name === name)); const d = all[i];
+    if (un) un();
+    const f = document.getElementById('frame'); f.className = 'frame g-' + ((d.alias && DEMOS.get(d.alias).group) || d.group);
+    un = DEMOS.mount(f, d.name);
+    document.getElementById('name').textContent = d.title; document.title = d.title + ' · Iframely Motion Lab';
+    document.getElementById('back').href = 'index.html#' + d.name;
+    document.getElementById('prev').href = '#' + all[(i - 1 + all.length) % all.length].name;
+    document.getElementById('next').href = '#' + all[(i + 1) % all.length].name;
+  }
+  addEventListener('hashchange', show); show();
+})();
+</script>
+<script type="module">
+/* Type panel, floating top-right and folded. Tweakpane 4 from jsDelivr; skipped offline. */
+try { const { Pane } = await import('https://cdn.jsdelivr.net/npm/tweakpane@4.0.5/dist/tweakpane.min.js'); FontLab.pane(Pane, { title: 'Type', expanded: false }); } catch (e) { console.warn('Type panel unavailable', e); }
+</script>
+</body>
+</html>

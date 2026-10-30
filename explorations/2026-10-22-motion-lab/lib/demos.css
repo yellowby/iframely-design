@@ -1,0 +1,103 @@
+/* Iframely motion lab · shared styles. Paper + cobalt tokens from the palette round. */
+:root {
+  --bg: #f7f5f0; --bg2: #efece5; --surface: #fffdf9; --line: #e3dfd6;
+  --ink: #1c1b18; --ink2: #5b5750; --ink3: #8a857c;
+  --accent: #1f3fe0; --link: #1a35c4; --accent-soft: #7b93ff;
+  --pink: #fadbe5; --lavender: #e4e3fb; --sky: #d8e7ff; --mint: #dcefe2; --sand: #f6ebc8; --peach: #fbe3d2;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-weight: var(--fl-sans-weight, 400); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: var(--link); }
+
+/* demo root */
+.demo { position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+.demo-bg, .demo-logo { position: absolute; inset: 0; }
+.demo-ill { height: auto; }
+.demo canvas.fill { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fallback { position: absolute; inset: 0; display: grid; place-items: center; font: 12px var(--mono); color: var(--ink3); }
+
+/* hero overlay used by the background demos */
+.hero { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: clamp(20px, 6%, 64px); pointer-events: none; }
+.hero.top { justify-content: flex-start; }
+.hero.bottom { justify-content: flex-end; }
+.hero .eyebrow, .pd .eyebrow { font-family: var(--mono); font-weight: var(--fl-mono-weight, 400); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.hero h1 { font-family: var(--serif); font-weight: var(--fl-serif-weight, 400); font-style: var(--fl-serif-style, normal); font-size: calc(clamp(30px, 5.4cqw, 68px) * var(--fl-serif-scale, 1)); line-height: var(--fl-serif-lh, 1.02); letter-spacing: var(--fl-serif-tracking, -.01em); margin: 0; max-width: 13ch; text-wrap: balance; }
+.hero p { margin: 0; max-width: 42ch; color: var(--ink2); font-size: clamp(14px, 1.5cqw, 17px); }
+.hero.dark { color: var(--bg); }
+.hero.dark p { color: #b9b4a9; }
+.hero.dark .eyebrow { color: #9fb0ff; }
+.btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; pointer-events: auto; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 16px; border-radius: 9px; font: 500 14px var(--sans); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: transform .15s, background .15s, border-color .15s; }
+.btn.primary { background: var(--accent); color: #fff; }
+.btn.primary:hover { background: var(--link); }
+.btn.secondary { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn.secondary:hover { border-color: var(--ink3); }
+.hero.dark .btn.secondary { background: transparent; color: var(--bg); border-color: rgba(247, 245, 240, .35); }
+.btn:active { transform: translateY(1px); }
+
+/* hero composition layout: background host behind, text left, visualization slot right */
+.demo-hero { position: absolute; inset: 0; }
+.hero2 { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(240px, .9fr) minmax(0, 1.1fr); gap: clamp(20px, 5cqw, 72px); align-items: center; padding: clamp(20px, 6cqw, 64px); pointer-events: none; }
+.hero2 .text { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.hero2 .text .eyebrow { font-family: var(--mono); font-weight: var(--fl-mono-weight, 400); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.hero2 .text h1 { font-family: var(--serif); font-weight: var(--fl-serif-weight, 400); font-style: var(--fl-serif-style, normal); font-size: calc(clamp(30px, 4.6cqw, 62px) * var(--fl-serif-scale, 1)); line-height: var(--fl-serif-lh, 1.02); letter-spacing: var(--fl-serif-tracking, -.01em); margin: 0; max-width: 13ch; text-wrap: balance; }
+.hero2 .text p { margin: 0; max-width: 40ch; color: var(--ink2); font-size: clamp(14px, 1.4cqw, 17px); }
+.hero2 .slot { position: relative; min-width: 0; align-self: stretch; min-height: 260px; }
+.hero2 .slot > * { pointer-events: auto; }
+@container (max-width: 480px) { .hero2 { grid-template-columns: 1fr; align-content: center; } .hero2 .slot { align-self: auto; height: 260px; } }
+
+/* product demo layout: text block + stage */
+.demo-pd { position: relative; height: auto; container-type: inline-size; }
+/* Rule: text on the left, visualization on the right. Two columns at every width except phones. */
+.pd { display: grid; grid-template-columns: minmax(170px, .75fr) minmax(0, 1.25fr); gap: clamp(16px, 4cqw, 56px); align-items: center; width: 100%; padding: clamp(16px, 4cqw, 48px); }
+.pd .text { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.pd .text h2 { font-family: var(--serif); font-weight: var(--fl-serif-weight, 400); font-style: var(--fl-serif-style, normal); font-size: calc(clamp(24px, 3.6cqw, 46px) * var(--fl-serif-scale, 1)); line-height: var(--fl-serif-lh, 1.04); letter-spacing: var(--fl-serif-tracking, -.01em); margin: 0; text-wrap: balance; }
+.pd .text p { margin: 0; color: var(--ink2); max-width: 40ch; }
+.pd .stage { position: relative; min-width: 0; aspect-ratio: 4 / 3; max-height: 560px; }
+/* B06 pastel backdrop behind a scene: the stage becomes a rounded colour panel, the scene sits 18px inside it */
+.pd .stage.has-pastel { border-radius: 18px; overflow: hidden; }
+.pd .stage .pastel-bg { position: absolute; inset: 0; }
+.pd .stage .pastel-bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pd .stage .stage-in { position: absolute; inset: 18px; }
+.pd .eyebrow.chip { display: inline-block; align-self: flex-start; max-width: 100%; padding: 4px 10px; border-radius: 7px; background: var(--pastel, var(--sky)); color: var(--ink); text-transform: none; letter-spacing: .02em; font-size: 12px; line-height: 1.4; white-space: normal; }
+@container (max-width: 760px) { .pd .stage .stage-in { inset: 12px; } }
+@container (max-width: 760px) { .pd .stage { aspect-ratio: 1 / 1; } .pd .text p { font-size: 13px; } .pd .text .btn { height: 34px; font-size: 13px; } }
+@container (max-width: 480px) { .pd { grid-template-columns: 1fr; } .pd .stage { aspect-ratio: 4 / 3; } }
+
+/* mock parts shared by the product demos */
+.m-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 1px 2px rgba(28, 27, 24, .04), 0 10px 28px -16px rgba(28, 27, 24, .22); }
+.m-bar { height: 8px; border-radius: 4px; background: var(--bg2); }
+.m-bar.dark { background: #d9d5cc; }
+.m-play { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); display: grid; place-items: center; flex: none; }
+.m-play::after { content: ""; border-left: 14px solid var(--ink); border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+.m-play.sm { width: 30px; height: 30px; }
+.m-play.sm::after { border-left-width: 10px; border-top-width: 6px; border-bottom-width: 6px; margin-left: 3px; }
+.mono { font-family: var(--mono); font-weight: var(--fl-mono-weight, 400); }
+.label { font-family: var(--mono); font-weight: var(--fl-mono-weight, 400); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.chip { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 6px; background: var(--sky); color: var(--ink); font: 500 11px var(--mono); white-space: nowrap; }
+.chip.pink { background: var(--pink); }
+.chip.mint { background: var(--mint); }
+.chip.sand { background: var(--sand); }
+.caret { display: inline-block; width: 8px; height: 1.1em; background: var(--accent); vertical-align: -2px; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+/* FontLab panel (Tweakpane 4) in the lab's colours. The panel's own text follows the chosen mono face. */
+:root {
+  --tp-base-background-color: var(--surface); --tp-base-shadow-color: rgba(28, 27, 24, .14); --tp-base-border-radius: 10px; --tp-base-font-family: var(--fl-mono, "Geist Mono", ui-monospace, Menlo, monospace);
+  --tp-button-background-color: var(--ink); --tp-button-background-color-active: #000; --tp-button-background-color-focus: #3d3a35; --tp-button-background-color-hover: #3d3a35; --tp-button-foreground-color: var(--bg);
+  --tp-container-background-color: var(--bg2); --tp-container-background-color-active: var(--line); --tp-container-background-color-focus: var(--line); --tp-container-background-color-hover: #e9e5dc; --tp-container-foreground-color: var(--ink);
+  --tp-groove-foreground-color: var(--line); --tp-input-background-color: var(--bg2); --tp-input-background-color-active: var(--line); --tp-input-background-color-focus: var(--line); --tp-input-background-color-hover: #e9e5dc; --tp-input-foreground-color: var(--ink);
+  --tp-label-foreground-color: var(--ink2); --tp-monitor-background-color: var(--bg2); --tp-monitor-foreground-color: var(--ink);
+}
+/* Floating pane: a zero-height sticky holder at the top of <body> keeps the pane in the top-right corner while the page scrolls. */
+.fontlab-holder { position: sticky; top: 0; height: 0; z-index: 20; }
+.fontlab-wrap { position: absolute !important; top: 12px !important; right: 12px !important; width: 300px !important; }
+.fontlab-pane textarea { white-space: pre-wrap; word-break: break-word; }
+
+/* a demo out of view (or in a hidden tab) holds its CSS animations too */
+.demo.off, .demo.off *, .demo.off *::before, .demo.off *::after { animation-play-state: paused !important; }
