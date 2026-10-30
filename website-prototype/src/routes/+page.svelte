@@ -10,6 +10,7 @@
 	// Home01 (Figma "Design 2027", Wireframes, 2026-10-30): hero with the S41 scene, trust, the connecting heading, the
 	// four products, each with its scene from the motion lab under it. Blocks, order and copy follow the frame; more blocks and the footer come in later steps.
 	let cycle = $state(0);
+	let hero = $state<HTMLDivElement>();
 
 	// path is the tag (Figma's text), href the product page it links to; the section's id is the path without the slash
 	type Product = {
@@ -103,12 +104,20 @@
 		Embed rich media from 1,900 providers. Show previews of any link your users share. Read web content for your automated
 		systems. Decide how other apps use your own content.
 	</p>
-	<Scene scene="home" class="mt-10 min-h-[290px]" onCycle={() => cycle++} />
+	<!-- the box is reserved at the scene's height for each of its layouts (it switches on its own width: four windows
+	     in a row, two by two at 980px and under, one column at 560px and under), so nothing moves when it mounts -->
+	<div bind:this={hero} class="@container mt-10">
+		<Scene
+			scene="home"
+			class="min-h-[290px] @max-[980px]:min-h-[490px] @max-[560px]:min-h-[920px]"
+			onCycle={() => cycle++}
+		/>
+	</div>
 </section>
 
 <section class="wrap mt-14">
 	<p class="t-label mb-4 text-faint">Trusted by products where real people share URLs</p>
-	<LogoWall step={cycle} />
+	<LogoWall step={cycle} lead={hero} />
 </section>
 
 <section class="wrap mt-28 flex flex-wrap items-center justify-between gap-8">
