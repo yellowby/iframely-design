@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      tweakpane:
-        specifier: ^4.0.5
-        version: 4.0.5
     devDependencies:
       '@sveltejs/adapter-static':
         specifier: ^4.0.0
@@ -625,9 +621,6 @@ packages:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
     engines: {node: '>=6'}
 
-  tweakpane@4.0.5:
-    resolution: {integrity: sha512-rxEXdSI+ArlG1RyO6FghC4ZUX8JkEfz8F3v1JuteXSV0pEtHJzyo07fcDG+NsJfN5L39kSbCYbB9cBGHyuI/tQ==}
-
   typescript@6.0.3:
     resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
@@ -1131,8 +1124,6 @@ snapshots:
       picomatch: 4.0.7
 
   totalist@3.0.1: {}
-
-  tweakpane@4.0.5: {}
 
   typescript@6.0.3: {}
 
