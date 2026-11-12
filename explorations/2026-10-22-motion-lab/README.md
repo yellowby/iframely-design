@@ -2,7 +2,9 @@
 
 2026-10-22. Working demos for the motion questions raised after the graphic-treatment boards: backgrounds with shaders, animation and light pointer interaction; hero compositions on the chosen dither base; and paper.design-style product scenes to sit beside a heading and text block. Plain HTML and JavaScript, no build step, in the Paper + cobalt palette. Type defaults to Instrument Serif, Inter and Geist Mono (JetBrains Mono for terminal and block characters); the Type panel in the top-right corner switches the heading, base and mono faces (see "Type panel" below).
 
-Open `index.html` directly (double-click; it works from `file://`) or serve the folder (`npx serve .`). The gallery has a sidebar with one page per group, so only the demos on the current page run: `#hero`, `#backgrounds`, `#scenes`, `#scenes-pastel`, `#logo`. A demo name in the hash (`index.html#hero-stack`) opens its page and scrolls to it. `demo.html#<name>` shows one demo full screen with prev/next links. Published copy: see the artifact link in the session recap.
+**Since 2026-11-06 the lab runs as a SvelteKit 3 app** (see "SvelteKit shell and picks" at the end): `npm install`, then `npm run dev` and open http://localhost:5192. The demo scripts, `lib/`, `fonts/` and the old `index.html` / `demo.html` now live in `static/`; paths below are relative to it.
+
+Before that: open `index.html` directly (double-click; it works from `file://`) or serve the folder (`npx serve .`). The gallery has a sidebar with one page per group, so only the demos on the current page run: `#hero`, `#backgrounds`, `#scenes`, `#scenes-pastel`, `#logo`, `#wordmark`, `#dither`. A demo name in the hash (`index.html#hero-stack`) opens its page and scrolls to it. `demo.html#<name>` shows one demo full screen with prev/next links. Published copy: see the artifact link in the session recap.
 
 ## Layout
 
@@ -19,6 +21,8 @@ fonts/local.js     self-hosted families (fonts/fontshare/*.woff2) and the slot f
 demos/hero-*.js    hero compositions: group:'hero', mount(host, slot, ctx) — host is the full-bleed background, slot the right half
 demos/bg-*.js      backgrounds: group:'bg', mount(host)
 demos/pd-*.js      product scenes: group:'pd', copy: { eyebrow, title, text, cta }, mount(stage)
+demos/wordmark.js  wordmark techniques: group:'wm', mount(stage); static type studies with a font switcher per card
+demos/dither-set.js dither set: group:'dt' (backgrounds) and 'dta' (accents), mount(stage); one shared WebGL2 context paints every canvas
 demos/logo*.js     logo scenes: group:'logo', mount(stage) — stage is a plain white full-frame box (.lgs); logo.js exports DEMOS.logoKit
 index.html         gallery (sidebar + pages)
 demo.html          one demo full screen, chosen by the URL hash
@@ -269,3 +273,357 @@ The developer products run blue → violet → orchid (220°, 254°, 284°); the
 - K01 `pal-pub-sheet`: each candidate beside the three fixed colours: swatches, hue positions, badges, tags, contrast.
 - K02 `pal-pub-home`: S28 with a switcher (localStorage `pal-pub`).
 - How: `PROD.pub` in `sec.js` now reads `var(--pub-m)`, `var(--pub-mid)`, `var(--pub-t)` with magenta as fallback (green before 2026-10-30), so every S scene looks the same unless a wrapper sets them. The Console's layer bars and rule highlight follow the variable. The Allowed / Partly allowed shields and the stats icons stay green, as status colours. `icon()` moves `var()` fills into `style` (SVG attributes don't take `var()`). `DEMOS.secKit` exposes `PROD`, `KEYS`, `CARDS`, `icon`, `tagEl`, `ensure`, `xEnsure` for `pal.js`.
+
+## Wordmark techniques (`group: wm`, page `#wordmark`, 2026-11-04)
+
+`demos/wordmark.js`. Ways to build the logo from lowercase "iframely" in a grotesk or a mono face with `//` and, optionally, `:`. Static type studies with a little hover; each card has a font switcher (mono: JetBrains Mono, Geist Mono, IBM Plex Mono, Space Mono, DM Mono, Martian Mono, Fragment Mono; grotesk: Inter Tight, Geist, Space Grotesk, Schibsted Grotesk, Host Grotesk, Hanken Grotesk; plus Doto in W12), all Google Fonts loaded by one stylesheet on first mount.
+
+| Demo | Technique |
+|---|---|
+| `wm-specimen` W01 | `//iframely` in all thirteen faces |
+| `wm-contrast` W02 | Slashes vs word in one property: colour, weight, comment grey, italic, reversed |
+| `wm-syntax` W03 | Position as syntax: `//iframely`, `://iframely`, `iframely://`, `iframely:`, `iframe:ly`, `iframe//ly`, `:iframely:`, `iframely::embed`, `/iframely` |
+| `wm-glyph` W04 | Glyph swaps: `iframe/y` (l → /), `iframe\|y`, slash or square in place of the i dot, `/ + /framely` |
+| `wm-cut` W05 | Diagonal cuts through the word (the gap is the slash; hover opens it), tall slashes, overprinted slashes, giant // behind, hover path |
+| `wm-icons` W06 | Short forms `//`, `i/`, `/i`, `i:`, `:/`, `if` as tiles; tile and disc lockups |
+| `wm-block` W07 | Highlight block, pill, drawn parallelograms, single bar |
+| `wm-tags` W08 | `<iframely/>`, `<iframe/ly>`, `</iframely>`, `[//]iframely`, `[//iframely]`, `{iframely:}` |
+| `wm-grid` W09 | Mono grid stacks: 5 × 2, 4 × 3 with `::`, 2 × 5, word first, 2 × 2 |
+| `wm-terminal` W10 | Block cursor, `$ iframely_`, `~/iframely`, blinking colon, `> iframely://` |
+| `wm-link` W11 | Underline, selection, marker, struck-out `https:`, dotted underline, browser tab |
+| `wm-symbols` W12 | Canvas: the mark resampled into `/ : .` characters, halftone dots, pixels; Doto dot-matrix face |
+| `wm-scale` W13 | Three sizes, truncation `//iframely → //if → //`, hover-to-expand short forms |
+| `wm-grotesk` W14 | Grotesk word with mono, superscript, subscript or drawn slashes; heavy word + colon; light/semibold |
+
+## Dither (`groups: dt, dta`, page `#dither`, 2026-11-05)
+
+`demos/dither-set.js`. Dithering for the white / `#f6f6f6` / `#0055ff` system, using the brand symbols `//`, `:`, `<`, `>` as dither units where it fits. One WebGL2 context (`R` in the file) renders field × method into a hidden canvas and every visible 2D canvas copies its frame from it, so the page never hits the context limit. Output is transparent where there is no ink: the ground is the element's own CSS background, so a pattern can sit on a block, a button or a section edge. ~30 fps, only on screen, one still frame with reduced motion.
+
+- Fields: `linear`, `radial`, `clouds` (fbm), `blobs` (metaballs), `arch`, `bands`, `slashes` (the // as two parallelograms), `chevrons` (< >), `sphere` (lit, with an orbit ring), `shapes` (circle + slash + half ring), `flat`, `bar` (marker); plus an optional text mask (multiply / max / knockout) with a vertical gradient inside the glyph box.
+- Methods: `bayer` 8×8, `ign` (interleaved gradient noise, blue-noise-like), `grain`, `halftone` (45°), `lines` (line screen at the slash angle), `marks` (per cell: nothing → thin / → bold / → //), `glyphs` (ramp `  . : / < >` and a heavy `/` in the second ink).
+
+| Demo | What |
+|---|---|
+| D01–D10 `dt-*` | Soft backgrounds, each on white, grey and blue with a sample text block; bar switches method, cell S/M/L, tone (Tint / Grey / Accent; glyphs, marks and lines take a stronger ink pair) and text. Corner glow, Grain wash, Noise clouds, Soft blobs, Horizon arch, Slash screen, Slash marks, //:<> glyph field, Waves, Soft shapes |
+| D11 `dta-slash` | The // mark dithered beside a product block; tiles: halftone / glyphs / marks / lines |
+| D12 `dta-chevrons` | < > behind a JSON card, dissolving outwards; tiles on blue (glyphs) and white (blue noise) |
+| D13 `dta-orb` | Halftone sphere, orbit ring, provider pills riding it |
+| D14 `dta-cards` | Product cards with the symbol (// <> {:} :/) dithered into the header in the product colour |
+| D15 `dta-dissolve` | A window / card dissolving into the ground (dither layer in the ground colour) |
+| D16 `dta-sections` | 56 px bands between white, blue and grey sections (Bayer 4 px, halftone, slash lines) |
+| D17 `dta-stats` | Numerals with offset dither shadows (Bayer, lines, halftone) |
+| D18 `dta-highlight` | Dithered marker and underline on white, grey, blue |
+| D19 `dta-buttons` | Hover sweep in buttons, product chips with a dithered swatch, glyph-textured tags |
+| D20 `dta-cta` | CTA cards with a glyph corner (blue) and slash-mark corner (grey) |
+
+### Second colour (2026-11-05)
+
+A page-wide "2nd colour" switch on `#dither` (None / Pink `#ff3d8b` / Red `#ff4438` / Violet `#8a4dff`; localStorage `dt-sec2`, default Pink). The shader has a third and fourth ink (`c`, `d`) and a hue field (`hue: { mode: 'noise' | 'linear' | 'all', p }`) that picks them per cell through its own Bayer offset, so the two colours mix as dither, never as a blend. Backgrounds mix the second pair from the ground at the same strength as the blue pair (`secInks`). Accents: // turns towards the top, > of < > takes it, the orb's shadow side, a sprinkle in the white→blue band, stat shadows, highlight markers, the top glyphs of the primary button sweep and the CTA corners. Product cards keep their product colours. Violet sits near the Preview API violet `#6a3bff`, and pink near the Publisher magenta, so check against the product palette before choosing.
+
+## Dither stills (`group: dts`, page `#dither-stills`, 2026-11-05)
+
+`demos/dither-stills.js`, static assets for Figma using `DEMOS.ditherKit` (exported by `dither-set.js`). Methods limited to the user's picks for stills: Bayer and //:<> glyphs. Each card renders at a real export size on white / grey / blue; the preview is that render (Fit, or "1:1 corner" to see real cell size). Controls: method, cell, tone, 2nd colour, size preset, export 1×/2×, ground transparent/filled, seed (reproducible; Shuffle). Exports per ground: Copy PNG (clipboard, pastes into Figma), PNG ↓, Copy SVG, SVG ↓. SVG: Bayer cells merged into horizontal runs, one `<path>` per ink (~1.5 MB for a 1440×800 cloud field); glyphs drawn as outlines of `. : / < >` and a heavy `/` (approximating JetBrains Mono), read back from a code pass of the shader (`codes: true` writes glyph index + hue select per pixel).
+
+F01–F17: corner glow, grain wash, noise clouds, soft blobs, horizon arch, waves, soft shapes, glyph field; // mark, < > brackets, orb, product symbols (per product), transition band (Bayer, from-ground × to-colour), marker strip, corner piece, dissolve overlay (ink = ground colour, to lay over an image).
+
+### Stills round 2 and picks (2026-11-05)
+
+User picks (marked ★ on `#dither-stills`): Corner piece, Grain wash, Noise clouds, //:<> glyph field, Soft shapes (needs more glyph variety), The // mark and Product symbols (want glyph and icon variants), Transition band (want real mono glyphs). Methods: Bayer and glyphs. Second colours: pink and violet only (red dropped on stills). Their F numbers were taken before a fix: `dts-corner` was registered twice (background and accent), so the accent overwrote the background; their F01 = Corner piece and F15 = Dissolve overlay. The accent is now `dts-cornerpiece`.
+
+Changes: the glyph atlas has 12 glyphs, `.` `:` then `/ < >` in regular, semibold and heavy; levels 3–5 pick `/` half the time and `<` or `>` otherwise (applies to the animated page too). Stills glyph cells are 14 / 20 / 30 px. Preview "Auto" shows glyph cards at 1:1, cropping the corner for backgrounds and the centre for centred assets. `solid` (shader `u_solid`) fills a cell completely above a threshold, so the glyph band ends in a solid edge. The dissolve preview has a sample image under it. New F17 `dts-icons`: play, player, embed `</>`, JSON `{ }`, link and card icons as masks filled with glyphs (Accent tone, texture off by default); exports as SVG outlines too.
+
+### Stills round 3: type and products (2026-11-05)
+
+`demos/dither-stills2.js`, F18–F24 on the same page and group, after the review of the picks: more glyph variety for Soft shapes, glyph and icon variants of the // mark and the product symbols, real mono glyphs in the band, and the four products as a set.
+
+**Type pass.** The shader now only supplies the field: `spec.codes = 2` writes the raw field value and the hue select per pixel (`dither-set.js`, one extra line in `main()` and in `paint()`). `dither-stills2.js` samples that at the centre of a character grid (JetBrains Mono advance .6 em, line height 1.25 em, font size 12 / 16 / 24 px for Cell S / M / L; a card may bring its own sizes, `def.fs`), runs the 8×8 Bayer threshold per cell in JS (same ramp as the shader: six levels, blank . : then three weights, the heaviest in ink b; `solid` cells become rectangles) and writes the characters with the real font. Layers: several fields can share one grid (the strongest owns a cell), each with its own glyph set. Glyph sets: `//:<>` (the shader's mix), Slashes, Brackets `<>` (alternating by column, so rows read `<><><>`), Braces `{:}`, Colon slash `:/`, URL (`h t p s : /` at the middle level), ASCII (`. : = + #`), Dots. Each product has its own set (`OWN`: // slashes, <> brackets, {:} braces, :/ colon-slash). Weight: Ramp (400 → 600 → 800 with density), Regular or Bold. PNG: one sprite per character, weight, ink and scale, drawn per cell, so the font's ligatures (`//`, `<>`, `::` are ligatures in JetBrains Mono) never fire. SVG: text, one `<text>` per row, weight and ink, starting at the first glyph with `xml:space="preserve"` for the gaps, solid cells as one `<path>`; Figma gets editable text layers, which needs JetBrains Mono installed there and its ligatures switched off. Inks: `inksFor(colour, ground, tone)` mirrors the sparse tables (tint .27 / .5 of the colour on light grounds, white mixes on dark ones; accent ends in the full colour or white), plus the second colour through `secInks` and a hue field.
+
+**`still()` additions** (`dither-stills.js`): `def.render(st, g, scale)` and `def.svg(st, g)` replace the shader paint and the vector export; `def.cols` (4-column grid for the product sets); free-text options (`opts: [{ input: true }]`); `def.reground(st, g)` recolours a ground from a control (product colour, tint, the Ink poster); `def.note`, `def.tag` (file names); OG 1200×630 in the background sizes; the kit is exported as `DEMOS.stillsKit`. Shader: the shapes field takes per-shape gains in `r` when `r.w > .5`, so the circle, slash and ring can be rendered as separate layers.
+
+| Demo | What |
+|---|---|
+| F18 `dts-type` Type field | The glyph-field, grain, clouds and corner picks in real type: field (Rise BR = the glyph-field pick, Glow TR, Corner, Clouds, Wash), glyph set, colour (blue, the three other product colours, Ink; the third ground takes the colour, Ink gives a dark poster), weight |
+| F19 `dts-typeshapes` Shapes in type | The soft-shapes pick as three layers in three sets: Dots · slashes · brackets, //:<> throughout, Braces · URL · :/, Slashes only. Preview starts fitted |
+| F20 `dts-typemark` // and < > in type | The glyph variant of the // mark and the brackets: the shape filled with its own character, heavy at the foot or the inner edges, dots scattered around. Bracket spacing follows the aspect ratio (`r.z = .5·W/H`) so every preset keeps both brackets on the canvas |
+| F21 `dts-typesymbols` Product symbols in their own glyphs | Four panels, one per product: // out of slashes, <> out of brackets, {:} out of braces and colons, :/ out of colons and slashes, in the product colour; ground white, tint or the colour (white type); optional cloud texture |
+| F22 `dts-prodicons` Product icons | The icon variant, through the shader (Bayer or glyphs): player, link card, braces, shield, each in its product colour on white, tint or the colour |
+| F23 `dts-typeband` Type band | The transition band in real type: rows thicken with density, the last row is forced solid (`lastSolid`), set and "to" colour switchable |
+| F24 `dts-typetext` Any text in type | Free text as the mask (Geist 700, JetBrains Mono 800 or Instrument Serif), filled with a glyph set, dense at the foot (`mg` 1.25 keeps the tops at colons) or even; finer cells (8 / 11 / 14 px) so a 190 px headline reads; OG size for social images |
+
+Gotchas: Google Fonts' JetBrains Mono subset has no block elements, so there is no `░▒▓█` set (they would fall back to another font and break the grid). The chevrons field places the brackets at `± r.z/2` in aspect units, so a fixed `r.z = 1` (F10's value for 2:1) pushes them off a square canvas. Preview Auto crops glyph cards at 1:1, which shows nothing useful for cards whose subject is the whole image (shapes, marks, text): those start on Fit. Checked headless with Playwright (`--use-gl=angle --use-angle=swiftshader`), including one SVG download per card.
+
+### D17 glyphs, F25 shadow tile, sidebar fix (2026-11-05)
+
+- **D17 `dta-stats`** has a second row with the shadow in //:<> glyphs (cells 6 / 8 / 11 px; mask strength 1.35 so heavy glyphs survive inside the strokes). User: "i really like D17".
+- **F25 `dts-shadow`** (in `dither-stills2.js`): the D17 effect as a static tile, a dither gradient the height of a line of type (dense at the foot / top / flat; ranges .3–.95, .1–.75, 0–1; optional noise), Bayer through the shader or real glyphs through the type pass (Bold by default). Exports PNG/SVG like every still. Under the exports, a live preview applies the white-ground PNG to "1,900+" and "2012" with `background-clip: text` (offset shadow or texture fill), plus the CSS to copy and the Figma steps: duplicate the text, mask the tile with the copy (or use the PNG as a Tile image fill at 50% for 2×), nudge it under the solid text. Bayer tiles repeat seamlessly sideways. `still()` got `def.after(st, el)` for previews like this; `svgOf` is in `DEMOS.stillsKit`.
+- **Sidebar**: clicking a demo on the current page no longer rebuilds and remounts the page; it marks the link and pins the card to the top for 2.5 s (or until the user scrolls), because cards above it mount lazily and grow and used to push it away. The last cards of a page stop where the page ends.
+
+## Dither sections (`group: dtx`, page `#dither-sections`, 2026-11-05)
+
+`demos/dither-sections.js`, after the user's Figma compositions of the Publisher Console block (glyph clusters + Bayer edge on blue, glyph field rising on pink, terminal band with block cursors on black, black | blue split) and a reference of pixel serif type inside crop marks over a fine dot grid. Live HTML copy (eyebrow path in JetBrains Mono, Geist 400 heading, square buttons, body right) over a canvas art layer built from ops: `rect`, `type` (the type pass, `DEMOS.typeKit` exported by `dither-stills2.js`), `bayer` (edge cells computed in JS from a shader-sampled field, top row solid), `rows` (terminal band: sparse dots, colons with glyphs, one heavy italic row with block cursors; drawn per character so ligatures never fire), `pix` (pixel type: text drawn at 1/p size, alpha thresholded, scaled up without smoothing). Exports per section: Copy PNG / PNG at 2×, SVG (type as JetBrains Mono text with ligatures off, Bayer cells and pixel type as merged runs). The Bayer edge hangs 40 px past the section into the page.
+
+| Demo | What |
+|---|---|
+| X01 `dtx-clusters` | Glyph clusters top-right and on the left edge, dot patches, edge Bayer / type rows / none |
+| X02 `dtx-rise` | One field rising from the bottom-right corner (pink by default) |
+| X03 `dtx-terminal` | Clean ground, terminal band at the foot (3 or 6 rows, italic or upright heavy row, optional dot field above) |
+| X04 `dtx-split` | Black left (dots in the colour, terminal band) and colour right (:/ field) |
+| X05 `dtx-quote` | Pixel serif statement: editable text and accent line, Source Serif 4 / Instrument Serif / Geist / JetBrains Mono, 2 or 3 px pixels, crop marks, one-pixel dot grid in Bayer order, four grounds |
+| X06 `dtx-products` | The four products as a set: Rich Media blue clusters + Bayer edge in //, Preview API violet rising <>, Data API black terminal band in orchid {:}, Publisher Console black | magenta split :/ (or all blue) |
+
+Every single-section card switches the product copy, colour (blue, pink, violet, orchid, magenta), ground (colour with white marks; black, white or grey with marks in the colour), glyph set, heading (Geist or Pixel serif: the h2 is hidden and drawn into the art as pixel Source Serif 4), and the page colour around it.
+
+### Sections round 2: the response is the texture (2026-11-05)
+
+`demos/dither-sections2.js`, X07–X12. User: "add some iframely api response related glyphs/words/json to backgrounds and shapes; propose our own interpretations". The idea: the field still decides density, but dense cells write real API output, legible at the core and eroding to `.` and `:` (only where the text has a character, so the haze keeps the text's shape) and then nothing; JSON keys take the second ink pair like a code editor.
+
+Mechanics: a glyph set's `ch` may now be a function `(i, j, seed) → char`, and a layer may pass a set object (`dither-stills2.js`). `textSet(lines, map)` reads text through a cell → [line, column] map: `tileMap` (response blocks tiled, each block column shifted 7 rows), bottom-aligned (rising from the request line), or `streamSet` (one string wrapped row by row; `compact()` drops whitespace outside strings so masked shapes have no holes). `keyTint` is a post-layout hook (`op.post(lay)`, new in `dither-sections.js`) that sets the hue-select bit for key characters. `classify()` tags characters as key / string / literal / punctuation. New op `text` (solid type, e.g. the stat numerals). `section()` accepts `item.art(W, st) → { ops, H }` for copy-less compositions. Kits: `DEMOS.sectionsKit`.
+
+Data: real Iframely responses from the logo scenes (YouTube video, GitHub card, SoundCloud), a Data API access object after the docs, and an illustrative Publisher Console policy (mock, `example-news.com`). The iframe src is shortened, no API key.
+
+| Demo | What |
+|---|---|
+| X07 `dtx-response` | The response tiled as the field, legible under the body copy (or corner / right block / band / clouds); copy follows the response's product |
+| X08 `dtx-request` | Bottom row = the request (`> curl "iframe.ly/api/iframely?url=…"`, block cursor, `200 · 212 ms`); the response rises from it, legible for its last lines, in the right column or full width |
+| X09 `dtx-symbolresp` | // { } <> :/ written in their own product's compact response, product colours, keys strong |
+| X10 `dtx-vocab` | The rising field in the API's words: meta keys, rel tags, provider domains, or keys + values |
+| X11 `dtx-card` | Preview API section whose visual is a link card in type: glyph-dither thumbnail (play knock-out for video), meta.title and description as text, `// site` in the accent, a faint JSON haze behind, the card foot dissolving in Bayer cells |
+| X12 `dtx-stats` | D17 with data shadows: 1,900+ in provider domains, 2012 in meta keys, 6,000+ in rel tags (words joined by `·`) |
+
+### Sections round 3: data in shapes and masks (2026-11-05)
+
+`demos/dither-sections3.js`, X13–X18. User: "continue explorations. add new ideas with glyphs/text/data/shapes/masks". Round 2's helpers are exported as `DEMOS.sectionsKit2` (responses, `textSet`, `streamSet`, `compact`, `keyTint`, `jsonInks`, `maskText`…). Article, receipt and policy data are mocks on `example-news.com`.
+
+| Demo | What |
+|---|---|
+| X13 `dtx-close` | The section closes like a response: closing staircases at its foot (`} ] }` stepping out like nested JSON, or `</a> </ul> </div>`), the indentation shown as `·` the way an editor shows whitespace, light to heavy towards the last row; the last `}` of each block drips past the edge in the section colour |
+| X14 `dtx-urlmask` | The URL set huge (domain/ over the path) as a mask, filled with its own compact response in bold, keys in the second ink; request line with cursor above, status and byte count below; optional JSON haze around |
+| X15 `dtx-skeleton` | Loading skeletons for a player, a link card and a track, where each bar is exactly as long as the real title / description / site (word gaps included) and is written in it; image blocks hold the JSON. Skeleton = dots and colons, Loaded = the text, Resolving sweeps across the card (levels set in a `post` hook from the cell's x) |
+| X16 `dtx-redact` | One article as three agents get it under a policy: keys stay, withheld values are covered by redaction bars in 2 px Bayer cells, solid in the middle and dissolving at the ends (or patchy). Bars are pixel runs, not ▒▓█ glyphs: Google-Fonts JetBrains Mono has no block elements and the fallback glyphs overflow the line |
+| X17 `dtx-weight` | A wall of words (domains, rel tags, keys, `·`-joined so no cell is empty) where the shape (product symbol, //iframely or 1,900+) is only a change of weight and ink: two layers on the same text stream, an even or left-fading field outside, a slightly blurred text mask inside |
+| X18 `dtx-receipt` | A read printed as a receipt hanging out of the section (dot leaders, signals checked, what was received, JSON haze behind). Round 2: five receipts (Data API read, Console policy test, Preview unfurl, Rich Media statement, Console agents report) and everything on the paper is text: product symbol, thumbnail, column chart, bars, barcode, code square and torn foot in block characters. Print: Text or Pixels (the same characters as rectangles); Face: Geist Mono, Fira Code, JetBrains Mono (block rows fall back to Geist Mono) |
+| X19 `dtx-redact-blocks` | X16 as pure text: redactions in block characters (bar ░▒▓██▓▒░, fade, mosaic, tape ▄) in Geist Mono or Fira Code at the face's block height, so redactions on consecutive lines join |
+| X21 `dtx-receipts2` | X20 in the website prototype's style (page #fafafa, text #111 / #333 / #777, blue #0055ff, product colours, Geist Mono), light or all black, accents per product / all blue / none. No pictures: //iframely logo in type, ░▒▓██▓▒░ rules and marks, a sparkline + ░▒▓█ heat strip, a quota gauge, bars ending in ▓▒░, a box-drawn link card, inverted chips (DENIED, BY LICENSE), barcode, code square |
+| X22 `dtx-receipts-text` | Rich Media prints the embed it returned instead of the statement: a 16:9 YouTube player in characters (box frame, ░▒▓ vignette in the accent, half-block play triangle, title over the frame, ━ progress with its head, ▌▌ 1:12 / 3:34 · CC HD [ ]), then title, author, site and the embed summary (type player, rel, aspect 16:9 · 1.778, duration, provider, iframe, autoplay, cache). Only characters Geist Mono has: ▶ and ⛶ fall back to wider glyphs and break the frame. Otherwise the X21 receipts as live HTML text (selectable; chips are spans with a background), at the face's block line height; Copy text / .txt give all four as plain characters. Uses the new `item.dom(st) → { el, text }` hook in `dither-sections.js` |
+| X20 `dtx-receipts` | Four receipts on a rail, one per product in its colour: Rich Media statement with a column chart of embeds per day, Preview unfurl with a dithered thumbnail, Data API read with a code square, Console agents with bars |
+
+### Sections round 4: marketing blocks typed in text (2026-11-05)
+
+`demos/dither-sections4.js`, X23–X28, after the user liked the text receipts. Whole website blocks in the prototype's copy layout (mono path, Geist heading, square buttons, body) whose visuals are live HTML text (`item.dom`), light or all black, accents per product / all blue / none; Copy text and .txt export the section as plain characters. A small character `grid()` places boxes, lines, arrows and text by cell and reads them out as rows. Geist Mono on Google Fonts carries box drawing and blocks (U+2500–259F), ASCII and only ↑ ↓ among arrows: no → ▶ ● ✓ □, which fall back to wider glyphs and break alignment, so arrows are `──>`. Font stacks with double quotes must not go into `style="…"` attributes. Numbers and entries are mock.
+
+| Demo | What |
+|---|---|
+| X23 `dtx-t-pipeline` | How it works: request box `──>` //iframely (1,900+ parsers, ░▒▓██▓▒░ core) branching `├──>` to embed / card / data / policy boxes in product colours |
+| X24 `dtx-t-stats` | 99.99% / 212 ms / 1,900+ with text charts: 90-day uptime bars (height = uptime), ▁▂▃ latency histogram with ↑ p50 / p95, providers by kind as ▓▒░-ended bars |
+| X25 `dtx-t-products` | The four products as text windows: playing YouTube player, link card with shaded thumbnail, Markdown excerpt over access bars, policy table with chips |
+| X26 `dtx-t-compare` | Iframely vs oEmbed only vs your scraper: 9-character shaded cells (█ / ▓▒░ / ░) plus yes / some / no |
+| X27 `dtx-t-changelog` | Updates as `git log --graph`: commits in product colours, product chips, a branch that merges back, `░▒▓ new` |
+| X28 `dtx-t-cta` | //iframely in half-block letters, a prompt with a block cursor, the buttons as inverted text, a ░▒▓██▓▒░ mark |
+
+### Sections round 5: text blocks with motion and interaction (2026-11-05)
+
+`demos/dither-sections5.js`, X29–X34 ("explore new ideas"). Same palette, faces and text export as X23–X28 (`DEMOS.sectionsKit4`). Timers stop on their own once the card re-renders (`live()` checks `isConnected`); reduced motion shows still states. Numbers, fixes and API parameters are illustrative.
+
+| Demo | What |
+|---|---|
+| X29 `dtx-t-hero` | Hero: a window where the request types itself, the JSON streams in (keys ink, strings in the product colour) and the result is drawn under `── rendered ──`: player, card, Markdown + access bars, policy; four URLs in a loop |
+| X30 `dtx-t-resolve` | A URL resolving into data: the player + embed summary in characters, each cell resolving in Bayer order left to right (blank → . → : → the character) on a slider, or playing back and forth |
+| X31 `dtx-t-diff` | What Iframely does to a link: a chat log as a diff, pasted URLs as removed lines, the player / cards drawn as added lines, a policy-trimmed news card with an `excerpt 300` chip |
+| X32 `dtx-t-index` | Provider index: 66 sample providers A–Z with dot leaders to their kind, blue letter headings, a letter rail and a live filter field |
+| X33 `dtx-t-man` | The API as `IFRAMELY(1)`: NAME, SYNOPSIS, DESCRIPTION, OPTIONS, HTTP STATUS, EXAMPLES, SEE ALSO |
+| X34 `dtx-t-heatmap` | 53 weeks × 7 days of parser fixes in ·· ░░ ▒▒ ▓▓ ██ with month and weekday labels, legend, total, and the latest fixes as commit lines |
+
+Block characters (U+2580–259F): Google Fonts' JetBrains Mono has none; Geist Mono and Fira Code ship them in a separate subset, so they are loaded with block text (`document.fonts.load(font, '█…')`). Measured full-block extents: Geist Mono 0.96 em above the baseline + 0.34 below (line height 1.3), Fira Code 0.90 + 0.30 (1.2); at those line heights rows of █ ▀ ▄ stack into solid areas. Half blocks give 1-bit pictures at two pixels per cell (one pixel = .6 × .65 em, drawings squashed by .923 to stay square); ▁…▇ make column charts, ▏…▉ bars. `rows` ops take `fam` and `base`; the canvas draws runs of block characters as one string with a hairline stroke so neighbours meet without seams (SVG keeps plain text). JetBrains Mono ligates `<>` and `//` on canvas, so symbols are drawn with zero-width non-joiners between characters.
+
+## Content visuals (`group: cv`, page `#content`, `demos/content-visuals.js`, 2026-11-05)
+
+One card per content block of website-prototype (home, /embeds, /preview-api, /data-api, /publishers), with that block's real eyebrow, heading, intro and cards. Each card adds a visual for the block's argument, often where the prototype has a grey placeholder or a plain table. Visuals are live HTML text in Geist Mono (Copy text / .txt), in the prototype palette with product colours, light or all black. Values not in the copy (timings, request counts, sample metadata, the example-news.com article) are illustrative.
+
+| Card | Block | Visual |
+|---|---|---|
+| V01 `cv-lenses` | home hero | one YouTube URL branching into four lenses: player, card, content with permissions, publisher rules |
+| V02 `cv-trust` | home trust | developers ↔ //iframely ↔ publishers, the four trust reasons placed on the diagram as [1]–[4] footnotes |
+| V03 `cv-stack` | /embeds hero | the placeholder made real: article card, post and player stacked in characters |
+| V04 `cv-evergreen` | /embeds hosted | 2019→2026 timeline: copied embed code goes 404 / moved, the hosted iframe with a Content ID stays fresh |
+| V05 `cv-weight` | /embeds interactives | ~500 KB player vs cover image as bars, the consent gate as the dialog a reader sees |
+| V06 `cv-merge` | /preview-api what you get | Open Graph / Twitter Cards / oEmbed / JSON-LD columns merging into normalised meta |
+| V07 `cv-hour` | /preview-api API | two hours of requests, one tick a minute: 47 requests and 12 requests, one hit each |
+| V08 `cv-board` | /data-api access object | content types × signals board with verdicts; tabs for the allowed (CC licence) and blocked (Console) samples |
+| V09 `cv-pricing` | /data-api pricing | log-scale staircase of the real tiers with a reads-a-month slider and a dot-leader monthly total |
+| V10 `cv-anatomy` | /publishers agents | one page drawn three times: what the Preview, Processing and Training agents read (█ read, ▒ with permission, ░ never) |
+| V11 `cv-robots` | /publishers signals | the prototype's robots.txt generator, live, with changed lines highlighted |
+| V12 `cv-annotated` | /publishers better previews | a bare link becomes a card, its four tags and image annotated to the parts they fill |
+
+### Content visuals round 2: no characters (`demos/content-visuals2.js`, 2026-11-05)
+
+User: "stop using ascii/glyph as a main idea, explore new variations". Same blocks and copy; the visuals are interface mock-ups (HTML/CSS), SVG diagrams and charts, and working controls, in Geist with the prototype palette and product colours. Gradients stand in for images. `DEMOS.cvKit.block` (from content-visuals.js) lays out the block.
+
+| Card | Block | Visual |
+|---|---|---|
+| V13 `cv-switch` | home hero | the four lead sentences switch a stage: player, card, content with permissions, publisher toggles (auto-cycles) |
+| V14 `cv-proof` | home trust | each trust claim opens its proof: signed headers, bot-manager verdicts, docs linking to Iframely, audit docs + uptime strip |
+| V15 `cv-wall` | /embeds hero | a wall of embed interfaces: video, audio waveform, post, map, gist, slides, summary card |
+| V16 `cv-years` | /embeds hosted | year slider 2019–2026 over the same post twice: copied embed breaks, hosted iframe counts refreshes |
+| V17 `cv-waterfall` | /embeds interactives | network waterfall, embed code (502 KB) vs click-to-play (34 KB); press play to load the rest |
+| V18 `cv-unfurl` | /preview-api what you get | a chat unfurl switched between Metadata, Summary card (large/small) and Rich Media |
+| V19 `cv-cost` | /preview-api API | animated chart, 3 hours: cumulative requests vs billable hits (62 vs 3) |
+| V20 `cv-layers` | /data-api access | content types as beams through signal layers (supports / promotes / blocks), allowed vs blocked sample |
+| V21 `cv-calc` | /data-api pricing | big-number calculator: presets, metadata-only half price, effective price, tier split bar |
+| V22 `cv-sequence` | /publishers agents | sequence diagrams per agent (app ↔ Iframely ↔ your site), arrows drawn in order |
+| V23 `cv-console` | /publishers hero | the Console placeholder filled: requests by agent over 30 days, customer apps, hover a day |
+| V24 `cv-policy` | /publishers control | real Live/Coming list beside a path × mode policy grid you can click through |
+| V25 `cv-cardlab` | /publishers better previews | edit title / description / alt / image, preview in chat, feed and list, 4-of-4 checklist |
+
+### Content visuals round 3: the blocks below the heroes (`demos/content-visuals3.js`, 2026-11-05)
+
+User: "explore not only hero sections but also other blocks". Same approach as round 2 (UI, SVG, working controls; no character art), on the mid-page and closing blocks. Shared helpers come from `DEMOS.cvKit2` (content-visuals2.js). The 40-provider sample in `PROV` feeds both the index and the CTA's URL recogniser; check it against /domains before quoting.
+
+| Card | Block | Visual |
+|---|---|---|
+| V26 `cv-products` | home products | the four product rows as one strip; the hovered column opens to text, buttons and a motif |
+| V27 `cv-cards` | /embeds cards and themes | the four placeholders drawn (large light, large dark, small, product); hover shows the link with utm_source |
+| V28 `cv-delivery` | /embeds delivery | a page scrolling itself: reserved boxes vs no heights, with embeds-loaded and layout-shift counters |
+| V29 `cv-options` | /embeds customization | the editor options form wired to the player and its iframe code (start, theme, size, Powered by, white-label) |
+| V30 `cv-paste` | /embeds editors and CMS | type, paste a URL, it becomes an embed node, in four editor chromes |
+| V31 `cv-providers` | /embeds providers | filterable provider index (kind chips + search) instead of 16 grey logo boxes |
+| V32 `cv-stats` | stats row | 2012 years filling, 6,000 dots, a live request counter at 6.5B/month, 0.01% downtime in minutes to scale (no heading; the page has none) |
+| V33 `cv-docs` | proof | Atlassian, Notion, GitBook doc pages with the key sentence highlighted (the prototype's summaries, not quotes) |
+| V34 `cv-faq` | /publishers FAQ | two-pane reader: filterable questions left, the answer large right |
+| V35 `cv-cta` | /embeds CTA | the band holds a URL field that recognises the provider and says what the embed will be |
+| V36 `cv-modes` | /data-api modes | triggers → audiences, one curve per mode; example + agent; the use values as a dial |
+| V37 `cv-structured` | /data-api structured | the six parts of a result mapped onto regions of an article page |
+| V38 `cv-compare` | /data-api compared | one row per reader: price bar with the table's wording, four permission marks; caption and honest paragraph kept |
+| V39 `cv-verify` | /publishers verify | the Self-check working: headers in, four checks resolve, verdict; "Load a fake" borrows only the user agent |
+| V40 `cv-purpose` | /publishers AI | the placeholder diagram running: request → agent by mode → your signals → decision back |
+| V41 `cv-traffic` | /publishers traffic back | a card clicked in a chat ticks up the utm_source row in the publisher's analytics |
+
+### Content visuals round 4: the remaining blocks (`demos/content-visuals4.js`, 2026-11-05)
+
+V42 `cv-response` (embeds API: response JSON lines light the embed parts they produce; Iframely API / oEmbed / embed.js tabs), V43 `cv-pasted` (preview hero: one link resolving in a chat and a doc), V44 `cv-forwhom` (preview "who it's for" as three scenes), V45 `cv-read` (data-api hero: the read arriving part by part with its access reasons), V46 `cv-teams` (data-api "who it is for" as four product moments), V47 `cv-reach` (how it fetches: reach per agent + four principles), V48 `cv-quickstart` (real code tabs, Run streams a response, steps light up), V49 `cv-askus` (buyers' FAQ as a conversation), V50 `cv-ctas` (preview, data, publisher CTAs with a working first step), V51 `cv-logos` (home logo row as two moving rows of names; documented uses on hover), V52 `cv-pubproof` (publisher proof: stats, robots.txt finder with placeholder lines, help pages). All on the prototype page grey (#fafafa) in light theme, like V01–V41 now.
+
+## Content visuals: Copy switch, Prototype or Humanized (`demos/content-human.js`, 2026-11-05)
+
+User: "create a new page and recreate all visuals using humanizer skill; get the text from website proto and pass it through humanizer". First built as a separate page of cloned cards; the user then asked to combine them, so every `cv` card now has a Copy switch (state key `voice`, default Prototype) and Humanized shows the prototype copy was rewritten with the humanizer skill (staged contrasts like "Structured, not scraped" or "Cards link to your page, not to ours", forced triads, fragment lists, passive voice, slogan headings and sales phrasing → plain statements; facts, numbers and names unchanged). `COPY` holds 71 [prototype, humanized] pairs; strings without tells are not listed. The swap runs on the rendered DOM (deepest element or text node whose whole text matches, quotes/spaces normalised, `<code>` styling kept), a MutationObserver re-applies it after interactive redraws, and the .txt export gets the same replacements. `sectionsKit.card` now keeps `def` on the registry entry so pages can clone cards. Check: 70 of 71 strings occur on #content and with every card on Humanized none survive (the 71st appears only after the "Blocked" tab); switching back to Prototype restores the original.
+
+## Page content: pricing (G01–G08, page `#pages`, group `pg`)
+
+`demos/pages-pricing.js`. A new lab page for whole-page content, starting with /pricing. The copy and the price list come from iframely-marketing `plans/website/12-pricing-volumes.md` (D41–D45; D42 is still proposed) and its demo page (`demos/website/src/routes/pricing`). Prices are computed with the rules in the demo's `pricing.ts`: 2,000 free hits; pay as you go at $4 per 1,000; monthly volumes from 10K at $3.00 to 2M at $0.70, with every hit at the volume's rate; annual billing at any volume, linear between the rows; Enterprise above 2M. The plans are presented as two, Free and Paid (working names), and the cards build on the V21 big-number price box.
+
+- G01 `pg-plans`: the two plans side by side. Paid is the calculator, with a monthly volume picker or annual billing at any volume. Under both: "You pay only for results" and Enterprise.
+- G02 `pg-which`: one slider prices pay as you go, the cheapest monthly volume and annual billing together, and the cheapest becomes the big number. The cost chart marks the ~9,500-hit crossover.
+- G03 `pg-staircase`: the volume table drawn as rate steps. Click a step for a monthly volume, or drag along the line for an annual volume.
+- G04 `pg-month`: one month on a commitment. The bar shows the free hits, the prepaid volume, usage, unused hits expiring and hits above the volume.
+- G05 `pg-hits`: the hit rules. URL-hours for the Preview API and Rich Media, requests for the Data API, and the "only results" rule shown as a batch of six links.
+- G06 `pg-compare`: only the rows that differ between the plans, plus "included everywhere" chips and an Enterprise strip.
+- G07 `pg-setups`: the demo's three worked examples (chat tool, newsroom, AI assistant), each with a size slider.
+- G08 `pg-md`: the page and its pricing.md, with a "For people" / "For agents" switch.
+
+The six sample URLs in G05 and the request ticks are illustrative.
+
+## Page content: closing CTAs (G09–G17) and a pricing block (G18)
+
+`demos/pages-cta.js`, same page and group. Each card shows one treatment of the bottom-of-page CTA for all five pages stacked (home, /embeds, /preview-api, /data-api, /publishers), and a Pages switch shows one page at a time. The copy is the prototype's Cta blocks. Home has no closing CTA, so it uses the band under its hero.
+
+- G09 as built, plus the product colour
+- G10 the home product layout, reused
+- G11 a band in the product colour
+- G12 the first step in the band (field or install line)
+- G13 the first request (real samples.ts code)
+- G14 the buttons as numbered steps
+- G15 the path as a giant mark
+- G16 both sides of the URL
+- G17 what is free, drawn
+
+The "Data API free line" switch swaps the prototype's "1,000 reads" for the new price list's 2,000 hits.
+
+G18 `pg-cta-pricing` is a short pricing block that sits just above the closing CTA, laid out after a mock-up the user shared. The heading is on the left; on the right are a white "Start free $0/mo" box and a coloured "Monthly volumes from $30/mo" box, with an Enterprise line below. The copy comes from G01. Switches: page, Paid box colour (blue, page, black), monthly or annual line, and the closing CTA below.
+
+## Pricing block, round 2 (G19–G24)
+
+`demos/pages-price-block.js`, iterations on G18. The type follows website-prototype `type.ts`: heading 32, body 18, note 16, mono tag 16, buttons as 15 px pills, and cards with a 12 px radius and a hairline. Each plan shows only its name, price, one line and one button. Free is $0 with 2,000 hits then $4 per 1,000, Monthly volumes start from $30, and Enterprise is 2M+.
+
+- G19 `pg-pb-three`: G18 in three columns (heading, Free, Paid) with an Enterprise line below
+- G20 `pg-pb-plans3`: section heading over three equal plan cards
+- G21 `pg-pb-pick`: G20 with volume chips on the paid card (10K, 50K, 100K, 1M)
+- G22 `pg-pb-rules`: three columns on hairlines, no boxes
+- G23 `pg-pb-strip`: a single-row strip
+- G24 `pg-pb-merge`: the page's closing CTA with a three-line price list beside it
+
+Switches: page, Paid plan colour (blue, page, black, outline), Price size (40, 56, 72) and the closing CTA below.
+
+## Page content: footers (G25–G37)
+
+`demos/pages-footer.js` and `demos/pages-footer2.js`, group `pg`. Content comes from website-prototype: the `nav.ts` footer columns, Solutions from the header, and the blurb, badges, copyright and Markdown line from `Footer.svelte`. Columns are regrouped per variant. The logo is the new `//iframely` from `Header.svelte`: JetBrains Mono, with `//` at 800 in blue and the word at 700. The giant versions are an SVG `<text>` stretched to ten mono cells.
+
+Round 1, after G15, G18 and the user's reference footers:
+- G25 the logo as the floor, cut by the edge
+- G26 big links on black
+- G27 links with three cards (free plan, publishers, Markdown)
+- G28 every link with its path, ending on the page path (G15)
+- G29 a glow of the four product colours with a ghosted logo
+- G30 the logo in Bayer dots
+- G31 the home promise and the footer as one blue block
+
+Round 2, own interpretations:
+- G32 the site map as a terminal tree
+- G33 iframely.com's own preview card
+- G34 the footer as an API response (JSON shape is a pun)
+- G35 the logo's two slashes as the frame
+- G36 provider names as a moving floor (names are a sample)
+- G37 the footer printed as a receipt
+
+### Footers: G32 on the light ground (G38–G42)
+
+All five use one colour: ink and grey, with blue only on the prompt and the logo's `//`. Legal is its own group. Its `#anchor` links, plus Status and Trust center, are shown as the paths they would get (`#terms` → `/terms`). The tree branches are drawn in JetBrains Mono because Geist Mono has no box-drawing characters.
+
+- G38 `pg-ft-tree-light`: a white panel
+- G39 `pg-ft-tree-page`: printed on the page in two rows of three
+- G40 `pg-ft-tree-chart`: one tree across the full width
+- G41 `pg-ft-tree-live`: the prompt writes `open https://iframely.com/…` for the hovered row
+- G42 `pg-ft-tree-floor`: the tree standing on the giant logo
+
+The Hover switch has four modes: Selection (the row inverted), Arrow (→ in blue, the name in bold), Blue link (underlined, with ↵) and Cursor (a blue block after the name). Until the pointer enters, each card plays a slow demo that hovers one row after another.
+
+Footers: the prototype's "Every page is also available as Markdown: llms.txt · pricing.md · OpenAPI" line is removed from every footer (G25–G42). Where a footer had no Legal column, its bottom row now carries the legal links; elsewhere it shows "Holding the web together since 2012." G27 has two cards instead of three.
+
+### Footer floors (G43) and G42's Floor switch
+
+`demos/pages-footer3.js`. G43 `pg-ft-floors` shows the bottom of G42 (the copyright row and the cut logo) with 17 treatments of the `//iframely` logo:
+- **Single colour:** blue `//` with ink word, all ink, all blue, tone on tone, hairline outline
+- **Gradient and fade:** fades into the edge, rises out of the ground, blue sinking to the page, blue to ink across, ghost with a crisp edge
+- **Pattern:** scan lines, fading halftone, written in itself (rows of small `//iframely` drawn on a canvas, because small SVG text renders with holes)
+- **Other:** above and below the line, echo, extruded, sliced and shifted
+
+Switches: Show (group) and Cut (half, as G42, whole). `DEMOS.footerFloor(I, id)` draws any floor, and G42's Floor switch now lists all 17.
+
+## SvelteKit shell and picks (2026-11-06)
+
+The lab is now a SvelteKit 3 app (kit 3, Svelte 5 runes, Vite 8, adapter-static). The demos are unchanged classic scripts in `static/demos/`; SvelteKit only replaces the gallery shell.
+
+```
+npm install
+npm run dev        # http://localhost:5192
+npm run check      # svelte-check
+```
+
+Routes:
+
+- `/<page>` is one sidebar page (`/pages`, `/logo`, `/content`…), and `/<page>#<demo>` scrolls to a card. Old `#page` and `#demo` hashes on `/` redirect there.
+- `/demo/<name>` is one demo full screen, with prev and next across the whole lab (Alt ← / →) and its Pick button.
+- `/favorites` (★ Picks in the sidebar) lists every pick grouped by page: code, title, where it lives, a note you can edit, the date, full-screen and unpick. Picks whose demo was removed are listed under "No longer in the lab". "Show the cards" renders the picked demos live under the table.
+- `/index.html` and `/demo.html` are the old static gallery, still working.
+
+Every card has a ☆ Pick button next to its title. Picks are written to `favorites.json` in this folder by the dev server (`src/routes/api/favorites/+server.ts`), so they can be read, diffed and committed. On first run the file is seeded from the `pick:` notes hard-coded in the demos. Without the dev server (a static build) picks fall back to localStorage.
+
+Adding a demo: drop the file in `static/demos/` and add its name to `static/lib/manifest.js` (load order matters for kits: a file that uses `DEMOS.footerKit` comes after `pages-footer`). Pages and their codes still come from `PAGES` and `CODE` in `static/lib/site.js`.
+
+```
+src/app.html                    loads Motion, FontLab, demos.js and manifest.js before the app starts
+src/lib/lab.ts                  pages, entries with codes (G01…), lookups
+src/lib/favs.svelte.ts          picks store: load/seed, toggle, notes, save to the file and localStorage
+src/lib/Card.svelte             one card; mounts its demo when it comes within 400px of the viewport
+src/lib/PickButton.svelte       ☆ Pick / ★ Picked
+src/routes/(shell)/             sidebar layout, /[page], /favorites
+src/routes/demo/[name]/         full screen
+static/lib/manifest.js          the demo files, in load order
+```

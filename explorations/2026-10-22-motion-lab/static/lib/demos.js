@@ -149,7 +149,7 @@
       const slot = h('div', { class: 'slot' });
       root.appendChild(h('div', { class: 'hero2' }, text, slot));
       un = def.mount(host, slot, { root, text });
-    } else if (def.group === 'ill' || def.group === 'pdw' || def.group === 'sec' || def.group === 'pal') { /* pdw: full-width product scenes with their own copy; sec: section picks; pal: palette trials */
+    } else if (def.group === 'ill' || def.group === 'wm' || def.group === 'dt' || def.group === 'dta' || def.group === 'dts' || def.group === 'dtx' || def.group === 'cv' || def.group === 'pg' || def.group === 'pdw' || def.group === 'sec' || def.group === 'pal') { /* pdw: full-width product scenes with their own copy; sec: section picks; pal: palette trials */
       const stage = h('div', { class: 'ill-host' }); root.appendChild(stage);
       un = def.mount(stage, { root });
     } else if (def.group === 'logo') {

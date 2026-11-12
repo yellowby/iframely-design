@@ -1,0 +1,177 @@
+{
+	"updated": "2026-11-12T10:02:33.517Z",
+	"items": {
+		"sec-connect-rail": {
+			"code": "S15",
+			"title": "Connecting section · command and a progress rail",
+			"page": "picks",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"sec-connect-rail-media": {
+			"code": "S23",
+			"title": "Connecting section · S21 with real media, typed Markdown",
+			"page": "picks",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"sec-hero-field-copy": {
+			"code": "S28",
+			"title": "Home top · S27 with short copy under each window",
+			"page": "picks",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"logo-reel": {
+			"code": "L02",
+			"title": "Slash reel: every URL lines up on //",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"logo-scheme": {
+			"code": "L03",
+			"title": "Scheme swap: //iframely is already a URL",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · header"
+		},
+		"logo-header": {
+			"code": "L04",
+			"title": "Header: the logo is the current path",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · header"
+		},
+		"logo-spinner": {
+			"code": "L06",
+			"title": "Loading: the slashes are the spinner",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · terminal + mark"
+		},
+		"logo-unfurl": {
+			"code": "L08",
+			"title": "Unfurl: the slashes lift out of the link",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · product scene"
+		},
+		"logo-field": {
+			"code": "L10",
+			"title": "Slash field: a texture of //",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "maybe"
+		},
+		"logo-decode": {
+			"code": "L12",
+			"title": "Decode: URLs resolve around fixed slashes",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"logo-hero-reel": {
+			"code": "L18",
+			"title": "Hero: reel + decode, landing on a result",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · hero"
+		},
+		"logo-unfurl-apps": {
+			"code": "L19",
+			"title": "Product scene: one link, three apps",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · product scene"
+		},
+		"logo-field-cta": {
+			"code": "L20",
+			"title": "Field CTA: a white block of //, ripples on check",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · CTA"
+		},
+		"logo-hero-glyphs": {
+			"code": "L28",
+			"title": "Hero: links in as text, data out as text",
+			"page": "logo",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"dts-grain": {
+			"code": "F02",
+			"title": "Grain wash",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"dts-clouds": {
+			"code": "F03",
+			"title": "Noise clouds",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"dts-shapes": {
+			"code": "F07",
+			"title": "Soft shapes",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · more glyphs"
+		},
+		"dts-glyphs": {
+			"code": "F08",
+			"title": "//:<> glyph field",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"dts-slash": {
+			"code": "F09",
+			"title": "The // mark",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · glyph/icon variant"
+		},
+		"dts-symbols": {
+			"code": "F12",
+			"title": "Product symbols",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · glyph/icon variant"
+		},
+		"dts-band": {
+			"code": "F13",
+			"title": "Transition band",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": "pick · mono glyphs"
+		},
+		"dts-cornerpiece": {
+			"code": "F15",
+			"title": "Corner piece",
+			"page": "dither-stills",
+			"at": "2026-11-06T10:35:39.710Z",
+			"note": ""
+		},
+		"dt-lines": {
+			"code": "D06",
+			"title": "Slash screen",
+			"page": "dither",
+			"at": "2026-11-12T10:02:18.639Z"
+		},
+		"dt-glyphs": {
+			"code": "D08",
+			"title": "//:<> glyph field",
+			"page": "dither",
+			"at": "2026-11-12T10:02:24.938Z"
+		},
+		"dta-cards": {
+			"code": "D14",
+			"title": "Product card headers",
+			"page": "dither",
+			"at": "2026-11-12T10:02:33.257Z"
+		}
+	}
+}

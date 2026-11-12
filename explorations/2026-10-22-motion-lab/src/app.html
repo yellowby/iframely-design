@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+		/>
+		<link rel="stylesheet" href="/lib/demos.css" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<!-- the classic lab: Motion, fonts, the DEMOS registry, every demo file (static/lib/manifest.js), then site.js,
+		     which only publishes window.LAB (pages and codes) here. They run before the app module starts. -->
+		<script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+		<script src="/lib/motion-shim.js"></script>
+		<script src="/fonts/local.js"></script>
+		<script>
+			/* font folders in local.js are relative to the old index.html; make them absolute for nested routes */
+			(window.FONTLAB_LOCAL || []).forEach((f) => { if (f.dir && !/^(\/|https?:)/.test(f.dir)) f.dir = '/' + f.dir; });
+		</script>
+		<script src="/lib/fontlab.js"></script>
+		<script>FontLab.init({ aliases: { serif: '--serif', sans: '--sans', mono: '--mono' }, apply: false });</script>
+		<script src="/lib/demos.js"></script>
+		<script src="/lib/dither.js"></script>
+		<script src="/lib/blobs.js"></script>
+		<script src="/lib/manifest.js"></script>
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

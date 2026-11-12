@@ -4,8 +4,8 @@
 	import Button from '#lib/components/Button.svelte';
 	import Cards from '#lib/components/Cards.svelte';
 	import Code from '#lib/components/Code.svelte';
-	import Placeholder from '#lib/components/Placeholder.svelte';
 	import Cta from '#lib/components/Cta.svelte';
+	import PricingBlock from '#lib/components/PricingBlock.svelte';
 	import Stats from '#lib/components/Stats.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
 	import { previewCurl, previewResponse } from '#lib/data/samples.ts';
@@ -22,11 +22,8 @@
 	sub="Send a URL, get the title, source, author, thumbnails and a ready summary card, across the formats publishers use. Keep Rich Media on for players and embeds, or turn it off for metadata only."
 >
 	<Button href="#signup">Get an API key</Button>
-	<Button href="/try" variant="quiet">Check a URL →</Button>
+	<Button href="/try" variant="secondary">Try a link</Button>
 	{#snippet after()}
-	{/snippet}
-	{#snippet aside()}
-		<Placeholder label="A pasted link turned into a preview card in a chat thread and a doc" class="aspect-[4/3]" />
 	{/snippet}
 </Hero>
 
@@ -106,6 +103,8 @@
 		]}
 	/>
 </Section>
+
+<PricingBlock />
 
 <Cta title="Paste a link, see the preview" text="2,000 hits a month free. No card needed.">
 	<Button href="#signup">Get an API key</Button>

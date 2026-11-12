@@ -1,0 +1,73 @@
+/* The gallery shell, from the old static/index.html, scoped under .lab so the full-screen view keeps its own frame rules. */
+.lab { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+.lab .side { position: sticky; top: 0; height: 100vh; overflow: auto; display: flex; flex-direction: column; gap: 22px; padding: 28px 18px 24px max(18px, env(safe-area-inset-left, 0px)); border-right: 1px solid var(--line); background: var(--bg2); }
+.lab .brand .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.lab .brand .title { font: 600 22px/1.1 var(--sans); letter-spacing: -.01em; margin-top: 4px; }
+.lab .brand .date { font: 11px var(--mono); color: var(--ink3); margin-top: 6px; }
+.lab nav { display: flex; flex-direction: column; gap: 2px; }
+.lab nav a { text-decoration: none; color: var(--ink2); }
+.lab nav a.pg { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; border-radius: 8px; font: 500 14px var(--sans); color: var(--ink); }
+.lab nav a.pg:hover { background: var(--bg); }
+.lab nav a.pg.on { background: var(--ink); color: var(--bg); }
+.lab nav a.pg .n { font: 500 11px var(--mono); color: #0055ff; align-self: center; }
+.lab nav a.pg.on .n { color: #8fb0ff; }
+.lab nav a.pg.fav { margin-bottom: 10px; }
+.lab nav .sub { display: flex; flex-direction: column; gap: 1px; margin: 4px 0 10px; }
+.lab nav .sub a { display: flex; gap: 8px; align-items: baseline; padding: 5px 10px; border-radius: 6px; font: 12px/1.35 var(--sans); color: var(--ink2); }
+.lab nav .sub a:hover { color: var(--ink); background: var(--bg); }
+.lab nav .sub a.on { color: var(--ink); }
+.lab nav .sub code { font: 11px var(--mono); color: var(--accent); flex: none; }
+.lab nav .sub .pk { margin-left: auto; color: #0055ff; font-size: 11px; flex: none; }
+.lab .side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; font: 11px/1.5 var(--mono); color: var(--ink3); }
+.lab .side-foot button { height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font: 500 12px var(--sans); cursor: pointer; align-self: flex-start; }
+.lab .side-foot button:hover { border-color: var(--ink3); }
+.lab .side-foot a { color: var(--link); }
+.lab .main { padding: 40px clamp(16px, 4vw, 56px) 60px; padding-right: max(clamp(16px, 4vw, 56px), env(safe-area-inset-right, 0px)); max-width: 1314px; min-width: 0; }
+.lab .main h1 { font-family: var(--serif); font-weight: var(--fl-serif-weight, 400); font-style: var(--fl-serif-style, normal); font-size: calc(clamp(34px, 4.5vw, 54px) * var(--fl-serif-scale, 1)); line-height: var(--fl-serif-lh, 1.02); margin: 0 0 10px; letter-spacing: var(--fl-serif-tracking, -.01em); text-wrap: balance; }
+.lab .main .intro { color: var(--ink2); max-width: 72ch; margin: 0 0 28px; }
+.lab .cards { display: grid; gap: 40px; }
+.lab .card header { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: baseline; margin-bottom: 10px; }
+.lab .card h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; font: 500 15px var(--sans); margin: 0; }
+.lab .card h3 code { font: 12px var(--mono); color: var(--accent); }
+.lab .card header p { grid-column: 1; margin: 0; color: var(--ink2); font-size: 13px; max-width: 84ch; }
+.lab .card header .links { display: flex; gap: 14px; }
+.lab .card header a { font: 12px var(--mono); color: var(--link); white-space: nowrap; }
+.lab .card { scroll-margin-top: 16px; }
+
+.lab .frame { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); container-type: inline-size; }
+.lab .frame.g-bg { aspect-ratio: 16 / 10; }
+.lab .frame.g-hero { aspect-ratio: 16 / 9; }
+.lab .frame.g-pd { min-height: 320px; }
+.lab .frame.g-logo { aspect-ratio: 16 / 9; }
+.lab .frame.g-ill, .lab .frame.g-wm, .lab .frame.g-dt, .lab .frame.g-dta, .lab .frame.g-dts, .lab .frame.g-dtx, .lab .frame.g-cv, .lab .frame.g-pg, .lab .frame.g-pdw, .lab .frame.g-sec, .lab .frame.g-pal { background: #fff; }
+.lab .frame.g-cv, .lab .frame.g-pg { background: #fafafa; }
+/* scenes keep their desktop layout: at least 1200 px wide, scrolling sideways in a narrower window */
+.lab .frame.g-pd, .lab .frame.g-pdp, .lab .frame.g-pdw, .lab .frame.g-sec, .lab .frame.g-pal { overflow-x: auto; }
+.lab .frame.g-pd > .demo, .lab .frame.g-pdp > .demo, .lab .frame.g-pdw > .demo, .lab .frame.g-sec > .demo, .lab .frame.g-pal > .demo { min-width: 1200px; }
+
+@media (max-width: 880px) {
+	.lab { grid-template-columns: 1fr; }
+	.lab .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); gap: 12px; padding: 16px max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px)); }
+	.lab .brand .title { font-size: 24px; }
+	.lab nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+	.lab nav .sub { display: none; }
+	.lab .side-foot { margin-top: 0; flex-direction: row; align-items: center; }
+	.lab .main { padding: 24px max(16px, env(safe-area-inset-right, 0px)) 40px max(16px, env(safe-area-inset-left, 0px)); }
+}
+
+/* quick search in the sidebar */
+.lab .search { position: relative; }
+.lab .search input { width: 100%; height: 34px; padding: 0 30px 0 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font: 13px var(--sans); color: var(--ink); }
+.lab .search input:focus { outline: 2px solid #0055ff; outline-offset: -1px; }
+.lab .search input::-webkit-search-cancel-button { display: none; }
+.lab .search kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font: 11px var(--mono); color: var(--ink3); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; pointer-events: none; }
+.lab .search input:focus + kbd, .lab .search input:not(:placeholder-shown) + kbd { display: none; }
+.lab .hits { display: flex; flex-direction: column; gap: 1px; margin-top: -10px; }
+.lab .hits-n, .lab .hits-none { font: 11px var(--mono); color: var(--ink3); padding: 2px 10px 6px; }
+.lab .hits a { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 6px; font: 12px/1.35 var(--sans); color: var(--ink); }
+.lab .hits a.on { background: var(--bg); }
+.lab .hits code { font: 11px var(--mono); color: var(--accent); flex: none; }
+.lab .hits small { display: block; font: 11px var(--mono); color: var(--ink3); margin-top: 2px; }
+.lab .hits .pk { margin-left: auto; color: #0055ff; font-size: 11px; flex: none; }
+.lab nav[hidden] { display: none; }
+.lab .hits a, .lab .hits a * { text-decoration: none; }

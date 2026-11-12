@@ -1,8 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
 	import Scene from '#lib/components/Scene.svelte';
 	import LogoWall from '#lib/components/LogoWall.svelte';
 	import Pill from '#lib/components/Pill.svelte';
+	import PricingBlock from '#lib/components/PricingBlock.svelte';
+	import GlyphSection from '#lib/components/GlyphSection.svelte';
+	import DitherHead from '#lib/components/DitherHead.svelte';
+	import { ICONS, type IconName } from '#lib/data/icons.ts';
+	import { CARD } from '#lib/card.ts';
+	import { cards } from '#lib/tweaks.svelte.ts';
+
+	const flush = $derived(cards.fit === 'flush');
+	const solid = $derived(cards.cover === 'solid');
 	import canva from '#lib/assets/marks/canva.svg';
 	import notion from '#lib/assets/marks/notion.svg';
 	import gitbook from '#lib/assets/marks/gitbook.svg';
@@ -11,6 +21,36 @@
 	// four products, each with its scene from the motion lab under it. Blocks, order and copy follow the frame; more blocks and the footer come in later steps.
 	let cycle = $state(0);
 	let hero = $state<HTMLDivElement>();
+
+	// "one URL at a time" in the connecting heading fades slowly through the four product accents, holding on each.
+	// Hovering a product card under it pulls the colour to that product's; leaving lets it ease back into the cycle,
+	// which keeps running underneath. With reduced motion the cycle stays on blue; a hovered card still sets its colour.
+	const ACCENTS = ['#0055ff', '#6a3bff', '#a52fd0', '#c81d77'].map((c) => {
+		const n = parseInt(c.slice(1), 16);
+		return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+	});
+	const STEP = 4000; // ms per accent: a hold, then the fade to the next
+	const FADE = 1600;
+	let accent = $state<HTMLSpanElement>();
+	let hovered = -1; // index of the hovered card
+
+	onMount(() => {
+		const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let raf = 0, pull = 0, to = ACCENTS[0], shown = '';
+		const frame = (ms: number) => {
+			raf = requestAnimationFrame(frame);
+			const i = still ? 0 : Math.floor(ms / STEP) % 4, k = still ? 0 : Math.max(0, ((ms % STEP) - (STEP - FADE)) / FADE);
+			const a = ACCENTS[i], b = ACCENTS[(i + 1) % 4];
+			if (hovered >= 0) to = ACCENTS[hovered];
+			pull += ((hovered >= 0 ? 1 : 0) - pull) * (still ? 1 : 0.1);
+			if (pull < 0.004) pull = 0;
+			const rgb = a.map((v, j) => Math.round(v + (b[j] - v) * k + (to[j] - (v + (b[j] - v) * k)) * pull));
+			const css = `rgb(${rgb.join(' ')})`;
+			if (css !== shown && accent) accent.style.color = shown = css;
+		};
+		raf = requestAnimationFrame(frame);
+		return () => cancelAnimationFrame(raf);
+	});
 
 	// path is the tag (Figma's text), href the product page it links to; the section's id is the path without the slash
 	type Product = {
@@ -84,12 +124,28 @@
 		}
 	];
 
+	// The four product boxes under the connecting heading: audience tag (in the product colour), name and text, from the
+	// iframely-marketing copy demo (demos/website, home). The whole box links to the product page; no link line inside.
+	// The card is D14 from the motion lab: a cover with the product's icon (the one in the header's Product dropdown)
+	// dithered in its colour (the last two fields), and the audience tag over it.
+	const CONNECT: [string, string, string, string, string, string, keyof typeof TINT][] = [
+		['For content platforms', 'text-rich', 'Rich Media', 'Embeds for over 1,900 providers and growing, through one API. Tracking provider changes since 2012.', '/embeds', '#0055ff', 'rich'],
+		['For collaboration apps', 'text-preview', 'Preview API', 'Link previews and cards for public URLs, across the formats publishers use. One API to connect to.', '/preview-api', '#6a3bff', 'preview'],
+		['For automated systems', 'text-data', 'Data API', 'Readable content, entities, Markdown and publisher permissions for automated processing.', '/data-api', '#a52fd0', 'data'],
+		['For publishers', 'text-pub', 'Publisher Console', 'A free account to see who fetches your pages and set how they are used, per domain, path and app.', '/publishers', '#c81d77', 'pub']
+	];
+
+	// Product and trust cards use the site's card (lib/card.ts). The product cards set its hover colours: the product
+	// colour (--m) and its tint (--t), the scene's (lib/scene/sec.js, PROD); the trust cards keep the grey default.
+	const TINT = { rich: '#e8efff', preview: '#efeaff', data: '#f7ebfc', pub: '#fdecf5' };
+
 	// Trust block: heading and cards from the iframely-marketing copy demo (demos/website, home), its logo row left out
-	const TRUST: [string, string, string, string][] = [
-		['Signed requests', 'Every request is signed with Web Bot Auth. Check our key directory and IP ranges.', '/verification', 'Verify our agents'],
-		['Allowed by publishers', 'Cloudflare and AWS verify our preview agent. DataDome customers authorize us 100% of the time.', '/docs/allowlisting', 'How to allow Iframely'],
-		['Trusted by developers', 'Canva, Notion and Circle point their users to Iframely in their own docs.', '/embeds#proof', 'Read the quotes'],
-		['Audited and transparent', 'SOC 2 Type II, Automated Processing Terms, a public Publisher Policy and uptime status.', '#trust', 'Trust center']
+	// (title, text, link, icon)
+	const TRUST: [string, string, string, IconName][] = [
+		['Built into apps you use', "Chances are, we've met. Iframely works behind the scenes in Canva, Notion, Circle and Atlassian.", '/embeds#proof', 'apps'],
+		['Signed and verified', 'Web Bot Auth on every request. Verify Iframely like Cloudflare, AWS and DataDome already do.', '/verification', 'signed'],
+		['Independently audited', 'SOC 2 Type II audits and pen tests, enterprise-ready security and privacy.', 'https://trust.iframely.com', 'audited'],
+		['Support you can rely on', 'Every account comes with support, from the team that has looked after the web since 2012.', 'mailto:support@iframely.com', 'support']
 	];
 </script>
 
@@ -120,15 +176,38 @@
 	<LogoWall step={cycle} lead={hero} />
 </section>
 
-<section class="wrap mt-28 flex flex-wrap items-center justify-between gap-8">
-	<h2 class="t-h2 max-w-[540px] text-fg">Connecting developers and publishers, <span class="text-blue">one URL at a time</span></h2>
-	<div class="flex gap-2">
-		<Pill href="/try" variant="secondary">Check URL</Pill>
-		<Pill href="#signup">Get API key</Pill>
-	</div>
+<section class="wrap mt-28">
+	<h2 class="t-h2 max-w-[540px] text-fg">Connecting developers and publishers, <span bind:this={accent} class="text-rich">one URL at a time</span></h2>
 </section>
 
-<div class="wrap mt-40 mb-40 flex flex-col gap-40">
+<section class="wrap mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+	{#each CONNECT as [tag, color, title, text, href, hex, icon], i (title)}
+		<a {href} onpointerenter={() => (hovered = i)} onpointerleave={() => (hovered = -1)} style="--m:{hex};--t:{TINT[icon]}" class="flex flex-col {CARD}">
+			<!-- the cover is a tile set 8px inside the card; its tag and icon keep the body text's left edge (8 + 16 = 24px) -->
+			<!-- radius 4: the card's 12 less the 8px inset, so the corners are concentric -->
+			<!-- two switches from the Tweakpane panel (lib/tweaks.svelte.ts): flush runs the cover to the card's edges, its
+			     tag and icon then 24px in; solid inverts it, the product colour as the ground with white tag and icon -->
+			<div class="relative overflow-hidden {flush ? 'rounded-t-xl' : 'm-2 rounded-sm'}">
+				<DitherHead color={hex} {icon} seed={i} invert={solid} pad={flush ? 24 : 16} />
+				<!-- a glow in the cover's ground colour (12% of the product's, or the colour itself) keeps the line readable over the dither -->
+				<p
+					class="t-small absolute [font-family:var(--ff-heading)]! [text-shadow:0_0_2px_var(--g),0_0_4px_var(--g),0_0_8px_var(--g),0_0_12px_var(--g)] {flush
+						? 'top-5 left-6'
+						: 'top-3 left-4'} {solid ? 'text-white' : color}"
+					style="--g:{solid ? hex : `color-mix(in srgb, ${hex} 12%, white)`}"
+				>
+					{tag}
+				</p>
+			</div>
+			<div class="p-6 {flush ? 'pt-5' : 'pt-4'}">
+				<h3 class="t-small text-[15px]! font-medium! text-fg">{title}</h3>
+				<p class="t-small mt-1 text-body">{text}</p>
+			</div>
+		</a>
+	{/each}
+</section>
+
+<div class="wrap mt-40 mb-16 flex flex-col gap-40">
 	{#each PRODUCTS as p (p.path)}
 		<section id={p.path.slice(1)} class="scroll-mt-[calc(var(--header-h)+24px)]">
 			<a href={p.href} class="t-tag {p.color} hover:underline">{p.path}</a>
@@ -160,15 +239,21 @@
 	{/each}
 </div>
 
-<section id="trust" class="wrap mb-40 scroll-mt-[calc(var(--header-h)+24px)]">
-	<h2 class="t-h2 text-fg">Trusted on both sides of the URL</h2>
+<PricingBlock />
+
+<section id="trust" class="wrap mt-16 mb-28 scroll-mt-[calc(var(--header-h)+24px)]">
+	<h2 class="t-h2 text-fg">Your URLs are in good hands</h2>
 	<div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-		{#each TRUST as [title, text, href, cta] (title)}
-			<a {href} class="flex flex-col rounded-xl border border-black/8 p-6 transition-colors hover:border-black/25">
-				<h3 class="t-note font-medium! text-fg">{title}</h3>
-				<p class="t-small mt-2 text-body">{text}</p>
-				<p class="t-small mt-auto pt-6 text-blue">{cta} →</p>
+		{#each TRUST as [title, text, href, icon] (title)}
+			<a {href} class="flex flex-col p-6 {CARD}">
+				<svg class="mb-5 text-fg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" aria-hidden="true">
+					<path d={ICONS[icon]} />
+				</svg>
+				<h3 class="t-small text-[15px]! font-medium! text-fg">{title}</h3>
+				<p class="t-small mt-1 text-body">{text}</p>
 			</a>
 		{/each}
 	</div>
 </section>
+
+<div class="wrap mb-24"><GlyphSection sub="Get a free key and try your first URL in a minute, or check a link without signing up." /></div>

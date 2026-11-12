@@ -72,6 +72,11 @@ body {
 	font-family: var(--ff-base);
 }
 
+/* Taglines and every other paragraph: no short last line, no orphaned word */
+p {
+	text-wrap: pretty;
+}
+
 /* The page container: 1200px of content, 20px gutters below that */
 .wrap {
 	max-width: calc(1200px + 2 * var(--gutter));

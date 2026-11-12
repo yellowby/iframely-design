@@ -8,6 +8,7 @@
 	import Table from '#lib/components/Table.svelte';
 	import Faq from '#lib/components/Faq.svelte';
 	import Cta from '#lib/components/Cta.svelte';
+	import PricingBlock from '#lib/components/PricingBlock.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
 	import {
 		accessSample,
@@ -29,12 +30,9 @@
 	title="The web reader that can show its permissions"
 	sub="Tell us why you are reading a URL. We read it once, as a signed and named agent, and return what the publisher allows for that purpose: metadata, links, entities, an excerpt, Markdown full text. With every result comes the <code>access</code> object, the record of why."
 >
-	<Button href="#signup">Get an API key, 1,000 reads free</Button>
-	<Button href="#quick-start" variant="secondary">Quick start</Button>
+	<Button href="#signup">Get an API key</Button>
+	<Button href="/try" variant="secondary">Try a link</Button>
 	{#snippet after()}
-	{/snippet}
-	{#snippet aside()}
-		<Code code={accessSample} label="access · Wikipedia article, mode assist" />
 	{/snippet}
 </Hero>
 
@@ -291,6 +289,8 @@
 		]}
 	/>
 </Section>
+
+<PricingBlock />
 
 <Cta title="Read your first URL" text="1,000 reads a month free. The access object comes with every one.">
 	<Button href="#signup">Get an API key</Button>

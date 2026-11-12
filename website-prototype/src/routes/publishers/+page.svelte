@@ -56,17 +56,13 @@
 />
 
 <Hero
-	eyebrow="For publishers"
+	eyebrow="Publisher Console"
 	title="Your content, your rules, across 6,000 products"
 	sub="Iframely renders previews and embeds for more than 6,000 products. Every request names the customer behind it, is signed, and reads one URL at a time. A free publisher account controls what each agent receives, per domain and path."
 >
-	<Button href="#signup-publisher">Claim your domain, free</Button>
-	<Button href="/verification" variant="secondary">Verify our agents</Button>
-	<Button href="/tools/url-debugger" variant="quiet">Check a URL →</Button>
+	<Button href="#signup-publisher">Start free</Button>
+	<Button href="/docs" variant="secondary">Docs</Button>
 	{#snippet after()}
-	{/snippet}
-	{#snippet aside()}
-		<Placeholder label="Publisher Console: requests by agent and customer app" class="aspect-[4/3]" />
 	{/snippet}
 </Hero>
 
@@ -262,5 +258,4 @@
 <Cta title="See who fetches your pages" text="Claim your domain in a few minutes. Free.">
 	<Button href="#signup-publisher">Claim your domain, free</Button>
 	<Button href="/verification" variant="invert">Verify our agents</Button>
-	<Button href="/tools/url-debugger" variant="invert">Check a URL</Button>
 </Cta>

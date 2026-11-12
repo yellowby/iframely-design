@@ -1,30 +1,31 @@
 // Header and footer navigation.
 
-export type NavLink = { label: string; href: string; note?: string; divider?: boolean };
-export type NavColumn = { title: string; items: NavLink[] };
+// icon: the product whose tile (product colour, white glyph) stands before the row in the header dropdown
+export type NavLink = { label: string; href: string; note?: string; divider?: boolean; icon?: 'rich' | 'preview' | 'data' | 'pub' };
+export type NavColumn = { title?: string; items: NavLink[] };
 export type NavGroup = { label: string; href?: string; columns?: NavColumn[] };
 
-// Home01 header: Products (two columns, Features and Solutions), Resources (developers, then company), Domains, Pricing
+// Home01 header: Product (two columns, Features and Solutions), Resources (developers, then company), Domains, Pricing
 export const header: NavGroup[] = [
 	{
-		label: 'Products',
+		label: 'Product',
 		columns: [
 			{
 				title: 'Features',
 				items: [
-					{ label: 'Rich Media', href: '/embeds', note: 'Embeds for 1,900 providers that keep working as platforms change' },
-					{ label: 'Preview API', href: '/preview-api', note: 'Link previews, cards and metadata for any URL, with rich media on or off' },
-					{ label: 'Data API', href: '/data-api', note: "Readable content and structured data for any URL, with the publisher's permissions attached" },
-					{ label: 'Publisher Console', href: '/publishers', note: 'See who fetches your pages and set what each app receives' }
+					{ label: 'Rich Media', href: '/embeds', icon: 'rich', note: 'Embeds for 1,900 providers, kept up to date' },
+					{ label: 'Preview API', href: '/preview-api', icon: 'preview', note: 'Link previews and metadata for any URL' },
+					{ label: 'Data API', href: '/data-api', icon: 'data', note: 'Readable content, with publisher permissions' },
+					{ label: 'Publisher Console', href: '/publishers', icon: 'pub', note: 'Set what each app receives from your pages' }
 				]
 			},
 			{
 				title: 'Solutions',
 				items: [
-					{ label: 'AI agents and RAG', href: '/for/agents', note: 'Ground assistants on URLs you are allowed to use' },
+					{ label: 'AI agents and RAG', href: '/for/agents', note: 'Ground assistants on URLs you may use' },
 					{ label: 'Chat and collaboration apps', href: '/for/chat-apps', note: 'Link previews people trust, at chat volume' },
-					{ label: 'CMS, editors and site builders', href: '/for/cms', note: 'Paste a URL, get an embed that keeps working' },
-					{ label: 'Publishers and newsrooms', href: '/for/newsrooms', note: 'Embeds in your stories, control over your own links' }
+					{ label: 'CMS, editors and site builders', href: '/for/cms', note: 'Paste a URL, get an embed that lasts' },
+					{ label: 'Publishers and newsrooms', href: '/for/newsrooms', note: 'Embeds in stories, control over your links' }
 				]
 			}
 		]
@@ -73,6 +74,16 @@ export const footer: { label: string; items: NavLink[] }[] = [
 		]
 	},
 	{
+		// same pages as the header's Solutions column (G42 footer, motion lab)
+		label: 'Solutions',
+		items: [
+			{ label: 'AI agents and RAG', href: '/for/agents' },
+			{ label: 'Chat and collaboration apps', href: '/for/chat-apps' },
+			{ label: 'CMS, editors and site builders', href: '/for/cms' },
+			{ label: 'Publishers and newsrooms', href: '/for/newsrooms' }
+		]
+	},
+	{
 		label: 'Free tools',
 		items: [
 			{ label: 'Embed code generator', href: '/try' },
@@ -100,17 +111,19 @@ export const footer: { label: string; items: NavLink[] }[] = [
 			{ label: 'About', href: '/about' },
 			{ label: 'Careers', href: '/careers' },
 			{ label: 'Compare', href: '/compare' },
-			{ label: 'Trust center', href: '#trust' },
 			{ label: 'Contact support', href: '/help#contact' }
 		]
 	},
 	{
 		label: 'Legal',
 		items: [
-			{ label: 'Terms', href: '#terms' },
-			{ label: 'Automated Processing Terms', href: '#automated-processing' },
-			{ label: 'Privacy', href: '#privacy' },
-			{ label: 'GDPR', href: '#gdpr' }
+			{ label: 'Terms of use', href: '#terms' },
+			{ label: 'Automated processing', href: '#automated-processing' },
+			{ label: 'Privacy policy', href: '#privacy' },
+			{ label: 'Publisher policy', href: '#publisher-policy' },
+			{ label: 'Security', href: '#security' },
+			{ label: 'GDPR', href: '#gdpr' },
+			{ label: 'Trust center', href: '#trust' }
 		]
 	}
 ];

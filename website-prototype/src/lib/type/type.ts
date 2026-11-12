@@ -34,7 +34,7 @@ export const ROLES: Role[] = [
 	{ id: 'tag', label: 'Path tag', slot: 'mono', size: 16, weight: 500, lh: 1.3, ls: 0 },
 	{ id: 'label', label: 'Label', slot: 'base', size: 15, weight: 400, lh: 1.5, ls: 0 },
 	{ id: 'small', label: 'Small', slot: 'base', size: 14, weight: 400, lh: 1.5, ls: 0 },
-	{ id: 'nav', label: 'Navigation', slot: 'base', size: 15, weight: 400, lh: 1.33, ls: 0 },
+	{ id: 'nav', label: 'Navigation', slot: 'base', size: 14, weight: 400, lh: 1.33, ls: 0 },
 	{ id: 'button', label: 'Button', slot: 'base', size: 15, weight: 500, lh: 1.33, ls: 0 }
 ];
 

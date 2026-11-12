@@ -1558,7 +1558,7 @@
      The root carries .demo and goes .off out of view, so the scene holds off screen as it does in the lab. */
   const homeBand = (host, o = {}) => {
     ensure(); fxCss(); if (!document.getElementById('css-hx')) document.head.appendChild(h('style', { id: 'css-hx' }, HX_CSS));
-    if (!document.getElementById('css-hxe')) document.head.appendChild(h('style', { id: 'css-hxe' }, '.sx.hx.hx-embed{padding:0;background:transparent}.hx-embed .hx-band.bare{margin-top:0}'));
+    if (!document.getElementById('css-hxe')) document.head.appendChild(h('style', { id: 'css-hxe' }, '.sx.hx.hx-embed{padding:0;background:transparent}.hx-embed .hx-band.bare{margin-top:0}.hx-embed .cx-rail span em{display:none}')); /* the home hero's rail keeps the product names only, no value beside them ("video · 16:9") */
     const root = h('div', { class: 'demo sx hx hx-embed' }), band = h('div', { class: 'hx-band bare' }); root.appendChild(band); host.appendChild(root);
     const seen = inView(root);
     const fx = Object.assign({}, FXS.mark);

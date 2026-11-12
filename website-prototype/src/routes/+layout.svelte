@@ -2,11 +2,12 @@
 	import './layout.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import Header from '#lib/components/Header.svelte';
+	import Footer from '#lib/components/Footer.svelte';
+	import TypeTweaks from '#lib/components/TypeTweaks.svelte';
 	import { typeCss } from '#lib/type/type.ts';
 	import type { LayoutProps } from './$types';
 
 	let { children }: LayoutProps = $props();
-	// The footer is rebuilt in a later step (Home01 has none yet)
 	const typeStyle = `<style id="type-roles">${typeCss()}</style>`;
 </script>
 
@@ -26,3 +27,5 @@
 <main>
 	{@render children()}
 </main>
+<Footer />
+<TypeTweaks />

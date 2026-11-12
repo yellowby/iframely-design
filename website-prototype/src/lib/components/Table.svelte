@@ -1,5 +1,6 @@
 <script lang="ts">
 	// Simple data table; cells may contain inline HTML. First column is emphasised.
+	// A row with fewer cells than the head stretches its last cell across the remaining columns.
 	let { head, rows, caption }: { head: string[]; rows: string[][]; caption?: string } = $props();
 </script>
 
@@ -15,7 +16,10 @@
 			{#each rows as row, i (i)}
 				<tr class="align-top">
 					{#each row as cell, j (j)}
-						<td class="prose-links px-4 py-3 {j === 0 ? 'font-medium text-ink-950' : 'text-ink-700'}">{@html cell}</td>
+						<td
+							colspan={j === row.length - 1 && row.length < head.length ? head.length - j : undefined}
+							class="prose-links px-4 py-3 {j === 0 ? 'font-medium text-ink-950' : 'text-ink-700'}">{@html cell}</td
+						>
 					{/each}
 				</tr>
 			{/each}
