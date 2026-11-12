@@ -8,7 +8,7 @@
      (Data API calls always carry a processing mode: assist, ai-input …);
    - L52 writes them as curl calls (a long query continues on the next line, as in a terminal); L53 as an iframely CLI.
    Rich media and meta responses are real Iframely output (2026-10-27), cut short, with no API key in them; the Data API
-   responses are mocked after the redesign docs (website-prototype docs/data-api), as that endpoint is new. */
+   responses are mocked after the redesign docs (website docs/data-api), as that endpoint is new. */
 (() => {
   const K = DEMOS.logoKit, C = K.cardKit;
   const IFR = 'https://iframely.net/api/iframe?url=…';

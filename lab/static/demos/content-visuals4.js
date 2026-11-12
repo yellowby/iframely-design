@@ -1,7 +1,7 @@
 /* V · Content visuals round 4 (2026-11-05): the remaining blocks (group 'cv', V42–V52).
    Embeds API, Preview API hero and "who it's for", Data API hero, "who it is for", "how it fetches", quick start, buyers'
    FAQ, the three closing CTAs, the home logo wall and the publishers' proof. Same approach as rounds 2–3; copy and code
-   samples from website-prototype (src/routes, src/lib/data/samples.ts); sample data is illustrative.
+   samples from website (src/routes, src/lib/data/samples.ts); sample data is illustrative.
    Needs content-visuals.js (block) and content-visuals2.js (DEMOS.cvKit2). */
 (() => {
   const K = () => DEMOS.cvKit2, B = () => DEMOS.cvKit;

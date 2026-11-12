@@ -1,7 +1,7 @@
 /* V · Content visuals round 3 (2026-11-05): the blocks below the heroes (group 'cv', V26–V41).
    Product rows, cards and themes, delivery, customization, editors, providers, stats, proof, FAQ, CTA, Data API modes,
    "Structured, not scraped", the comparison table, verification, the AI diagram and traffic back. Copy from
-   website-prototype; sample data is illustrative. Needs content-visuals.js (block) and content-visuals2.js (DEMOS.cvKit2). */
+   website; sample data is illustrative. Needs content-visuals.js (block) and content-visuals2.js (DEMOS.cvKit2). */
 (() => {
   const K = () => DEMOS.cvKit2, B = () => DEMOS.cvKit;
   const SANS = 'Geist, Inter, sans-serif', GMONO = "'Geist Mono', ui-monospace, monospace";

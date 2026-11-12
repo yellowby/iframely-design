@@ -2,7 +2,7 @@
 
 Figma: "Design 2027" → page **Round 2: Home + products** (`66:44`).
 
-Built from the Figma "Home" frame (layout, header, logos, images) and the copy and section order of `website-prototype` (home, /embeds, /preview-api, /data-api, /publishers).
+Built from the Figma "Home" frame (layout, header, logos, images) and the copy and section order of `website` (home, /embeds, /preview-api, /data-api, /publishers).
 
 ## What is on the page
 

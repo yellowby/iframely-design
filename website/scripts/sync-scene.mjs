@@ -5,7 +5,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const lab = fileURLToPath(new URL('../../explorations/2026-10-22-motion-lab/', import.meta.url));
+const lab = fileURLToPath(new URL('../../lab/static/', import.meta.url));
 const out = fileURLToPath(new URL('../src/lib/scene/', import.meta.url));
 const FILES = ['lib/demos.js', 'demos/logo.js', 'demos/logo14.js', 'demos/sec.js'];
 

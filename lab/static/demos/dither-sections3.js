@@ -355,7 +355,7 @@
   });
 
   /* ------------------------------------------------------------ X21 receipts in the prototype's style
-     website-prototype palette (src/routes/layout.css): page #fafafa, text #111 / #333 / #666 / #777, rules #f2f2f2 (#ccc
+     website palette (src/routes/layout.css): page #fafafa, text #111 / #333 / #666 / #777, rules #f2f2f2 (#ccc
      for type rules), blue #0055ff and one colour per product; mono = Geist Mono. No pictures: the //iframely logo in type,
      ░▒▓██▓▒░ dividers, a sparkline and a heat strip, shade-ended bars, a progress gauge, a box-drawn link card, inverted
      chips, a barcode and the code square. */

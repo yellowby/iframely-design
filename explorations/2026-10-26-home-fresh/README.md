@@ -1,6 +1,6 @@
 # Home — fresh explorations (2026-10-26)
 
-Figma "Design 2027" → page **Home — fresh explorations** (`89:63`). Started from scratch at the user's request: no earlier boards or round 2/3 pieces as inspiration. White or light-grey body, #0055ff accent, 1240 content in 1440 frames. The original Home mockup (`1:102`) is the only reference: its logo, customer logo strip, provider icons and media images are reused. Copy follows `website-prototype` home.
+Figma "Design 2027" → page **Home — fresh explorations** (`89:63`). Started from scratch at the user's request: no earlier boards or round 2/3 pieces as inspiration. White or light-grey body, #0055ff accent, 1240 content in 1440 frames. The original Home mockup (`1:102`) is the only reference: its logo, customer logo strip, provider icons and media images are reused. Copy follows `website` home.
 
 | Frame | Idea | Type |
 |---|---|---|

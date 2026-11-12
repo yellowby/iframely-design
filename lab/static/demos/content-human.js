@@ -1,5 +1,5 @@
 /* V · Content visuals, humanized (2026-11-05): a Copy switch (Prototype / Humanized, state key 'voice') on every 'cv' card;
-   Humanized shows the website-prototype copy passed through the humanizer skill (staged contrasts, forced triads,
+   Humanized shows the website copy passed through the humanizer skill (staged contrasts, forced triads,
    fragments, passive voice, inflated headings and sales phrasing rewritten; facts, numbers and names kept).
    COPY pairs [prototype text, humanized text]. Strings without tells are not listed and stay as they are.
    The swap works on the rendered DOM: an element whose whole text equals a prototype string (tags stripped, quotes and

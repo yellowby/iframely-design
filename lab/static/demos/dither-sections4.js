@@ -12,7 +12,7 @@
   const seg = (s, tone, wt, bg) => [s, tone || 'ink', wt || 400, bg];
   const gap = g => ({ gap: g || .6 });
 
-  /* colours: website-prototype palette (via X21's THEME); acc is Iframely blue, each product keeps its colour */
+  /* colours: website palette (via X21's THEME); acc is Iframely blue, each product keeps its colour */
   function inksOf(s) {
     const TH = Z().THEME[s.theme], PC = Z().PCOLS(), pc = k => (s.acc2 === 'none' ? TH.ink : s.acc2 === 'blue' ? X().BLUE : PC[k]), bg = s.theme === 'black' ? '#000000' : '#ffffff';
     return { bg, ink: TH.ink, body: TH.body, mute: TH.mute, rule: TH.rule, acc: s.acc2 === 'none' ? TH.ink : X().BLUE, rich: pc('rich'), preview: pc('preview'), data: pc('data'), pub: pc('pub'), white: '#ffffff', ground: bg };

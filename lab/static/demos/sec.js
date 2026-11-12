@@ -1,4 +1,3 @@
-// @ts-nocheck
 /* S · Section picks: one scene per slot on the site, set inside a mock of its section with the current copy from
    iframely-marketing/demos/website (home page for the hero and the side slots, each product page's hero for the large
    slots). Section type: Geist, headings 32 / 120% / −2%, product badges in the Figma "product badges" palette.
@@ -23,11 +22,11 @@
     pub: (a, b) => `<rect x="2" y="4" width="20" height="16" rx="4" fill="${b}"/><rect x="6" y="12" width="2.6" height="5" rx="1.3" fill="${a}"/><rect x="10.7" y="9" width="2.6" height="8" rx="1.3" fill="${a}"/><rect x="15.4" y="6.5" width="2.6" height="10.5" rx="1.3" fill="${a}"/>`,
   };
   const icon = (k, s) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24">${ICO[k](PROD[k].main, PROD[k].mid).replace(/(fill|stroke)="(var\([^"]+\))"/g, 'style="$1:$2"')}</svg>`; /* var() only works as a style, not as an SVG attribute */
-  const fav = k => { if (/^https?:/.test(k || '')) return `<img alt="" src="${k}">`; const I = (DEMOS.logoKit && DEMOS.logoKit.cardKit && DEMOS.logoKit.cardKit.ICON) || {}; return I[k] ? `<img alt="" src="${I[k].src}">` : `<img alt="" src="data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3.5' fill='#171717'/><text x='8' y='11.6' font-family='Arial' font-weight='700' font-size='10' fill='#fff' text-anchor='middle'>${(k || '?')[0].toUpperCase()}</text></svg>`)}">`; }; /* no favicon in the kit: a letter tile, as an img so it sizes like the others */
+  const fav = k => { if (/^https?:/.test(k || '')) return `<img alt="" src="${k}">`; const I = (DEMOS.logoKit && DEMOS.logoKit.cardKit && DEMOS.logoKit.cardKit.ICON) || {}; return I[k] ? `<img alt="" src="${I[k].src}">` : `<img alt="" src="data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3.5' fill='#0b1533'/><text x='8' y='11.6' font-family='Arial' font-weight='700' font-size='10' fill='#fff' text-anchor='middle'>${(k || '?')[0].toUpperCase()}</text></svg>`)}">`; }; /* no favicon in the kit: a letter tile, as an img so it sizes like the others */
   const R = DEMOS.reduced;
 
   const CSS = `
-.sx{--ink:#171717;--mut:#666666;--g:#939393;--g2:#bbbbbb;--line:#e7e7e7;--soft:#f7f7f7;--bl:#0055ff;font-family:Geist,Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ink);background:#fff;padding:64px clamp(16px,4.5cqw,64px) 72px;container-type:inline-size}
+.sx{--ink:#0b1533;--mut:#5b6680;--g:#8a93a8;--g2:#b4bccb;--line:#e3e7ef;--soft:#f6f7fa;--bl:#0055ff;font-family:Geist,Inter,ui-sans-serif,system-ui,sans-serif;color:var(--ink);background:#fff;padding:64px clamp(16px,4.5cqw,64px) 72px;container-type:inline-size}
 .sx *{box-sizing:border-box}
 .sx-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 11px 5px 7px;border-radius:8px;background:var(--t);color:var(--m);font-size:14px;font-weight:500}
 .sx-badge svg{display:block}
@@ -51,11 +50,11 @@
 .mono{font-family:'Geist Mono','JetBrains Mono',ui-monospace,monospace}
 .sx-fl{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:4px;background:var(--ink);color:#fff;font:600 9px/1 Geist,sans-serif;font-style:normal}
 /* P08 windows in the cool greys of this page */
-.sx .ph{--ink:#171717;--i7:#666666;--i5:#939393;--i3:#d5d5d5;--i2:#e7e7e7;--i1:#f1f1f1;font-family:Geist,Inter,sans-serif}
-.sx .ph-hub{background:#171717}
+.sx .ph{--ink:#0b1533;--i7:#5b6680;--i5:#8a93a8;--i3:#cfd5e1;--i2:#e3e7ef;--i1:#eef1f6;font-family:Geist,Inter,sans-serif}
+.sx .ph-hub{background:#0b1533}
 /* shared window chrome */
 .sx-stage{background:var(--soft);border-radius:22px;padding:clamp(14px,3cqw,40px)}
-.sx-win{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(23,23,23,.04),0 12px 32px rgba(23,23,23,.06);overflow:hidden;min-width:0;display:flex;flex-direction:column}
+.sx-win{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(11,21,51,.04),0 12px 32px rgba(11,21,51,.06);overflow:hidden;min-width:0;display:flex;flex-direction:column}
 .sx-bar{display:flex;align-items:center;gap:6px;padding:11px 14px;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
 .sx-bar i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--line)}
 .sx-bar span{margin-left:10px;overflow:hidden;text-overflow:ellipsis}
@@ -97,7 +96,7 @@
 .rm-wave u{flex:1;background:var(--g2);border-radius:2px}
 .rm-wave u.p{background:var(--bl)}
 .rm-post{background:#fff;border:1px solid var(--line);padding:16px 18px;display:grid;grid-template-columns:40px 1fr;gap:12px;font-size:14px;color:var(--ink);line-height:1.5}
-.rm-post .av{width:40px;height:40px;border-radius:50%;background:#171717;display:grid;place-items:center;color:var(--bl);font:800 16px 'JetBrains Mono',monospace;letter-spacing:-.08em}
+.rm-post .av{width:40px;height:40px;border-radius:50%;background:#0b1533;display:grid;place-items:center;color:var(--bl);font:800 16px 'JetBrains Mono',monospace;letter-spacing:-.08em}
 .rm-post small{color:var(--g);font-size:13px}
 .rm-post p{margin:4px 0 10px}
 .rm-post .img{height:92px;border-radius:10px;background:linear-gradient(120deg,#d3e1ff,#8fb2ff)}
@@ -270,7 +269,7 @@
 .hs-play span{position:absolute;left:12px;bottom:8px;font:11.5px 'Geist Mono',monospace;color:rgba(255,255,255,.8)}
 .hs-card{display:grid;grid-template-columns:1fr 64px;gap:12px;padding:12px 14px;font-size:13px}
 .hs-card .pv-s{font:11px 'Geist Mono',monospace;letter-spacing:.04em}
-.hs-card i{border-radius:8px;background:linear-gradient(135deg,#666666,#171717)}
+.hs-card i{border-radius:8px;background:linear-gradient(135deg,#5b6680,#0b1533)}
 .hs-md{padding:12px 14px;display:grid;gap:2px;font:12.5px/1.55 'Geist Mono',monospace;color:var(--g)}
 .hs-md b{color:var(--ink);font-weight:500}
 .hs-md small{margin-top:6px;font-size:11.5px;color:var(--g2)}
@@ -380,7 +379,7 @@
   /* ── Preview API ── */
   const LINKS = [
     { url: 'soundcloud.com/bonobo/kerala', who: 'Maya', say: 'this is the one for the intro', fav: 'soundcloud', site: 'SoundCloud', title: 'Kerala', desc: 'Bonobo · Migration · 2017. Stream on SoundCloud.', th: 'linear-gradient(135deg,#ffcf8a,#f2552c)', src: [['oEmbed', 'rich · audio'], ['Open Graph', 'title, image'], ['Twitter Cards', 'player'], ['JSON-LD', 'MusicRecording'], ['HTML', 'title']] },
-    { url: 'github.com/itteco/iframely', who: 'Dev', say: 'the parser lives here', fav: 'github', site: 'GitHub', title: 'itteco/iframely', desc: 'oEmbed proxy: one endpoint for embeds and previews of any URL.', th: 'linear-gradient(135deg,#666666,#171717)', src: [['oEmbed', null], ['Open Graph', 'title, image'], ['Twitter Cards', 'summary'], ['JSON-LD', null], ['HTML', 'title, icon']] },
+    { url: 'github.com/itteco/iframely', who: 'Dev', say: 'the parser lives here', fav: 'github', site: 'GitHub', title: 'itteco/iframely', desc: 'oEmbed proxy: one endpoint for embeds and previews of any URL.', th: 'linear-gradient(135deg,#5b6680,#0b1533)', src: [['oEmbed', null], ['Open Graph', 'title, image'], ['Twitter Cards', 'summary'], ['JSON-LD', null], ['HTML', 'title, icon']] },
     { url: 'en.wikipedia.org/wiki/Kerala', who: 'Ana', say: 'background for the piece', fav: 'wikipedia', site: 'Wikipedia', title: 'Kerala', desc: 'A state on the Malabar Coast of India, formed in 1956 from Malayalam-speaking regions.', th: 'linear-gradient(135deg,#c6ecd8,#3c8d5a)', src: [['oEmbed', null], ['Open Graph', 'image'], ['Twitter Cards', null], ['JSON-LD', 'Article'], ['HTML', 'title, description']] },
   ];
   DEMOS.register('sec-preview-large', {
@@ -476,7 +475,7 @@
     blurb: 'New. The Console for example.com: requests per agent on the left (Preview, Processing, Training), a live feed in the middle naming the customer app, the path and what it received, and the content policy by path on the right. Every few seconds the /blog/* policy flips between full text and excerpt, and the next Processing requests for /blog/ follow it. Customer names are made up. Hover pauses.',
     mount(stage) {
       const slot = section(stage, { layout: 'large', prod: 'pub', title: 'Your content, your rules, across 6,000 products', sub: 'Iframely renders previews and embeds for more than 6,000 products. Every request names the customer behind it, is signed, and reads one URL at a time. A free publisher account controls what each agent receives, per domain and path.', btns: [['Claim your domain, free'], ['Verify our agents', 'secondary'], ['Check a URL →', 'quiet']] });
-      const AG = [['Preview Agent', 18240, 'metadata only, never the body', '#171717'], ['Processing Agent', 6412, 'assist · discover · search · ai-input', '#0055ff'], ['Training Agent', 312, 'metadata and links only', '#bbbbbb']];
+      const AG = [['Preview Agent', 18240, 'metadata only, never the body', '#0b1533'], ['Processing Agent', 6412, 'assist · discover · search · ai-input', '#0055ff'], ['Training Agent', 312, 'metadata and links only', '#b4bccb']];
       const ags = h('div', null, h('h4', null, 'Last 7 days'), ...AG.map(([n, v, s, c]) => h('div', { class: 'pc-ag', style: `--c:${c};--w:${Math.max(3, v / 182.4)}%`, html: `<div><b>${n}</b><s>${v.toLocaleString('en')}</s></div><small>${s}</small><u></u>` })));
       const feed = h('div', { class: 'pc-feed' }, h('div', { class: 'pc-r hd', html: '<span>time</span><span>agent</span><span>app</span><span>path</span><span class="v">got</span>' }));
       const polBlog = h('span', { class: 'pc-sel' }, 'full text');
@@ -543,7 +542,7 @@
     data: s => `<div class="cx-term"><div><span class="g">// </span>iframely data <span class="u">${s.url}</span></div><div class="g">   200 · ${s.data.ms} ms</div><div>   ${s.data.h}</div><div class="g">   ${s.data.ex}</div><div class="g">   access · ${s.data.acc}</div></div>`,
     pub: (s, n) => `<div class="cx-con"><div class="h"><b>${s.domain}</b><span>this URL · now</span></div>${[['preview', APP.rich, 'embed'], ['preview', APP.preview, 'card'], ['processing', APP.data, s.got]].slice(0, n == null ? 3 : n).map(([a, b, c]) => `<div class="r"><span>${a}</span><span>${b}</span><span class="v">${c}</span></div>`).join('')}<div class="pol"><code>${s.pol[0]}</code><span>${s.pol[1]}</span></div>` +
       /* the week for this domain, shown only where the Console window is tall (S12) */
-      `<div class="ext"><div class="h"><b>Last 7 days</b><span>by agent</span></div>${[['Preview', s.week[0], '#171717'], ['Processing', s.week[1], '#0055ff'], ['Training', s.week[2], '#bbbbbb']].map(([a, v, c]) => `<div class="b"><span>${a}</span><u style="--w:${Math.max(2, v / s.week[0] * 100)}%;--c:${c}"></u><s>${v}k</s></div>`).join('')}<div class="sig">Every request signed (Web Bot Auth) and named in the Forwarded header.</div></div></div>`,
+      `<div class="ext"><div class="h"><b>Last 7 days</b><span>by agent</span></div>${[['Preview', s.week[0], '#0b1533'], ['Processing', s.week[1], '#0055ff'], ['Training', s.week[2], '#b4bccb']].map(([a, v, c]) => `<div class="b"><span>${a}</span><u style="--w:${Math.max(2, v / s.week[0] * 100)}%;--c:${c}"></u><s>${v}k</s></div>`).join('')}<div class="sig">Every request signed (Web Bot Auth) and named in the Forwarded header.</div></div></div>`,
   };
   const CX_CSS = `
 .cx-url{display:flex;justify-content:center;margin-bottom:24px}
@@ -551,15 +550,15 @@
 .cx-url .u{color:var(--bl)}
 .cx-top{position:relative}
 .cx-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.cx-lines path{fill:none;stroke:#d5d5d5;stroke-width:1.5;stroke-dasharray:4 5;transition:stroke .5s}
-.cx-hub{position:relative;z-index:1;width:84px;height:84px;border-radius:22px;background:#171717;display:grid;place-items:center;box-shadow:0 10px 30px rgba(23,23,23,.18);transition:box-shadow .4s;margin:0 auto}
+.cx-lines path{fill:none;stroke:#cfd5e1;stroke-width:1.5;stroke-dasharray:4 5;transition:stroke .5s}
+.cx-hub{position:relative;z-index:1;width:84px;height:84px;border-radius:22px;background:#0b1533;display:grid;place-items:center;box-shadow:0 10px 30px rgba(11,21,51,.18);transition:box-shadow .4s;margin:0 auto}
 .cx-hub b{font:800 38px/1 'JetBrains Mono',ui-monospace,monospace;color:var(--bl);letter-spacing:-.06em;transform:translateX(-2px)}
-.cx-hub.ping{box-shadow:0 10px 30px rgba(23,23,23,.18),0 0 0 9px rgba(0,85,255,.14)}
+.cx-hub.ping{box-shadow:0 10px 30px rgba(11,21,51,.18),0 0 0 9px rgba(0,85,255,.14)}
 .cx1 .cx-hub{margin-bottom:76px}
 .cx-cards{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .cx-card{min-width:0}
 .cx-card .sx-win,.cx-side .sx-win{transition:box-shadow .3s,border-color .3s}
-.cx-card.hot .sx-win,.cx-w.hot{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,.06)}
+.cx-card.hot .sx-win,.cx-w.hot{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(11,21,51,.06)}
 .cx-body{height:236px;padding:14px 16px 16px;display:flex;flex-direction:column;justify-content:flex-end;gap:9px;font-size:12.5px;transition:opacity .3s;min-width:0}
 .cx-body.fade{opacity:.12}
 .cx-copy{padding:18px 4px 0}
@@ -699,7 +698,7 @@
 .cx-cmd .u{color:var(--bl)}
 .cx-cmd .st{color:var(--g)}
 .sx-bar.nd span{margin-left:0}
-.cx3 .cx-card.on .sx-win{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,.06)}
+.cx3 .cx-card.on .sx-win{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(11,21,51,.06)}
 `;
   const CARDS2 = ['sec-connect-cards2', { /* registered after S12 so the numbers stay put */
     group: 'sec', title: 'Connecting section · cards, the URL as a command',
@@ -1059,7 +1058,7 @@
   const DECIDE = {
     all: ['Allowed', `<svg viewBox="0 0 16 16"><path d="${SHIELD}" fill="#007a45"/><path d="m5.4 8.1 1.8 1.8 3.5-3.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`],
     part: ['Partly allowed', `<svg viewBox="0 0 16 16"><path d="${SHIELD}" fill="#e2f6ec" stroke="#007a45" stroke-width="1.3"/><path d="M5.4 8h5.2" stroke="#007a45" stroke-width="1.6" stroke-linecap="round"/></svg>`],
-    none: ['Denied', `<svg viewBox="0 0 16 16"><path d="${SHIELD}" fill="#171717"/><path d="m6 6 4 4M10 6l-4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>`],
+    none: ['Denied', `<svg viewBox="0 0 16 16"><path d="${SHIELD}" fill="#0b1533"/><path d="m6 6 4 4M10 6l-4 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>`],
   };
   const PC23 = s => { const p = s.pc, n = p.allow.length, d = DECIDE[n === 5 ? 'all' : n ? 'part' : 'none'];
     const bars = Array.from({ length: 30 }, (_, i) => { const c = 1 + Math.round(3 * Math.abs(Math.sin((i + p.seed) * 1.7) * Math.cos((i + p.seed) * .6))), hit = p.hits && (i * 7 + p.seed) % 3 === 0 ? Math.max(1, c - 1) : 0;
@@ -1113,9 +1112,9 @@
 .x-pc .h b{font-weight:600;color:var(--ink);font-size:13px}
 .x-pc .h span{font-size:11px;color:var(--g)}
 .x-pc .ch{height:24px;display:flex;align-items:flex-end;gap:2px;border-bottom:1px solid var(--line)}
-.x-pc .ch i{flex:1;height:var(--c);background:#e7e7e7;position:relative}
+.x-pc .ch i{flex:1;height:var(--c);background:#e3e7ef;position:relative}
 .x-pc .ch i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--h);background:#0055ff}
-.x-pc .ch i.now{background:#d5d5d5}
+.x-pc .ch i.now{background:#cfd5e1}
 .x-pc .st{display:flex;gap:14px;font:11px 'Geist Mono',ui-monospace,monospace;color:var(--g)}
 .x-pc .st b{font-weight:500;color:var(--ink)}
 .x-pc .ru{display:flex;justify-content:space-between;align-items:baseline;margin-top:4px}
@@ -1128,7 +1127,7 @@
 .x-pc .dc span{color:var(--g);font-size:11.5px;overflow:hidden;text-overflow:ellipsis}
 .x-pc .lv{display:flex;gap:4px;align-items:flex-end}
 .x-pc .lv div{flex:1 1 auto;display:flex;flex-direction:column;gap:4px} /* each column as wide as its label */
-.x-pc .lv i{display:block;border-radius:2px;border:1px dashed #d5d5d5;box-sizing:border-box}
+.x-pc .lv i{display:block;border-radius:2px;border:1px dashed #cfd5e1;box-sizing:border-box}
 .x-pc .lv .on i{background:var(--g2);border:0} /* layers sent, in a light neutral grey rather than the product colour (2026-10-30) */
 .x-pc .lv span{font:10px Geist,Inter,sans-serif;letter-spacing:-.01em;color:var(--g2);white-space:nowrap}
 .x-pc .lv .on span{color:var(--ink)}
@@ -1187,7 +1186,7 @@
 .hx-grid div:nth-child(6n){border-right:0}
 .hx-grid div:nth-last-child(-n+6){border-bottom:0}
 .hx-grid.one div{height:64px;border-bottom:0}
-.hx-wm{font:600 21px Geist,Inter,sans-serif;color:#363636;letter-spacing:-.02em;white-space:nowrap}
+.hx-wm{font:600 21px Geist,Inter,sans-serif;color:#2b3550;letter-spacing:-.02em;white-space:nowrap}
 .hx-wm.at,.hx-wm.gb,.hx-wm.nbc{font-size:16px;letter-spacing:.06em;font-weight:700}
 .hx-wm.cv{font:italic 600 26px Georgia,serif;letter-spacing:-.02em}
 .hx-wm.vx{font:italic 800 26px Georgia,serif}
@@ -1202,7 +1201,7 @@
 .hx-gap{height:72px}
 .cx-copy .hx-proof{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;color:var(--g);line-height:1.45}
 .cx-copy .hx-proof b{font-weight:500;color:var(--mut)}
-.hx-field{display:flex;align-items:center;gap:10px;margin-top:32px;max-width:640px;border:1px solid var(--line);border-radius:28px;background:#fff;padding:5px 5px 5px 20px;box-shadow:0 1px 2px rgba(23,23,23,.04),0 10px 26px rgba(23,23,23,.05)}
+.hx-field{display:flex;align-items:center;gap:10px;margin-top:32px;max-width:640px;border:1px solid var(--line);border-radius:28px;background:#fff;padding:5px 5px 5px 20px;box-shadow:0 1px 2px rgba(11,21,51,.04),0 10px 26px rgba(11,21,51,.05)}
 .hx-field .cx-cmd{flex:1;margin:0;font-size:14.5px;min-width:0;overflow:hidden}
 .hx-field a{flex:none;height:44px;display:inline-flex;align-items:center;padding:0 22px;border-radius:22px;background:var(--ink);color:#fff;font-size:15.5px;text-decoration:none}
 .hx-field.clean .cx-cmd>span:first-child,.hx-field.clean .cx-cmd .st{display:none} /* S28: the URL only, no prompt or status */
@@ -1398,7 +1397,7 @@
 .fx3 .cx-rail .typing em::after{content:"";display:inline-block;width:1.5px;height:12px;margin-left:2px;vertical-align:-2px;background:var(--m);animation:fx-blink 1s steps(1) infinite}
 @keyframes fx-blink{50%{opacity:0}}
 .fx4 .cx-rail i{display:none}
-.fx4.cx3 .cx-card.on .sx-win{border-color:var(--line);box-shadow:0 1px 2px rgba(23,23,23,.04),0 12px 32px rgba(23,23,23,.06)}
+.fx4.cx3 .cx-card.on .sx-win{border-color:var(--line);box-shadow:0 1px 2px rgba(11,21,51,.04),0 12px 32px rgba(11,21,51,.06)}
 .fx4 .sx-win{position:relative}
 .fx4 .sx-win::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(var(--m) var(--fxa),transparent 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .45s;pointer-events:none;z-index:2}
 .fx4 .cx-card.trace .sx-win::after{opacity:1;animation:fx-trace .8s cubic-bezier(.4,0,.2,1) forwards}
@@ -1495,8 +1494,8 @@
 .ch .cx-unf{margin-top:6px;grid-template-columns:minmax(0,1fr) 36px;transition:opacity .25s,transform .25s}
 .ch .cx-unf span{-webkit-line-clamp:1}
 .ch .cx-unf i{width:36px;height:36px}
-.ch .cx-unf.sk u{display:block;height:7px;margin:4px 0;border-radius:4px;background:linear-gradient(90deg,#f0f0f0,#f9f9f9 50%,#f0f0f0) 0 0/200% 100%;animation:ch-sh 1s linear infinite}
-.ch .cx-unf.sk i{background:#f0f0f0}
+.ch .cx-unf.sk u{display:block;height:7px;margin:4px 0;border-radius:4px;background:linear-gradient(90deg,#eef0f4,#f8f9fb 50%,#eef0f4) 0 0/200% 100%;animation:ch-sh 1s linear infinite}
+.ch .cx-unf.sk i{background:#eef0f4}
 @keyframes ch-sh{to{background-position:-200% 0}}
 .ch-in{flex:none;display:flex;align-items:center;gap:6px;height:30px;padding:0 5px 0 10px;border:1px solid var(--line);border-radius:8px;font-size:12px;color:var(--ink)}
 .ch-in .t{flex:1;min-width:0;display:flex;justify-content:flex-end;overflow:hidden;white-space:pre}
@@ -1552,7 +1551,7 @@
     blurb: 'S40 with the Preview API window turned into a chat channel: a thread anchored to the bottom and a message box (Message #general). For each URL a line of text and the link type into the message box, the send button lights up in the Preview colour, the message is sent and appears as the newest one with the link in blue, older messages move up and fade out at the top, and the link unfurls: a shimmering placeholder first, then the card with the site’s icon, title, description and image.',
     mount(stage) { const un = fxScene('mark', { urlOnly: true }, { body: Object.assign({}, BODY23, { preview: chatBody }), update: { preview: animChat, data: typeData, pub: animPC } })(stage); return un; },
   });
-  /* The S41 band on its own for the website prototype (website-prototype/src/lib/components/HomeScene.svelte): the URL
+  /* The S41 band on its own for the website prototype (website/src/lib/components/HomeScene.svelte): the URL
      line with the // spinner, the gradient progress line, the four windows (chat in Preview API) and no copy, mounted into
      host without the hero, nav or logos. onCycle runs when the last window has answered (the page swaps its logos then).
      The root carries .demo and goes .off out of view, so the scene holds off screen as it does in the lab. */

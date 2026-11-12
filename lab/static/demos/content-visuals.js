@@ -1,17 +1,17 @@
 /* V · Content visuals (2026-11-05): new ways to show the website's content blocks (group 'cv', page #content, V01–V12).
-   One card per block of website-prototype (src/routes: +page, embeds, preview-api, data-api, publishers), with its real copy
+   One card per block of website (src/routes: +page, embeds, preview-api, data-api, publishers), with its real copy
    (eyebrow, heading, intro, cards) and a visual that carries the block's argument where the prototype has a grey
    placeholder or a plain table. Visuals are live text in Geist Mono in the prototype palette (light or all black); values
    that are not in the copy (timings, request counts, sample metadata) are illustrative.
    Needs dither-sections.js (card), dither-sections3.js (player, receiptText, TFONT) and dither-sections4.js (grid, pre, inksOf). */
 (() => {
   const X = () => DEMOS.sectionsKit, Z = () => DEMOS.sectionsKit3, V = () => DEMOS.sectionsKit4;
-  const SANS = 'Geist, Inter, sans-serif', GMONO = "'Geist Mono', ui-monospace, monospace", PAGE = '#fafafa'; /* website-prototype --color-page */
+  const SANS = 'Geist, Inter, sans-serif', GMONO = "'Geist Mono', ui-monospace, monospace", PAGE = '#fafafa'; /* website --color-page */
   const seg = (s, tone, wt, bg) => [s, tone || 'ink', wt || 400, bg], gap = g => ({ gap: g || .6 });
   const div = (css, html) => { const d = document.createElement('div'); if (css) d.style.cssText = css; if (html != null) d.innerHTML = html; return d; };
   const strip = h => h.replace(/<br\s*\/?>/g, ' ').replace(/<[^>]+>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
   const OPTS = [{ key: 'theme', label: 'Theme', values: [['light', 'Light'], ['black', 'All black']] }, { key: 'acc2', label: 'Accent', values: [['product', 'Product colours'], ['blue', 'All blue'], ['none', 'None']] }, { key: 'tfont', label: 'Face', values: [['geist', 'Geist Mono'], ['fira', 'Fira Code']] }, X().OPT.page];
-  const NOTE = 'Copy from website-prototype; the visual is live HTML text (Copy text / .txt export the block). Values not in the copy are illustrative.';
+  const NOTE = 'Copy from website; the visual is live HTML text (Copy text / .txt export the block). Values not in the copy are illustrative.';
   function vcard(name, title, blurb, page, build) {
     X().card(name, title, blurb, { group: 'cv', short: name.replace('cv-', ''), init: { theme: 'light', acc2: 'product', tfont: 'geist' }, opts: OPTS, note: NOTE,
       items: st => [{ label: page + ' · ' + st.theme, dom: s => build(s, Object.assign(V().inksOf(s), s.theme === 'black' ? {} : { bg: PAGE, ground: PAGE })) }] });

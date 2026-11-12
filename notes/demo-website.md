@@ -58,4 +58,4 @@ Section headlines on the product pages (eyebrow, then title):
 5. Six customer logos in the trust section.
 
 
-Update 2026-10-22: the demo was copied into this repo as `website-prototype/` (without node_modules, .svelte-kit and build). Work on that copy from now on; the original under iframely-marketing stays as it was.
+Update 2026-10-22: the demo was copied into this repo as `website/` (originally `website-prototype/`; without node_modules, .svelte-kit and build). Work on that copy from now on; the original under iframely-marketing stays as it was.

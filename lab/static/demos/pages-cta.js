@@ -1,8 +1,8 @@
 /* G · Page content: closing CTAs (2026-11-05, group 'pg', page #pages). The band at the bottom of the five main pages
    (home, /embeds, /preview-api, /data-api, /publishers), one treatment per card with all five pages stacked so a treatment
-   can be judged as a system. Copy from website-prototype: the Cta blocks at the end of each product page; home has no
+   can be judged as a system. Copy from website: the Cta blocks at the end of each product page; home has no
    closing CTA yet, so it uses the band under its hero ("Connecting developers and publishers, one URL at a time").
-   Code lines from website-prototype src/lib/data/samples.ts and the publishers FAQ. Needs content-visuals2.js (cvKit2). */
+   Code lines from website src/lib/data/samples.ts and the publishers FAQ. Needs content-visuals2.js (cvKit2). */
 (() => {
   const K = () => DEMOS.cvKit2, X = () => DEMOS.sectionsKit;
   const SANS = 'Geist, Inter, sans-serif', GMONO = "'Geist Mono', ui-monospace, monospace";
@@ -31,7 +31,7 @@
   const OPTS = [{ key: 'theme', label: 'Theme', values: [['light', 'Light'], ['black', 'All black']] },
     { key: 'which', label: 'Pages', values: [['all', 'All five'], ...P.map(p => [p.k, p.name])] },
     { key: 'free', label: 'Data API free line', values: [['proto', 'As in prototype'], ['new', 'New price list']] }];
-  const NOTE = 'Copy from the website-prototype Cta blocks (embeds, preview-api, data-api, publishers); home has no closing CTA, so it uses the band under its hero. The Data API line says 1,000 reads free; the new price list gives 2,000 hits on every account (switch “Data API free line”). Code from src/lib/data/samples.ts; the robots.txt lines follow the publishers FAQ.';
+  const NOTE = 'Copy from the website Cta blocks (embeds, preview-api, data-api, publishers); home has no closing CTA, so it uses the band under its hero. The Data API line says 1,000 reads free; the new price list gives 2,000 hits on every account (switch “Data API free line”). Code from src/lib/data/samples.ts; the robots.txt lines follow the publishers FAQ.';
   function card(name, title, blurb, band, init) {
     X().card(name, title, blurb, { group: 'pg', short: name.replace('pg-', ''), init: Object.assign({ theme: 'light', acc2: 'product', which: 'all', free: 'proto' }, init), opts: OPTS, note: NOTE,
       items: st => [{ label: 'closing CTA · ' + st.which + ' · ' + st.theme, dom: s => {

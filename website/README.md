@@ -14,7 +14,7 @@ SvelteKit 3, Svelte 5, Tailwind 4, adapter-static (every page is prerendered).
 
 ## Colour
 
-`src/routes/layout.css` defines the tokens: paper `#f7f5f0` as the page (`ink-50`), warm ink `#1c1b18` for text (`ink-900`), cobalt `#1f3fe0` as the accent (`brand-600`) and `#1a35c4` for links (`brand-700`). `--color-white` is redefined as the card surface `#fffdf9`, so `bg-white` in the components sits on paper. Default sections are paper, muted sections one step darker (`ink-100`), dark sections ink. The six pastels (pink, lavender, sky, mint, sand, peach) are available as `bg-pink` and so on but not yet used. Source of truth: `../explorations/2026-10-22-motion-lab/lib/demos.css`.
+`src/routes/layout.css` defines the tokens: paper `#f7f5f0` as the page (`ink-50`), warm ink `#1c1b18` for text (`ink-900`), cobalt `#1f3fe0` as the accent (`brand-600`) and `#1a35c4` for links (`brand-700`). `--color-white` is redefined as the card surface `#fffdf9`, so `bg-white` in the components sits on paper. Default sections are paper, muted sections one step darker (`ink-100`), dark sections ink. The six pastels (pink, lavender, sky, mint, sand, peach) are available as `bg-pink` and so on but not yet used. Source of truth: `../lab/static/lib/demos.css`.
 
 ## Type panel
 

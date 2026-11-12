@@ -1,6 +1,6 @@
 /* V · Content visuals round 2 (2026-11-05): the same prototype blocks without characters as the idea (group 'cv', V13–V25).
    Interface mock-ups, SVG diagrams and charts, and working controls, in the prototype palette (light / all black) and Geist.
-   Copy is from website-prototype; sample data (requests, file sizes, years, customer apps, paths) is illustrative.
+   Copy is from website; sample data (requests, file sizes, years, customer apps, paths) is illustrative.
    Needs content-visuals.js (DEMOS.cvKit.block) and dither-sections4.js (inksOf). */
 (() => {
   const X = () => DEMOS.sectionsKit, V = () => DEMOS.sectionsKit4, B = () => DEMOS.cvKit;
@@ -8,7 +8,7 @@
   const mix = (a, b, k) => X().mix(a, b, k);
   const div = (css, html) => { const d = document.createElement('div'); if (css) d.style.cssText = css; if (html != null) d.innerHTML = html; return d; };
   const OPTS = [{ key: 'theme', label: 'Theme', values: [['light', 'Light'], ['black', 'All black']] }, { key: 'acc2', label: 'Accent', values: [['product', 'Product colours'], ['blue', 'All blue'], ['none', 'None']] }, X().OPT.page];
-  const NOTE = 'Copy from website-prototype; the visual is HTML, CSS and SVG. Sample data (requests, sizes, years, apps, paths) is illustrative.';
+  const NOTE = 'Copy from website; the visual is HTML, CSS and SVG. Sample data (requests, sizes, years, apps, paths) is illustrative.';
   const ink = s => { const I = V().inksOf(s), d = s.theme === 'black'; return Object.assign({}, I, d ? {} : { bg: '#fafafa', ground: '#fafafa' }, { dark: d, surf: d ? '#111111' : '#ffffff', well: d ? '#0a0a0a' : '#f4f4f4', line: d ? '#2a2a2a' : '#e6e6e6', faint: d ? '#1a1a1a' : '#f2f2f2', good: d ? '#3fb950' : '#1a7f37', warn: d ? '#d29922' : '#9a6700' }); };
   function card(name, title, blurb, page, build) {
     X().card(name, title, blurb, { group: 'cv', short: name.replace('cv-', ''), init: { theme: 'light', acc2: 'product' }, opts: OPTS, note: NOTE,

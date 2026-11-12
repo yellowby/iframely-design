@@ -51,7 +51,7 @@ The choice persists in `localStorage` (`fontlab:v1`) across pages and reloads; a
 | Base | Inter (variable, optical sizes, italics), Geist (variable) | Google Fonts |
 | Mono | Geist Mono (variable), JetBrains Mono (variable, italics) | Google Fonts |
 
-Licensed faces are added by dropping the files in `fonts/<Family>/` and adding an entry to `fonts/local.js` with `paid: true`; `fonts/README.md` has the format and the list of trials in place (Arizona Flare, Reckless, Tiempos Headline and Fine, Signifier, PP Editorial New, GT Alpina and Fine). Exposure (205TF) and Wulkan Text have no trial yet. The same `fontlab.js` and `local.js` live in the website prototype (`website-prototype/src/lib/fontlab/`), where the panel is a Svelte component on every page with one extra control, "Serif on" (h1 / h1 + h2 / h1 to h3 / off). The lab copy of `fontlab.js` is canonical; copy it over after changes.
+Licensed faces are added by dropping the files in `fonts/<Family>/` and adding an entry to `fonts/local.js` with `paid: true`; `fonts/README.md` has the format and the list of trials in place (Arizona Flare, Reckless, Tiempos Headline and Fine, Signifier, PP Editorial New, GT Alpina and Fine). Exposure (205TF) and Wulkan Text have no trial yet. The same `fontlab.js` and `local.js` live in the website prototype (`website/src/lib/fontlab/`), where the panel is a Svelte component on every page with one extra control, "Serif on" (h1 / h1 + h2 / h1 to h3 / off). The lab copy of `fontlab.js` is canonical; copy it over after changes.
 
 ## Decisions so far (team, 2026-10-22)
 
@@ -437,7 +437,7 @@ Block characters (U+2580–259F): Google Fonts' JetBrains Mono has none; Geist M
 
 ## Content visuals (`group: cv`, page `#content`, `demos/content-visuals.js`, 2026-11-05)
 
-One card per content block of website-prototype (home, /embeds, /preview-api, /data-api, /publishers), with that block's real eyebrow, heading, intro and cards. Each card adds a visual for the block's argument, often where the prototype has a grey placeholder or a plain table. Visuals are live HTML text in Geist Mono (Copy text / .txt), in the prototype palette with product colours, light or all black. Values not in the copy (timings, request counts, sample metadata, the example-news.com article) are illustrative.
+One card per content block of website (home, /embeds, /preview-api, /data-api, /publishers), with that block's real eyebrow, heading, intro and cards. Each card adds a visual for the block's argument, often where the prototype has a grey placeholder or a plain table. Visuals are live HTML text in Geist Mono (Copy text / .txt), in the prototype palette with product colours, light or all black. Values not in the copy (timings, request counts, sample metadata, the example-news.com article) are illustrative.
 
 | Card | Block | Visual |
 |---|---|---|
@@ -540,7 +540,7 @@ G18 `pg-cta-pricing` is a short pricing block that sits just above the closing C
 
 ## Pricing block, round 2 (G19–G24)
 
-`demos/pages-price-block.js`, iterations on G18. The type follows website-prototype `type.ts`: heading 32, body 18, note 16, mono tag 16, buttons as 15 px pills, and cards with a 12 px radius and a hairline. Each plan shows only its name, price, one line and one button. Free is $0 with 2,000 hits then $4 per 1,000, Monthly volumes start from $30, and Enterprise is 2M+.
+`demos/pages-price-block.js`, iterations on G18. The type follows website `type.ts`: heading 32, body 18, note 16, mono tag 16, buttons as 15 px pills, and cards with a 12 px radius and a hairline. Each plan shows only its name, price, one line and one button. Free is $0 with 2,000 hits then $4 per 1,000, Monthly volumes start from $30, and Enterprise is 2M+.
 
 - G19 `pg-pb-three`: G18 in three columns (heading, Free, Paid) with an Enterprise line below
 - G20 `pg-pb-plans3`: section heading over three equal plan cards
@@ -553,7 +553,7 @@ Switches: page, Paid plan colour (blue, page, black, outline), Price size (40, 5
 
 ## Page content: footers (G25–G37)
 
-`demos/pages-footer.js` and `demos/pages-footer2.js`, group `pg`. Content comes from website-prototype: the `nav.ts` footer columns, Solutions from the header, and the blurb, badges, copyright and Markdown line from `Footer.svelte`. Columns are regrouped per variant. The logo is the new `//iframely` from `Header.svelte`: JetBrains Mono, with `//` at 800 in blue and the word at 700. The giant versions are an SVG `<text>` stretched to ten mono cells.
+`demos/pages-footer.js` and `demos/pages-footer2.js`, group `pg`. Content comes from website: the `nav.ts` footer columns, Solutions from the header, and the blurb, badges, copyright and Markdown line from `Footer.svelte`. Columns are regrouped per variant. The logo is the new `//iframely` from `Header.svelte`: JetBrains Mono, with `//` at 800 in blue and the word at 700. The giant versions are an SVG `<text>` stretched to ten mono cells.
 
 Round 1, after G15, G18 and the user's reference footers:
 - G25 the logo as the floor, cut by the edge

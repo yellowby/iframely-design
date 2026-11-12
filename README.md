@@ -12,7 +12,7 @@ This folder holds notes and prototypes only. The site code, the plans and the de
 | `C:\web\publicly` | The live iframely.com site (SvelteKit 5, pnpm). Source of the current fonts, colours and page templates. |
 | `C:\web\iframely-marketing\plans\website\` | The website plan: one file per page question (01 to 11) and the decision log D1 to D40 in its README. |
 | `C:\web\iframely-marketing\research\` | The research behind the plan. Start with `action-plan-overview.md`. |
-| `website-prototype/` (in this repo) | Copy of the barebones SvelteKit prototype of the proposed site, taken from `C:\web\iframely-marketing\demos\website` on 2026-10-22 without `node_modules`, `.svelte-kit` and `build`. Draft copy and structure, no design yet; the place to apply the motion lab and the chosen palette. `npm install` then `npm run dev` (http://localhost:5173). |
+| `website/` (in this repo) | Copy of the barebones SvelteKit prototype of the proposed site, taken from `C:\web\iframely-marketing\demos\website` on 2026-10-22 without `node_modules`, `.svelte-kit` and `build`. Draft copy and structure, no design yet; the place to apply the motion lab and the chosen palette. `npm install` then `npm run dev` (http://localhost:5173). |
 | `C:\web\iframely-marketing\demos\website\` | The original of that prototype; treat the copy above as the working one from now on. |
 
 ## Notes
@@ -26,7 +26,7 @@ This folder holds notes and prototypes only. The site code, the plans and the de
 
 - [explorations/2026-10-22-palette-fonts/](explorations/2026-10-22-palette-fonts/README.md): palettes, serif headings, hero and pattern switches (HTML board), two restyled Home frames and the palettes / patterns / shapes board in Figma.
 - [explorations/2026-10-22-graphic-treatments/](explorations/2026-10-22-graphic-treatments/README.md): type-as-texture, bold two-colour shapes and blueprint/specimen tiles; the terminal-graphics board; the logo-refresh board. All in Figma, with node ids.
-- [explorations/2026-10-22-motion-lab/](explorations/2026-10-22-motion-lab/README.md): working HTML demos. Seven shader and canvas backgrounds with pointer interaction, seven scripted product scenes (Motion) next to text blocks, and the Type panel (Tweakpane) that switches heading, base and mono faces, shared with the prototype. Open `index.html`.
+- [lab/](lab/README.md): working HTML demos. Seven shader and canvas backgrounds with pointer interaction, seven scripted product scenes (Motion) next to text blocks, and the Type panel (Tweakpane) that switches heading, base and mono faces, shared with the prototype. Open `index.html`.
 
 ## Conventions
 

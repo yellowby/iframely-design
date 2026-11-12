@@ -1,5 +1,5 @@
 /* G · Page content: pricing block above the closing CTA, round 2 (2026-11-05, group 'pg'). Iterations on G18 after the
-   user's notes: type closer to website-prototype (src/lib/type/type.ts: hero 40, h2 32, body 18, note 16, tag mono 16,
+   user's notes: type closer to website (src/lib/type/type.ts: hero 40, h2 32, body 18, note 16, tag mono 16,
    button 15 in a pill; cards 12px radius with a hairline), three columns, and only the basic facts per plan (name,
    price, one line, one button). Copy from G01 / iframely-marketing 12-pricing-volumes.md. Needs pages-cta.js (ctaKit). */
 (() => {
@@ -54,7 +54,7 @@
     { key: 'paint', label: 'Paid plan', values: [['acc', 'Blue'], ['page', 'Page colour'], ['ink', 'Black'], ['none', 'Outline']] },
     { key: 'size', label: 'Price size', values: [[40, '40 · hero'], [56, '56'], [72, '72']] },
     { key: 'withcta', label: 'Closing CTA', values: [['yes', 'Shown below'], ['no', 'Hidden']] }];
-  const NOTE = 'Plan facts from iframely-marketing 12-pricing-volumes.md (G01): 2,000 hits free then $4 per 1,000; monthly volumes from $30 (10,000 at $3.00); Enterprise above 2 million. Type from website-prototype type.ts; the heading face is Aeonik Fono in the prototype and falls back to Geist here. The plan labels and “2M+” are working copy.';
+  const NOTE = 'Plan facts from iframely-marketing 12-pricing-volumes.md (G01): 2,000 hits free then $4 per 1,000; monthly volumes from $30 (10,000 at $3.00); Enterprise above 2 million. Type from website type.ts; the heading face is Aeonik Fono in the prototype and falls back to Geist here. The plan labels and “2M+” are working copy.';
   const TEXT = 'Usage-based pricing\nOne price list, 2,000 hits a month free on every account.\n' + PLANS.map(q => `${q.label}: ${q.from ? 'from ' : ''}${q.price}${q.unit ? ' ' + q.unit : ''}. ${q.line}. [${q.btn}]`).join('\n');
   function pcard(name, title, blurb, build, init, noCta) {
     X().card(name, title, blurb, { group: 'pg', short: name.replace('pg-', ''), note: NOTE,

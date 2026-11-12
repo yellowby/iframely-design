@@ -1,7 +1,7 @@
 /* G · Page content: footers (2026-11-05, group 'pg', page #pages). Fancier page footers for the website, after G15 (the
    path as a giant mark cut by the edge) and G18 (big type, a coloured plan box), and a set of footers the user shared
    (giant wordmarks, promo cards beside the links, big-type link lists on black, soft gradients, a dithered wordmark).
-   Content from website-prototype: src/lib/data/nav.ts (footer columns, header Solutions), Footer.svelte (blurb, badges,
+   Content from website: src/lib/data/nav.ts (footer columns, header Solutions), Footer.svelte (blurb, badges,
    copyright, Markdown line) and the //iframely logo from Header.svelte. Columns are regrouped per variant.
    Needs content-visuals2.js (cvKit2)and pages-cta.js (ctaKit). */
 (() => {
@@ -45,7 +45,7 @@
   const pill = (t, bg, fg, line) => `<span style="display:inline-flex;align-items:center;height:38px;padding:0 20px;border-radius:19px;font:500 15px ${SANS};white-space:nowrap;${bg ? `background:${bg};color:${fg}` : `box-shadow:inset 0 0 0 1px ${line};color:${fg}`}">${t}</span>`;
 
   const OPTS = [{ key: 'theme', label: 'Theme', values: [['light', 'Light'], ['black', 'All black']] }];
-  const NOTE = 'Links, blurb, badges and copyright from website-prototype nav.ts and Footer.svelte; Solutions from the header menu. Logo paths from Logo.svelte. Columns regrouped per variant; nothing new added except the plan facts in G27 (from the price list).';
+  const NOTE = 'Links, blurb, badges and copyright from website nav.ts and Footer.svelte; Solutions from the header menu. Logo paths from Logo.svelte. Columns regrouped per variant; nothing new added except the plan facts in G27 (from the price list).';
   function fcard(name, title, blurb, build, opts = [], init = {}) {
     X().card(name, title, blurb, { group: 'pg', short: name.replace('pg-', ''), note: NOTE, opts: [...OPTS, ...opts],
       init: Object.assign({ theme: 'light', acc2: 'product' }, init),

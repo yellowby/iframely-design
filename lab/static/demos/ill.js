@@ -1,7 +1,7 @@
 /* ill-* · small product illustrations for the prototype's product pages, after a reference board (mono labels, thin black
    line diagrams, one accent) with the accent switched to Iframely blue. Static inline SVG, viewBox 360 × 240, so each one
    can be copied straight into a Svelte component (every card has a "copy svg" button). Titles and text are the feature
-   copy from website-prototype/src/routes/{embeds,preview-api,data-api,publishers}. Group 'ill', mount(stage). */
+   copy from website/src/routes/{embeds,preview-api,data-api,publishers}. Group 'ill', mount(stage). */
 (() => {
   /* palette slots, set per tile by paint(): line, accent, accent mid, accent light, placeholder grey, muted text, knockout (tile bg) */
   let K, B, B2, B3, G, M, W, SFX = '', TILE = false;
