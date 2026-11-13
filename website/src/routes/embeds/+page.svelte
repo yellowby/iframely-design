@@ -9,6 +9,10 @@
 	import GlyphSection from '#lib/components/GlyphSection.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
 	import ProviderWall from '#lib/components/ProviderWall.svelte';
+	import EmbedWall from '#lib/components/EmbedWall.svelte';
+	import CtaWindow from '#lib/components/CtaWindow.svelte';
+	import BlueprintCards from '#lib/components/BlueprintCards.svelte';
+	import type { IconName } from '#lib/data/icons.ts';
 	import DevCover, { type DevScene } from '#lib/components/DevCover.svelte';
 	import { PANEL } from '#lib/card.ts';
 
@@ -27,11 +31,12 @@
 		['Predictive height', 'Posts take their place on the page before they even load, so text stays where readers left it and your Core Web Vitals stay healthy.', '', '', 'height'],
 		['One video at a time', 'A single setting keeps one player playing, and muted autoplay on scroll is there wherever providers allow it.', '/docs/autoplay', 'Docs', 'single']
 	];
+	// "Privacy and security" cards: the bold lead, the rest of the sentence, the icon
 	const security = [
-		['Every embed runs in our iframe,', 'apart from your page and its code.'],
-		['Readers give their consent', 'before any third-party cookie loads.'],
-		['Iframely is SOC 2 Type II audited.', ''],
-		['On Enterprise, reader traffic can stay on your own domain:', 'we serve everything from your CDN.']
+		['Every embed runs in our iframe,', 'apart from your page and its code.', 'frame'],
+		['Readers give their consent', 'before any third-party cookie loads.', 'consent'],
+		['Iframely is SOC 2 Type II audited.', '', 'audited'],
+		['On Enterprise, reader traffic can stay on your own domain:', 'we serve everything from your CDN.', 'domain']
 	];
 </script>
 
@@ -42,57 +47,91 @@
 
 <Hero
 	eyebrow="Rich Media"
-	title="Perfect embeds, every time"
+	product
+	endpoint="iframe.ly/api/iframely"
+	title={'Perfect embeds, <span class="text-rich">every time</span>'}
 	sub="Send us a URL, get the embed code back. Today and tomorrow. Videos play, posts appear and maps move, the way people expect from the apps they love, wherever your users write, post and chat."
 >
 	<Button href="#signup">Get an API key</Button>
 	<Button href="/try" variant="secondary">Try a link</Button>
+	<!-- V15 from the motion lab: a wall of the kinds of embeds, under the copy -->
+	{#snippet below()}<EmbedWall />{/snippet}
 </Hero>
 
-<!-- Our take on iframely.com's "Rich media people like and share": the home sections' two columns, then a wall of
-     provider logos sorted by kind of media (components/ProviderWall.svelte), then the link to the full list. -->
+<!-- The call to action straight after the hero scene, as the wall's last window in blue (components/CtaWindow.svelte):
+     pulled up over the hero's bottom padding (56px, 80px from md) so it sits 28px under the wall, the wall's own gap. -->
+<div class="hero-cta wrap -mt-7 mb-10 md:-mt-13">
+	<CtaWindow
+		title="Start with one URL"
+		buttons={[
+			['Get an API key', '#signup'],
+			['Try a link', '/try']
+		]}
+	/>
+</div>
+
+<!-- Our take on iframely.com's "Rich media people like and share": the home sections' two columns, then the
+     providers as one ruled sheet in the page's card box (components/ProviderWall.svelte). No buttons under the
+     heading: the closing line and the link to the full list are in the sheet's foot. -->
 <section id="providers" class="wrap scroll-mt-[calc(var(--header-h)+24px)] py-24">
-	<p class="t-tag text-rich">1,900 providers</p>
-	<div class="mt-5 grid gap-x-16 gap-y-8 md:grid-cols-2">
+	<div class="grid gap-x-16 gap-y-8 md:grid-cols-2">
 		<h2 class="t-h2 text-fg">Over 1,900 media providers, and growing</h2>
-		<div>
-			<p class="t-body text-body">
-				From YouTube and Spotify to Figma, Google Docs and Calendly, and the one you've never heard of. Every provider is
-				prepared with care, and reviewed by hand all year round.
-			</p>
-			<p class="t-note mt-4 text-mute">Whatever your users paste tomorrow, chances are it already works today.</p>
-		</div>
+		<p class="t-body text-body">
+			From YouTube and Spotify to Figma, Google Docs and Calendly, and the one you've never heard of. Every provider is
+			prepared with care, and reviewed by hand all year round.
+		</p>
 	</div>
-	<div class="mt-16"><ProviderWall /></div>
-	<div class="mt-10 flex justify-center">
-		<a
-			href="/domains"
-			class="t-button inline-flex items-center gap-2.5 rounded-full bg-white py-2 pr-2 pl-5 text-fg ring-1 ring-black/12 transition-shadow ring-inset hover:ring-black/30"
-		>
-			Browse supported providers
-			<span class="rounded-full bg-rich/10 px-2 py-1 text-[12px] leading-none text-rich">1,900+</span>
-		</a>
-	</div>
+	<div class="mt-14"><ProviderWall /></div>
 </section>
 
 <!-- A block laid out as the home page's product sections: the tag, then the heading on the left and the text (if any)
      on the right; under them four cards, two by two: text on top, a cover placeholder below. -->
-{#snippet cardBlock(id: string, tag: string, title: string, text: string, cards: string[][])}
+{#snippet cardBlock(id: string, tag: string, title: string, text: string, cards: string[][], flat = false, num = '')}
 	<section {id} class="wrap scroll-mt-[calc(var(--header-h)+24px)] py-24">
-		<p class="t-tag text-rich">{tag}</p>
+		<!-- num: the section's number before the tag, in a small light blue box (a sheet number) -->
+		<p class="t-tag flex items-center gap-2.5 text-rich">
+			{#if num}<span class="rounded-sm bg-rich/10 px-1.5 py-1 text-[12px] leading-none">{num}</span>{/if}{tag}
+		</p>
 		<div class="mt-5 grid gap-x-16 gap-y-8 md:grid-cols-2">
 			<h2 class="t-h2 text-fg">{title}</h2>
 			{#if text}<p class="t-body text-body">{text}</p>{/if}
 		</div>
+		{#if flat}
+			<!-- as the hero wall: the card has the wall's windows' box (8px corners, hairline ring, soft shadow), 28px from
+			     the next. The title, text and link are on top; the cover is under them: the scene's window on light grey,
+			     set in by 24px. -->
+			<div class="mt-14 grid gap-4 md:grid-cols-2">
+				{#each cards as [name, body, href, cta, scene], i (name)}
+					<div class="relative flex flex-col overflow-hidden rounded-lg bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.08),0_8px_24px_rgb(0_0_0/calc(0.06*var(--drop,1)))]">
+						<!-- the cover is set 12px inside the card (DevCover's bare mode), its window two squares further in; the
+						     text lines up with that window, 36px in. The title is set as the window bars' neighbour: 18px
+						     medium; the text under it is grey, a step quieter than the title. -->
+						<div class="order-first grow px-9 pt-7 pb-6">
+							<h3 class="text-[18px] leading-[1.35] font-medium text-fg">{name}</h3>
+							<p class="t-small mt-1.5 max-w-[440px] text-[15px]! text-pretty text-mute">{body}</p>
+						</div>
+						<DevCover scene={scene as DevScene} bare pattern={i % 4} />
+						<!-- the link: a small black pill lying on the cover, in its bottom-right corner, over the scene's window -->
+						{#if cta}
+							<a
+								{href}
+								class="group t-small absolute right-6 bottom-6 inline-flex items-center gap-1 rounded-full bg-fg py-1.5 pr-2.5 pl-3.5 font-medium text-white transition-colors hover:bg-body"
+								>{cta}<svg class="transition-transform group-hover:translate-x-0.5" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5" /></svg></a
+							>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		{:else}
 		<div class="mt-16 grid gap-6 md:grid-cols-2">
 			{#each cards as [name, body, href, cta, scene] (name)}
 				<div class="flex flex-col overflow-hidden {PANEL}">
-					<div class="grow p-6">
+					<div class="grow p-8 pb-6">
 						<!-- the card is not a link; its link is a small grey chip in the top-right corner, and the title keeps clear of it -->
 						{#if cta}
 							<a
 								{href}
-								class="absolute top-5 right-5 inline-flex items-center gap-1 rounded-full py-1 pr-2 pl-2.5 text-[12px] leading-none text-mute ring-1 ring-black/8 transition-colors ring-inset hover:text-fg hover:ring-black/25"
+								class="absolute top-7 right-7 inline-flex items-center gap-1 rounded-full py-1 pr-2 pl-2.5 text-[12px] leading-none text-mute ring-1 ring-black/8 transition-colors ring-inset hover:text-fg hover:ring-black/25"
 								>{cta}<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 1.5 7 5 3.5 8.5" /></svg></a
 							>
 						{/if}
@@ -108,15 +147,18 @@
 				</div>
 			{/each}
 		</div>
+		{/if}
 	</section>
 {/snippet}
 
 {@render cardBlock(
 	'developers',
-	'For your developers',
+	'For developers',
 	'The embeds API you wish you built yourself',
-	'Send a URL, get HTML back. Connect once, and every feature comes through the same endpoint:',
-	developers
+	'Send a URL, get HTML back. Connect once, and every feature comes through the same endpoint.',
+	developers,
+	true,
+	'01'
 )}
 
 <Section id="upkeep" eyebrow="For your product team" title="Your embeds are in good hands" narrow>
@@ -138,22 +180,19 @@
 	</div>
 </Section>
 
-<Section
-	id="security"
-	tone="muted"
-	eyebrow="Privacy and security"
-	title="Third-party media, without the third-party worries"
-	intro="Your security team will ask, so here's the short answer:"
->
-	<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-		{#each security as [lead, rest] (lead)}
-			<div class="rounded-xl border border-ink-100 bg-white p-5 text-[15px] text-ink-700">
-				<b class="text-ink-950">{lead}</b>
-				{rest}
-			</div>
-		{/each}
+<!-- Laid out as the home page's sections (and the card blocks here): the tag, then the heading on the left and the
+     text on the right; under them the cards, as the home page's trust block: two by two, an icon on a blueprint tile,
+     then the sentence with its lead in bold. -->
+<section id="security" class="wrap scroll-mt-[calc(var(--header-h)+24px)] py-24">
+	<p class="t-tag text-rich">Privacy and security</p>
+	<div class="mt-5 grid gap-x-16 gap-y-8 md:grid-cols-2">
+		<h2 class="t-h2 text-fg">Third-party media, without the third-party worries</h2>
+		<p class="t-body text-body">Your security team will ask, so here's the short answer:</p>
 	</div>
-</Section>
+	<div class="mt-16">
+		<BlueprintCards items={security.map(([lead, text, icon]) => ({ lead, text, icon: icon as IconName }))} />
+	</div>
+</section>
 
 {@render cardBlock('performance', 'Performance', 'Fast and beautiful, on every device', '', performance)}
 
@@ -236,19 +275,6 @@
 	</div>
 </Section>
 
-<!-- X01 from the motion lab (the home page's blue glyph block) with the lab's Rich Media copy -->
-<div class="wrap mt-24">
-	<GlyphSection
-		title="Perfect embeds, every time"
-		text="Send us a URL, get the embed code back. Today and tomorrow. Videos play, posts appear and maps move, the way people expect from the apps they love, wherever your users write, post and chat."
-		note="1,900 providers through one API. Free to start."
-		buttons={[
-			['Get an API key', '#signup'],
-			['Try a link', '/try']
-		]}
-	/>
-</div>
-
 <PricingBlock />
 
 <Cta
@@ -260,7 +286,15 @@
 	<Button href="#contact" variant="invert">Ask for a quote</Button>
 </Cta>
 
-<!-- The hero's tagline, parked here in a block of its own until its place is decided -->
-<section class="wrap py-24">
-	<p class="t-h2 text-fg">Bringing URLs to life</p>
-</section>
+<!-- The blue block that sat under the hero wall (X01 from the motion lab, without its noise), kept here as the page's
+     last block, before the footer -->
+<div class="wrap mt-24">
+	<GlyphSection
+		title="Start with one URL"
+		noise={false}
+		buttons={[
+			['Get an API key', '#signup'],
+			['Try a link', '/try']
+		]}
+	/>
+</div>

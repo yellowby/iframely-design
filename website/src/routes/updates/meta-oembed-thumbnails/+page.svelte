@@ -25,7 +25,7 @@ const image = data.links?.thumbnail?.[0]?.href  // filled by Iframely where avai
 	<div class="mt-3 flex flex-wrap gap-2">
 		<Badge tone="warn">Provider news</Badge><Badge>Instagram</Badge><Badge>Facebook</Badge><Badge tone="bad">action required</Badge>
 	</div>
-	<h1 class="t-hero mt-3 text-balance">
+	<h1 class="t-hero mt-3">
 		Instagram and Facebook oEmbed no longer return thumbnails or authors: what changed and how to keep images
 	</h1>
 	<p class="mt-2 text-sm text-ink-500">Published 2025-10-08 · Updated 2026-10-15 · By the Iframely team (author and role)</p>

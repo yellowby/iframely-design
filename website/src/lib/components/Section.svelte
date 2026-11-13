@@ -38,7 +38,7 @@
 					</p>
 				{/if}
 				{#if title}
-					<h2 class="t-h2 max-w-2xl text-balance">{@html title}</h2>
+					<h2 class="t-h2 max-w-2xl">{@html title}</h2>
 				{/if}
 				{#if intro}
 					<p class="t-body mt-4 max-w-[720px] {tone === 'dark' ? 'text-ink-300' : 'text-mute'}">{@html intro}</p>

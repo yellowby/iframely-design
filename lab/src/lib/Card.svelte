@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import PickButton from './PickButton.svelte';
+	import TrashButton from './TrashButton.svelte';
 	import { frameGroup, type Entry } from './lab.ts';
 
 	// One demo as a gallery card: code, title, pick, full-screen link, blurb, and the frame it mounts into when it comes
@@ -40,6 +41,7 @@
 		<h3>
 			<code>{e.code}</code>{e.d.title}
 			<PickButton name={e.d.name} />
+			<TrashButton name={e.d.name} />
 		</h3>
 		<span class="links">
 			{#if where}<a href={`/${e.page.id}#${e.d.name}`}>in {e.page.title} →</a>{/if}

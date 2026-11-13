@@ -8,6 +8,8 @@
 	import PricingBlock from '#lib/components/PricingBlock.svelte';
 	import Stats from '#lib/components/Stats.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
+	import Scene from '#lib/components/Scene.svelte';
+	import CtaWindow from '#lib/components/CtaWindow.svelte';
 	import { previewCurl, previewResponse } from '#lib/data/samples.ts';
 </script>
 
@@ -18,14 +20,27 @@
 
 <Hero
 	eyebrow="Preview API"
+	product
+	endpoint="iframe.ly/api/iframely"
 	title="Link previews for every URL your users share"
 	sub="Send a URL, get the title, source, author, thumbnails and a ready summary card, across the formats publishers use. Keep Rich Media on for players and embeds, or turn it off for metadata only."
 >
 	<Button href="#signup">Get an API key</Button>
 	<Button href="/try" variant="secondary">Try a link</Button>
-	{#snippet after()}
-	{/snippet}
+	<!-- the home page's Preview API scene, under the copy, as the wall of embeds on /embeds -->
+	{#snippet below()}<Scene scene="preview" class="min-h-[480px]" />{/snippet}
 </Hero>
+
+<!-- the call to action straight after the hero scene, as on /embeds (components/CtaWindow.svelte) -->
+<div class="hero-cta wrap -mt-7 mb-10 md:-mt-13">
+	<CtaWindow
+		title="Start with one URL"
+		buttons={[
+			['Get an API key', '#signup'],
+			['Try a link', '/try']
+		]}
+	/>
+</div>
 
 <Section eyebrow="What you get" title="One request, a usable preview for any public URL">
 	<Cards

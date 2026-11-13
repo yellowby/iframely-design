@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { ROLES, SLOTS, family, type Slot } from '#lib/type/type.ts';
-	import { cards, cta } from '#lib/tweaks.svelte.ts';
+	import { cards, cta, look } from '#lib/tweaks.svelte.ts';
 
 	// A Tweakpane panel for trying type on the live site: fixed in the bottom-right corner, collapsed by default.
 	// For the heading and the base slot: the family (the current one, Geist or Inter) and the weight, size, line height
@@ -51,13 +51,21 @@
 			if (saved) for (const [g] of GROUPS) Object.assign(state[g], saved[g]);
 			if (saved?.cards) Object.assign(cards, saved.cards);
 			if (saved?.cta) Object.assign(cta, saved.cta);
+			if (saved?.look) Object.assign(look, saved.look);
+			// a saved tag variant that no longer exists (the dropped "leader" and "corners") falls back to the default
+			if (!['regular', 'measure', 'badge', 'endpoint', 'outline', 'off'].includes(look.tag)) look.tag = 'measure';
 		} catch {
 			// no storage, or nothing usable in it: the defaults stand
 		}
 		const sync = () => {
 			for (const [g] of GROUPS) apply(g, state[g]);
+			// corners: the rule that squares everything lives in routes/layout.css
+			document.documentElement.dataset.corners = look.corners;
+			document.documentElement.dataset.shadows = look.shadows;
+			document.documentElement.dataset.accent = look.accent;
+			document.documentElement.dataset.heroCta = look.heroCta;
 			try {
-				localStorage.setItem(KEY, JSON.stringify({ ...state, cards, cta }));
+				localStorage.setItem(KEY, JSON.stringify({ ...state, cards, cta, look }));
 			} catch {
 				// not kept; the page still follows
 			}
@@ -86,6 +94,50 @@
 				f.addBinding(v, 'line', { label: 'line', min: 0.9, max: 2, step: 0.01 });
 				f.addBinding(v, 'spacing', { label: 'spacing', min: -0.08, max: 0.08, step: 0.005, format: (n: number) => n.toFixed(3) });
 			}
+			// every rounded corner on the site (buttons, cards, pills, the product scenes), or none
+			const CORNERS: [string, string][] = [['Rounded', 'rounded'], ['Square', 'square']];
+			p.addFolder({ title: 'Corners' }).addBinding(look, 'corners', {
+				label: undefined,
+				view: 'radiogrid',
+				groupName: 'look-corners',
+				size: [CORNERS.length, 1],
+				cells: (x: number) => ({ title: CORNERS[x][0], value: CORNERS[x][1] })
+			});
+			// every drop shadow on the site (cards, panels, the product scenes), or none; outlines and rings stay
+			const SHADOWS: [string, string][] = [['On', 'on'], ['Off', 'off']];
+			p.addFolder({ title: 'Shadows' }).addBinding(look, 'shadows', {
+				label: undefined,
+				view: 'radiogrid',
+				groupName: 'look-shadows',
+				size: [SHADOWS.length, 1],
+				cells: (x: number) => ({ title: SHADOWS[x][0], value: SHADOWS[x][1] })
+			});
+			// the blue words in the page headings, or none ("one URL at a time" on the home page stays blue)
+			p.addFolder({ title: 'Heading highlight' }).addBinding(look, 'accent', {
+				label: undefined,
+				view: 'radiogrid',
+				groupName: 'look-accent',
+				size: [SHADOWS.length, 1],
+				cells: (x: number) => ({ title: SHADOWS[x][0], value: SHADOWS[x][1] })
+			});
+			// the blue call-to-action window under the product heroes' scenes, or none
+			p.addFolder({ title: 'Hero CTA' }).addBinding(look, 'heroCta', {
+				label: undefined,
+				view: 'radiogrid',
+				groupName: 'look-hero-cta',
+				size: [SHADOWS.length, 1],
+				cells: (x: number) => ({ title: SHADOWS[x][0], value: SHADOWS[x][1] })
+			});
+			// the tag over a product hero's heading (/embeds): a light blue pill, a numbered blueprint measure line, or the API call
+			// (in two rows of three: Regular is the plain blue tag the home page's sections have)
+			const TAG: [string, string][] = [['Regular', 'regular'], ['Badge', 'badge'], ['Measure', 'measure'], ['Endpoint', 'endpoint'], ['Outline', 'outline'], ['Off', 'off']];
+			p.addFolder({ title: 'Hero tag' }).addBinding(look, 'tag', {
+				label: undefined,
+				view: 'radiogrid',
+				groupName: 'look-tag',
+				size: [3, 2],
+				cells: (x: number, y: number) => ({ title: TAG[y * 3 + x][0], value: TAG[y * 3 + x][1] })
+			});
 			// the home page's four product cards: the cover's colours and how it sits in the card
 			const c = p.addFolder({ title: 'Product cards' });
 			const grid = (key: 'cover' | 'fit', opts: [string, string][]) =>
@@ -110,6 +162,11 @@
 			p.addButton({ title: 'Reset' }).on('click', () => {
 				Object.assign(cards, CARDS);
 				cta.bg = 'rich';
+				look.corners = 'rounded';
+				look.shadows = 'on';
+				look.accent = 'on';
+				look.heroCta = 'on';
+				look.tag = 'measure';
 				for (const [g] of GROUPS) Object.assign(state[g], defaults(g));
 				p.refresh();
 				sync();
@@ -125,4 +182,5 @@
 	});
 </script>
 
-<div bind:this={host} class="fixed right-4 bottom-4 z-50 w-64 print:hidden"></div>
+<!-- .tweaks-pane keeps the panel's own corners when the site's are switched to square (routes/layout.css) -->
+<div bind:this={host} class="tweaks-pane fixed right-4 bottom-4 z-50 w-64 print:hidden"></div>

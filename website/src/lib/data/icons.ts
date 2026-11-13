@@ -10,6 +10,11 @@ export const ICONS = {
 	apps: 'M3.5 3.5H10V10H3.5ZM14 3.5H20.5V10H14ZM3.5 14H10V20.5H3.5ZM17.25 14V20.5M14 17.25H20.5',
 	signed: 'M20.0004 6L12 2L4 6C4 12.6667 6.00012 18.6667 12.0001 22C18.0002 18.6667 20.0004 12.6667 20.0004 6Z',
 	audited: 'M5.5 2.5H14.5L18.5 6.5V21.5H5.5ZM14.5 2.5V6.5H18.5M9 14L11 16L15 12',
-	support: 'M3.5 4.5H20.5V16.5H12L7.5 20.5V16.5H3.5ZM8 9H16M8 12.5H13'
+	support: 'M3.5 4.5H20.5V16.5H12L7.5 20.5V16.5H3.5ZM8 9H16M8 12.5H13',
+	// /embeds, "Privacy and security" (same grid and stroke): a window with a framed box in it (our iframe),
+	// a switch turned on (consent), a globe (your own domain)
+	frame: 'M3.5 4.5H20.5V19.5H3.5ZM3.5 8.5H20.5M8 12H16V16H8Z',
+	consent: 'M8 7.5H16A4.5 4.5 0 0 1 16 16.5H8A4.5 4.5 0 0 1 8 7.5ZM16 10A2 2 0 1 0 16 14A2 2 0 0 0 16 10Z',
+	domain: 'M12 2.5A9.5 9.5 0 1 0 12 21.5A9.5 9.5 0 0 0 12 2.5ZM2.5 12H21.5M12 2.5C8.5 6 8.5 18 12 21.5M12 2.5C15.5 6 15.5 18 12 21.5'
 };
 export type IconName = keyof typeof ICONS;

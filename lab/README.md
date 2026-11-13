@@ -615,6 +615,10 @@ Routes:
 
 Every card has a ☆ Pick button next to its title. Picks are written to `favorites.json` in this folder by the dev server (`src/routes/api/favorites/+server.ts`), so they can be read, diffed and committed. On first run the file is seeded from the `pick:` notes hard-coded in the demos. Without the dev server (a static build) picks fall back to localStorage.
 
+Next to it is a Trash button. A trashed card leaves its page, the sidebar and the search (the other cards keep their codes) and is unpicked; it waits on `/trash`, where Restore puts it back. The list is saved to `trash.json` in this folder (`src/routes/api/trash/+server.ts`), the same way as picks; the demo files are never touched. Both lists share one store class in `src/lib/favs.svelte.ts`.
+
+In the sidebar each page has a chevron that opens or closes its card list (remembered in localStorage, `motion-lab-nav-open`). In the search box ↑ ↓ move through the results (wrapping), Enter opens the selected card, Esc clears.
+
 Adding a demo: drop the file in `static/demos/` and add its name to `static/lib/manifest.js` (load order matters for kits: a file that uses `DEMOS.footerKit` comes after `pages-footer`). Pages and their codes still come from `PAGES` and `CODE` in `static/lib/site.js`.
 
 ```

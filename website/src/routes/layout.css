@@ -77,6 +77,50 @@ p {
 	text-wrap: pretty;
 }
 
+/* Headings wrap the same way: every heading element, and the heading type roles wherever they are used */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.t-hero,
+.t-h2 {
+	text-wrap: pretty;
+}
+
+/* Corners: Square in the Tweakpane panel (lib/tweaks.svelte.ts, look.corners) removes every rounded corner on the site:
+   buttons, cards, pills, the product scenes (their radii are set in the lab's own CSS and inline styles, hence
+   !important) and circles. The panel itself keeps its corners. */
+html[data-corners='square'] :not(.tweaks-pane, .tweaks-pane *),
+html[data-corners='square'] :not(.tweaks-pane, .tweaks-pane *)::before,
+html[data-corners='square'] :not(.tweaks-pane, .tweaks-pane *)::after {
+	border-radius: 0 !important;
+}
+
+/* Shadows: Off in the Tweakpane panel (look.shadows) removes every drop shadow on the site: cards, panels, the header
+   menu, the product scenes and their windows. Each shadow's opacity is multiplied by --drop, so outlines, hover rings
+   and focus halos, which are also drawn with box-shadow, stay. Tailwind's stock shadow utilities are cleared whole. */
+html[data-shadows='off'] {
+	--drop: 0;
+}
+html[data-shadows='off'] :is(.shadow-sm, .hover\:shadow-sm):not(.tweaks-pane *) {
+	--tw-shadow: 0 0 #0000 !important;
+}
+
+/* Heading highlight: Off in the Tweakpane panel (look.accent) sets the blue words of the page headings ("every time",
+   "the lower the rate") in the heading's own colour. The one that stays is marked data-accent-keep: "one URL at a
+   time" on the home page. */
+html[data-accent='off'] :is(h1, h2) span:is(.text-blue, .text-rich):not([data-accent-keep]) {
+	color: inherit;
+}
+
+/* Hero CTA: Off in the Tweakpane panel (look.heroCta) removes the blue call-to-action window under the product
+   heroes' scenes (/embeds, /preview-api, /data-api, /publishers; the wrapper is marked .hero-cta). */
+html[data-hero-cta='off'] .hero-cta {
+	display: none;
+}
+
 /* The page container: 1200px of content, 20px gutters below that */
 .wrap {
 	max-width: calc(1200px + 2 * var(--gutter));

@@ -87,7 +87,7 @@
 					style="transform:translateX({box.x}px)"
 				>
 					<div
-						class="relative box-content overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_12px_32px_rgba(17,17,17,0.08)] {anim ? MOVE + ' transition-[width,height]' : ''}"
+						class="relative box-content overflow-hidden rounded-xl border border-black/10 bg-white shadow-[0_12px_32px_rgb(17_17_17/calc(0.08*var(--drop,1)))] {anim ? MOVE + ' transition-[width,height]' : ''}"
 						class:drop={open !== null && !anim}
 						style="width:{box.w}px;height:{box.h}px"
 					>

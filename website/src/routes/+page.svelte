@@ -7,7 +7,8 @@
 	import PricingBlock from '#lib/components/PricingBlock.svelte';
 	import GlyphSection from '#lib/components/GlyphSection.svelte';
 	import DitherHead from '#lib/components/DitherHead.svelte';
-	import { ICONS, type IconName } from '#lib/data/icons.ts';
+	import BlueprintCards from '#lib/components/BlueprintCards.svelte';
+	import type { IconName } from '#lib/data/icons.ts';
 	import { CARD } from '#lib/card.ts';
 	import { cards } from '#lib/tweaks.svelte.ts';
 
@@ -16,6 +17,9 @@
 	import canva from '#lib/assets/marks/canva.svg';
 	import notion from '#lib/assets/marks/notion.svg';
 	import gitbook from '#lib/assets/marks/gitbook.svg';
+	// the two sites' own square icons: circle.so's touch icon, mightynetworks.com's favicon
+	import circle from '#lib/assets/marks/circle.png';
+	import mighty from '#lib/assets/marks/mighty.svg';
 
 	// Home01 (Figma "Design 2027", Wireframes, 2026-10-30): hero with the S41 scene, trust, the connecting heading, the
 	// four products, each with its scene from the motion lab under it. Blocks, order and copy follow the frame; more blocks and the footer come in later steps.
@@ -91,6 +95,10 @@
 			title: 'A preview for every link your users share, from any site',
 			text: 'Send any public URL, get the title, source, author, thumbnails and a ready summary card. Keep Rich Media on for players, or turn it off for metadata only.',
 			note: 'The product behind link previews in Atlassian, Notion and GitBook.',
+			marks: [
+				{ src: circle, alt: 'Circle', w: 20 },
+				{ src: mighty, alt: 'Mighty', w: 20 }
+			],
 			buttons: [
 				['Preview API', '/preview-api'],
 				['Check URL', '/try']
@@ -155,7 +163,7 @@
 />
 
 <section class="wrap pt-20">
-	<h1 class="t-hero max-w-[720px] text-balance text-fg">We make URLs work inside other products</h1>
+	<h1 class="t-hero max-w-[720px] text-fg">We make URLs work inside other products</h1>
 	<p class="t-lead mt-4 max-w-[720px] text-mute">
 		Embed rich media from 1,900 providers. Show previews of any link your users share. Read web content for your automated
 		systems. Decide how other apps use your own content.
@@ -165,7 +173,7 @@
 	<div bind:this={hero} class="@container mt-10">
 		<Scene
 			scene="home"
-			class="min-h-[290px] @max-[980px]:min-h-[490px] @max-[560px]:min-h-[920px]"
+			class="min-h-[293px] @max-[980px]:min-h-[495px] @max-[560px]:min-h-[927px]"
 			onCycle={() => cycle++}
 		/>
 	</div>
@@ -177,7 +185,7 @@
 </section>
 
 <section class="wrap mt-28">
-	<h2 class="t-h2 max-w-[540px] text-fg">Connecting developers and publishers, <span bind:this={accent} class="text-rich">one URL at a time</span></h2>
+	<h2 class="t-h2 max-w-[540px] text-fg">Connecting developers and publishers, <span bind:this={accent} data-accent-keep class="text-rich">one URL at a time</span></h2>
 </section>
 
 <section class="wrap mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -210,7 +218,8 @@
 <div class="wrap mt-40 mb-16 flex flex-col gap-40">
 	{#each PRODUCTS as p (p.path)}
 		<section id={p.path.slice(1)} class="scroll-mt-[calc(var(--header-h)+24px)]">
-			<a href={p.href} class="t-tag {p.color} hover:underline">{p.path}</a>
+			<!-- every section's path in the default blue, not the product's colour (p.color, now unused) -->
+			<a href={p.href} class="t-tag text-blue hover:underline">{p.path}</a>
 			<div class="mt-5 grid gap-x-16 gap-y-8 md:grid-cols-2">
 				<div>
 					<h2 class="t-h2 text-fg">{p.title}</h2>
@@ -225,7 +234,7 @@
 					<div class="mt-[18px] flex items-center gap-3.5">
 						{#if p.marks}
 							<span class="flex shrink-0 items-center gap-2.5"
-								>{#each p.marks as m (m.alt)}<img src={m.src} alt={m.alt} width={m.w} height="20" />{/each}</span
+								>{#each p.marks as m (m.alt)}<img src={m.src} alt={m.alt} width={m.w} height="20" class="rounded-[4px]" />{/each}</span
 							>
 						{/if}
 						<p class="t-note text-soft">{p.note}</p>
@@ -243,16 +252,10 @@
 
 <section id="trust" class="wrap mt-16 mb-28 scroll-mt-[calc(var(--header-h)+24px)]">
 	<h2 class="t-h2 text-fg">Your URLs are in good hands</h2>
-	<div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-		{#each TRUST as [title, text, href, icon] (title)}
-			<a {href} class="flex flex-col p-6 {CARD}">
-				<svg class="mb-5 text-fg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" aria-hidden="true">
-					<path d={ICONS[icon]} />
-				</svg>
-				<h3 class="t-small text-[15px]! font-medium! text-fg">{title}</h3>
-				<p class="t-small mt-1 text-body">{text}</p>
-			</a>
-		{/each}
+	<p class="t-body mt-3 text-mute">Trusted on both sides of the URL</p>
+	<!-- two by two, horizontal cards: an icon on a blueprint tile, then the text (components/BlueprintCards.svelte) -->
+	<div class="mt-10">
+		<BlueprintCards items={TRUST.map(([title, text, href, icon]) => ({ title, text, href, icon }))} />
 	</div>
 </section>
 

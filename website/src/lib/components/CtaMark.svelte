@@ -11,7 +11,7 @@
 	<div class="mark-panel relative overflow-hidden rounded-2xl bg-white ring-1 ring-black/8 ring-inset">
 		<div class="relative z-1 grid gap-x-10 gap-y-7 px-7 pt-10 md:grid-cols-[1.1fr_1fr] md:px-14 md:pt-13">
 			<h2 class="t-h2 max-w-[540px] text-fg">
-				Connecting developers and publishers, <span class="text-blue">one URL at a time</span>
+				Connecting developers and publishers, <span data-accent-keep class="text-blue">one URL at a time</span>
 			</h2>
 			<div class="flex flex-wrap content-start gap-2 md:justify-end md:pt-1.5">
 				<Pill href="#signup">Get API key</Pill>

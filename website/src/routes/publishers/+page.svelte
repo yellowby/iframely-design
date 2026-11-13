@@ -7,6 +7,8 @@
 	import Stats from '#lib/components/Stats.svelte';
 	import Cta from '#lib/components/Cta.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
+	import Scene from '#lib/components/Scene.svelte';
+	import CtaWindow from '#lib/components/CtaWindow.svelte';
 	import Table from '#lib/components/Table.svelte';
 	import Faq from '#lib/components/Faq.svelte';
 	import Badge from '#lib/components/Badge.svelte';
@@ -57,14 +59,26 @@
 
 <Hero
 	eyebrow="Publisher Console"
+	product
 	title="Your content, your rules, across 6,000 products"
 	sub="Iframely renders previews and embeds for more than 6,000 products. Every request names the customer behind it, is signed, and reads one URL at a time. A free publisher account controls what each agent receives, per domain and path."
 >
 	<Button href="#signup-publisher">Start free</Button>
 	<Button href="/docs" variant="secondary">Docs</Button>
-	{#snippet after()}
-	{/snippet}
+	<!-- the home page's Console scene, under the copy, as the wall of embeds on /embeds -->
+	{#snippet below()}<Scene scene="pub" class="min-h-[480px]" />{/snippet}
 </Hero>
+
+<!-- the call to action straight after the hero scene, as on /embeds (components/CtaWindow.svelte) -->
+<div class="hero-cta wrap -mt-7 mb-10 md:-mt-13">
+	<CtaWindow
+		title="Claim your domain"
+		buttons={[
+			['Start free', '#signup-publisher'],
+			['Docs', '/docs']
+		]}
+	/>
+</div>
 
 <Section id="agents" eyebrow="Who is fetching, and why" title="Three agents, three reasons, one URL at a time">
 	<Table

@@ -102,6 +102,14 @@
 	:global(.hx-embed .hx-mark) {
 		font-size: 16px;
 	}
+	/* the product names (the rail) sit midway between the progress line over them and the windows under them: 12px
+	   each way, where the lab has 7px over and 14px under */
+	:global(.hx-embed .cx-rail) {
+		margin-bottom: 12px;
+	}
+	:global(.hx-embed .cx-rail div) {
+		gap: 12px;
+	}
 	/* S41's windows here are 286px wide, 254px in the lab: keep the media at the lab's 125px (222px × 9/16) so the embed
 	   code under it stays inside the 196px body */
 	:global(.hx-embed .cx-pl) {

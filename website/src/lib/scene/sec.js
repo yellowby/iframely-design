@@ -55,7 +55,7 @@
 .sx .ph-hub{background:#171717}
 /* shared window chrome */
 .sx-stage{background:var(--soft);border-radius:22px;padding:clamp(14px,3cqw,40px)}
-.sx-win{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(23,23,23,.04),0 12px 32px rgba(23,23,23,.06);overflow:hidden;min-width:0;display:flex;flex-direction:column}
+.sx-win{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(23,23,23,calc(.04*var(--drop,1))),0 12px 32px rgba(23,23,23,calc(.06*var(--drop,1)));overflow:hidden;min-width:0;display:flex;flex-direction:column}
 .sx-bar{display:flex;align-items:center;gap:6px;padding:11px 14px;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
 .sx-bar i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--line)}
 .sx-bar span{margin-left:10px;overflow:hidden;text-overflow:ellipsis}
@@ -102,7 +102,7 @@
 .rm-post p{margin:4px 0 10px}
 .rm-post .img{height:92px;border-radius:10px;background:linear-gradient(120deg,#d3e1ff,#8fb2ff)}
 .rm-map{background-color:#e9eef0;background-image:linear-gradient(90deg,transparent 46%,#fff 46% 50%,transparent 50%),linear-gradient(transparent 58%,#fff 58% 62%,transparent 62%),linear-gradient(32deg,transparent 38%,#d5e4d3 38% 64%,transparent 64%),linear-gradient(150deg,transparent 70%,#cfe0ee 70%)}
-.rm-map em{position:absolute;left:61%;top:28%;width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--bl);box-shadow:0 4px 10px rgba(0,85,255,.35)}
+.rm-map em{position:absolute;left:61%;top:28%;width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--bl);box-shadow:0 4px 10px rgba(0,85,255,calc(.35*var(--drop,1)))}
 .rm-cap{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--g);margin-top:-8px;margin-bottom:16px;min-height:18px;transition:opacity .4s}
 .rm-cap img{width:14px;height:14px}
 .rm-cap b{color:var(--ink);font-weight:500}
@@ -552,14 +552,14 @@
 .cx-top{position:relative}
 .cx-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .cx-lines path{fill:none;stroke:#d5d5d5;stroke-width:1.5;stroke-dasharray:4 5;transition:stroke .5s}
-.cx-hub{position:relative;z-index:1;width:84px;height:84px;border-radius:22px;background:#171717;display:grid;place-items:center;box-shadow:0 10px 30px rgba(23,23,23,.18);transition:box-shadow .4s;margin:0 auto}
+.cx-hub{position:relative;z-index:1;width:84px;height:84px;border-radius:22px;background:#171717;display:grid;place-items:center;box-shadow:0 10px 30px rgba(23,23,23,calc(.18*var(--drop,1)));transition:box-shadow .4s;margin:0 auto}
 .cx-hub b{font:800 38px/1 'JetBrains Mono',ui-monospace,monospace;color:var(--bl);letter-spacing:-.06em;transform:translateX(-2px)}
-.cx-hub.ping{box-shadow:0 10px 30px rgba(23,23,23,.18),0 0 0 9px rgba(0,85,255,.14)}
+.cx-hub.ping{box-shadow:0 10px 30px rgba(23,23,23,calc(.18*var(--drop,1))),0 0 0 9px rgba(0,85,255,.14)}
 .cx1 .cx-hub{margin-bottom:76px}
 .cx-cards{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .cx-card{min-width:0}
 .cx-card .sx-win,.cx-side .sx-win{transition:box-shadow .3s,border-color .3s}
-.cx-card.hot .sx-win,.cx-w.hot{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,.06)}
+.cx-card.hot .sx-win,.cx-w.hot{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,calc(.06*var(--drop,1)))}
 .cx-body{height:236px;padding:14px 16px 16px;display:flex;flex-direction:column;justify-content:flex-end;gap:9px;font-size:12.5px;transition:opacity .3s;min-width:0}
 .cx-body.fade{opacity:.12}
 .cx-copy{padding:18px 4px 0}
@@ -699,7 +699,7 @@
 .cx-cmd .u{color:var(--bl)}
 .cx-cmd .st{color:var(--g)}
 .sx-bar.nd span{margin-left:0}
-.cx3 .cx-card.on .sx-win{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,.06)}
+.cx3 .cx-card.on .sx-win{border-color:var(--m);box-shadow:0 0 0 3px var(--t),0 12px 32px rgba(23,23,23,calc(.06*var(--drop,1)))}
 `;
   const CARDS2 = ['sec-connect-cards2', { /* registered after S12 so the numbers stay put */
     group: 'sec', title: 'Connecting section · cards, the URL as a command',
@@ -1083,7 +1083,7 @@
   const X23_CSS = `
 .cx-lean.cx-ta .cx-body{justify-content:flex-start}
 .x-yt{background:#000 center/cover no-repeat;display:grid;place-items:center}
-.x-yt .yt{width:52px;height:37px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.x-yt .yt{width:52px;height:37px;filter:drop-shadow(0 2px 6px rgba(0,0,0,calc(.3*var(--drop,1))))}
 .x-sc{background:#fff;border:1px solid #e5e5e5;border-radius:4px;display:grid;grid-template-columns:34% minmax(0,1fr);font-family:'Interstate','Lucida Grande',Geist,Arial,sans-serif}
 .x-sc .art{background:center/cover no-repeat}
 .x-sc .r{min-width:0;display:flex;flex-direction:column;padding:7px 8px 6px 8px}
@@ -1202,7 +1202,7 @@
 .hx-gap{height:72px}
 .cx-copy .hx-proof{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;color:var(--g);line-height:1.45}
 .cx-copy .hx-proof b{font-weight:500;color:var(--mut)}
-.hx-field{display:flex;align-items:center;gap:10px;margin-top:32px;max-width:640px;border:1px solid var(--line);border-radius:28px;background:#fff;padding:5px 5px 5px 20px;box-shadow:0 1px 2px rgba(23,23,23,.04),0 10px 26px rgba(23,23,23,.05)}
+.hx-field{display:flex;align-items:center;gap:10px;margin-top:32px;max-width:640px;border:1px solid var(--line);border-radius:28px;background:#fff;padding:5px 5px 5px 20px;box-shadow:0 1px 2px rgba(23,23,23,calc(.04*var(--drop,1))),0 10px 26px rgba(23,23,23,calc(.05*var(--drop,1)))}
 .hx-field .cx-cmd{flex:1;margin:0;font-size:14.5px;min-width:0;overflow:hidden}
 .hx-field a{flex:none;height:44px;display:inline-flex;align-items:center;padding:0 22px;border-radius:22px;background:var(--ink);color:#fff;font-size:15.5px;text-decoration:none}
 .hx-field.clean .cx-cmd>span:first-child,.hx-field.clean .cx-cmd .st{display:none} /* S28: the URL only, no prompt or status */
@@ -1398,7 +1398,7 @@
 .fx3 .cx-rail .typing em::after{content:"";display:inline-block;width:1.5px;height:12px;margin-left:2px;vertical-align:-2px;background:var(--m);animation:fx-blink 1s steps(1) infinite}
 @keyframes fx-blink{50%{opacity:0}}
 .fx4 .cx-rail i{display:none}
-.fx4.cx3 .cx-card.on .sx-win{border-color:var(--line);box-shadow:0 1px 2px rgba(23,23,23,.04),0 12px 32px rgba(23,23,23,.06)}
+.fx4.cx3 .cx-card.on .sx-win{border-color:var(--line);box-shadow:0 1px 2px rgba(23,23,23,calc(.04*var(--drop,1))),0 12px 32px rgba(23,23,23,calc(.06*var(--drop,1)))}
 .fx4 .sx-win{position:relative}
 .fx4 .sx-win::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(var(--m) var(--fxa),transparent 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .45s;pointer-events:none;z-index:2}
 .fx4 .cx-card.trace .sx-win::after{opacity:1;animation:fx-trace .8s cubic-bezier(.4,0,.2,1) forwards}
@@ -1606,7 +1606,7 @@
 .sx.sx-embed{padding:0;background:transparent;align-self:start}
 .sx-embed .sx-stage{background:none;padding:0;border-radius:0}
 .sx-embed .sx-marq{margin-top:28px}
-.dx.ex{grid-template-columns:minmax(0,1fr) 340px;height:560px;background:#fff;border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.03),0 12px 32px rgba(0,0,0,.04)}
+.dx.ex{grid-template-columns:minmax(0,1fr) 340px;height:560px;background:#fff;border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,calc(.03*var(--drop,1))),0 12px 32px rgba(0,0,0,calc(.04*var(--drop,1)))}
 .ex>.sx-win{border:0;border-radius:0;box-shadow:none;min-height:0}
 .ex .sx-bar{border-bottom-color:#ededed}
 .ex .ed{height:auto;flex:1;min-height:0}
@@ -1895,6 +1895,65 @@
     });
     return () => { follow.disconnect(); stop(); };
   };
+  /* The website prototype's /console scene (site only, not in the lab): the Console's own concepts in one window, in
+     place of S09's request log. Left, the domain's analytics (estimated views, fetches, errors, the Iframely sources
+     that fetch it), counting up; middle, the content policy as the app shows it: a switch for the domain's own policy
+     and, per processing mode, the chain of allowed content types (grey while it is the default, blue once changed);
+     right, the Iframely robot switches. Each run turns the own policy on, narrows two modes and signs the Preview
+     agent, then starts over from the defaults. Source names are made up. */
+  const pubStage = slot => {
+    const TYPES = ['Meta', 'Links', 'Entities', 'Excerpt', 'Fulltext'];
+    const MODES = [['Assist', 5], ['Discover', 4], ['Search', 4], ['AI-Input', 3], ['AI-Train', 2]];
+    const CHK = '<i><svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5.2 4.2 7.4 8 3"/></svg></i>';
+    const num = n => n.toLocaleString('en');
+    /* analytics */
+    const stat = { views: 191120, fetches: 9812, errors: 42 };
+    const stEl = {};
+    const stats = h('div', { class: 'pb-st' }, ...[['views', 'Estimated views', '#9db8ff'], ['fetches', 'Fetches', '#0055ff'], ['errors', 'Errors', '#d5d5d5']].map(([k, t, c]) => h('div', null, h('small', { html: `${t}<i style="background:${c}"></i>` }), stEl[k] = h('b', null, num(stat[k])))));
+    const V = [38, 20, 12, 13, 50, 62, 30, 44, 26, 8, 20, 36, 58, 28, 16, 60, 40, 30, 46, 22, 12, 24, 25, 8, 34, 14], F = [4, 3, 2, 2, 7, 9, 5, 6, 5, 2, 3, 7, 6, 4, 4, 9, 6, 5, 6, 4, 3, 4, 4, 2, 5, 3];
+    const X = i => 5 + i * 10;
+    const chart = h('div', { html: `<svg class="pb-chart" viewBox="0 0 260 74" preserveAspectRatio="none"><path d="M0 26.5H260M0 48.5H260" stroke="#e7e7e7" stroke-dasharray="2 3" vector-effect="non-scaling-stroke"/><path d="M0 73.5H260" stroke="#e0e0e0" vector-effect="non-scaling-stroke"/><polyline points="${V.map((v, i) => `${X(i)},${68 - v}`).join(' ')}" fill="none" stroke="#9db8ff" stroke-width="1.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>${F.map((f, i) => `<rect x="${X(i) - 3.5}" y="${73 - f}" width="7" height="${f}" fill="#0055ff"/>`).join('')}</svg>` });
+    const SRC = [['Acme Chat', 3310], ['Notely', 3120], ['Briefly', 1840], ['Searchly', 940], ['Linkboard', 410]].map(([n, v]) => ({ n, v }));
+    const srcEl = SRC.map(s => h('div', { class: 'pb-src' }, h('span', null, s.n), s.el = h('span', { class: 'n' }, num(s.v))));
+    const paintSrc = () => SRC.forEach((s, i) => { srcEl[i].style.setProperty('--w', (s.v / SRC[0].v * 100).toFixed(1) + '%'); s.el.textContent = num(s.v); });
+    paintSrc();
+    const an = h('div', { class: 'pb-an' }, h('h4', null, 'Analytics'), stats, chart, h('div', { class: 'pb-sub', html: '<span>Iframely source</span><span>Fetches</span>' }), ...srcEl);
+    /* content policy */
+    const own = h('i', { class: 'pb-tg' });
+    const rows = MODES.map(([m]) => h('div', { class: 'pb-row' }, h('b', null, m), h('div', { class: 'pb-chips', html: `<span class="pb-ch k">${CHK}</span>` + TYPES.map(t => `<span class="pb-ch">${t}</span>`).join('') })));
+    const level = (i, n) => { rows[i].classList.toggle('own', n !== MODES[i][1]); rows[i].querySelectorAll('.pb-ch:not(.k)').forEach((c, j) => { c.classList.toggle('off', j >= n); c.classList.toggle('end', j === n - 1); }); };
+    const pol = h('div', { class: 'pb-po' }, h('h4', null, 'Content policy'),
+      h('div', { class: 'pb-act' }, own, h('div', { html: '<b>Activate your own content policy</b><small>Overrides the default policy for your domain. Page signals are still respected.</small>' })),
+      h('div', { class: 'pb-tb' }, h('div', { class: 'pb-row hd', html: '<b>Mode</b><span>Allowed content types</span>' }), ...rows));
+    /* robot */
+    const OPT = [['JavaScript prerender', 'For single-page apps and other dynamic pages.', 1], ['Structured data in page body', 'JSON-LD, Schema.org and microformats.', 1], ['Web Bot Auth signature', 'A cryptographic signature on every request from the Preview agent.', 0], ['Custom HTTP header', 'Verify that a request comes from our robots.', 0]];
+    const tg = OPT.map(([, , on]) => h('i', { class: 'pb-tg' + (on ? ' on' : '') }));
+    /* rules: a path (or pattern) overrides one domain setting; the last one is added during the run */
+    const RULES = [['/blog/*', 'Content policy', ['Assist', 'Search']], ['/app/*', 'Iframely robot', ['Prerender']], ['/members/*', 'Content policy', ['AI-Input', 'AI-Train']]];
+    const rules = RULES.map(([p, what, tags]) => h('div', { class: 'pb-rule', html: `<code>${p}</code><div><small>${what}</small><span>${tags.map(t => `<em>${t}</em>`).join('')}</span></div>` }));
+    const ro = h('div', { class: 'pb-ro' }, h('h4', { html: 'Rules <span>by path</span>' }), ...rules,
+      h('h4', { class: 'pb-h2' }, 'Iframely robot'), ...OPT.map(([t], i) => h('div', { class: 'pb-opt' }, tg[i], h('b', null, t))));
+    slot.appendChild(h('div', { class: 'sx-stage' }, win('Manage domains — example.com', h('div', { class: 'pb' }, an, pol, ro), '<i class="pb-dot"></i>Verified by DNS')));
+    const reset = () => { own.classList.remove('on'); pol.classList.remove('live'); tg[2].classList.remove('on'); rules[2].classList.add('off'); rules[2].classList.remove('flash'); MODES.forEach(([, n], i) => level(i, n)); };
+    reset();
+    const iv = R ? 0 : setInterval(() => {
+      if (slot.closest('.demo.off')) return;
+      const r = Math.random(), s = SRC[r < .4 ? 0 : r < .7 ? 1 : r < .88 ? 2 : r < .96 ? 3 : 4];
+      s.v++; stat.fetches++; stat.views += 12 + Math.floor(Math.random() * 30); if (Math.random() < .04) stat.errors++;
+      for (const k in stEl) stEl[k].textContent = num(stat[k]);
+      paintSrc();
+    }, 800);
+    const stop = runner(slot, async (S, W) => {
+      reset(); await W(1800);
+      own.classList.add('on'); pol.classList.add('live'); await S(1300);
+      level(4, 1); await S(1500);
+      level(2, 3); await S(1500);
+      level(0, 4); await S(1500);
+      rules[2].classList.remove('off'); rules[2].classList.add('flash'); await S(1400); rules[2].classList.remove('flash'); await S(400);
+      tg[2].classList.add('on'); await W(5200);
+    });
+    return () => { clearInterval(iv); stop(); };
+  };
   /* S05, S07 and S09 for the website prototype's product blocks (/preview-api, /data-api, /console): the lab scene mounted
      as it is, its section copy (badge, heading, text, buttons) dropped since the page has its own, the stage in the
      product's colour with square corners, as richBand's is in Iframely blue; the Data API and S09's windows stand on
@@ -1905,7 +1964,7 @@
 .sx-band>.sx.sx-large{padding:0;background:transparent}
 .sx-band .sx-stage{background:var(--pm);border-radius:0}
 .sx-band-data .sx-stage,.sx-band-preview .sx-stage,.sx-band-pub .sx-stage{background:none;padding:0}
-.sx-band-data .sx-win,.sx-band-preview .px{border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.03),0 12px 32px rgba(0,0,0,.04)}
+.sx-band-data .sx-win,.sx-band-preview .px{border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,calc(.03*var(--drop,1))),0 12px 32px rgba(0,0,0,calc(.04*var(--drop,1)))}
 .dx.px{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) 340px;background:#fff}
 .px>.sx-win{border:0;border-radius:0;box-shadow:none}
 .px>.sx-win+.sx-win{border-left:1px solid #ededed}
@@ -1933,6 +1992,62 @@
 .dx-g h4{margin:0 0 12px;font:500 11px/1.4 Geist,Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a8a8a}
 .dx .da-sig,.dx .da-dec{grid-template-columns:auto minmax(0,1fr);gap:2px 14px;font-size:12px;line-height:1.7}
 .dx .da-sig dd,.dx .da-dec dd{white-space:normal;text-align:right}
+.sx-band-pub .sx-win{border:1px solid #e6e6e6;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,calc(.03*var(--drop,1))),0 12px 32px rgba(0,0,0,calc(.04*var(--drop,1)))}
+.sx-band-pub .sx-bar{border-bottom-color:#ededed}
+.sx-band-pub .sx-bar .r{display:flex;align-items:center;gap:7px}
+.pb-dot{width:7px!important;height:7px!important;background:#1f8a4c!important}
+.pb{display:grid;grid-template-columns:300px minmax(0,1fr) 300px;height:480px;overflow:hidden;font-size:13px;line-height:1.4}
+.pb>*{min-width:0;padding:22px 24px}
+.pb>*+*{border-left:1px solid #ededed}
+.pb-an,.pb-ro{background:#fafafa}
+.pb h4{margin:0 0 16px;font:600 14px/1.3 Geist,Inter,sans-serif;color:var(--ink)}
+.pb b{font-weight:500}
+.pb small{display:block;font-size:12px;line-height:1.45;color:var(--mut)}
+.pb-st{display:flex;justify-content:space-between;gap:10px}
+.pb-st small{white-space:nowrap}
+.pb-st small i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:5px;vertical-align:1px}
+.pb-st b{display:block;margin-top:2px;font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pb-chart{display:block!important;width:100%;height:82px;margin:14px 0 20px}
+.pb-sub{display:flex;justify-content:space-between;font-size:12px;color:var(--g);padding:0 8px;margin-bottom:6px}
+.pb-src{position:relative;display:flex;justify-content:space-between;align-items:center;height:28px;padding:0 8px;margin-top:4px;font-size:12.5px}
+.pb-src::before{content:"";position:absolute;inset:0 auto 0 0;width:calc(var(--w) * .78);border-radius:3px;background:#dbe6ff;transition:width .6s}
+.pb-src span{position:relative}
+.pb-src .n{font-variant-numeric:tabular-nums}
+.pb-tg{flex:none;position:relative;width:34px;height:20px;border-radius:10px;background:#d5d5d5;transition:background .3s}
+.pb-tg::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .3s}
+.pb-tg.on{background:var(--bl)}
+.pb-tg.on::after{transform:translateX(14px)}
+.pb-act{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:13px 14px}
+.pb-act small{margin-top:2px}
+.pb-tb{margin-top:14px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.pb-row{display:flex;align-items:center;height:46px;padding:0 14px;border-top:1px solid var(--line)}
+.pb-row.hd{height:34px;border-top:0;background:#f7f7f7;font-size:12px;color:var(--mut)}
+.pb-row>b{flex:none;width:92px}
+.pb-row.hd>b{font-weight:400}
+.pb-chips{display:flex;min-width:0}
+.pb-ch{flex:none;display:flex;align-items:center;height:28px;max-width:90px;padding:0 13px 0 17px;margin-left:-6px;overflow:hidden;white-space:nowrap;background:#f1f1f1;color:#444;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%,8px 50%);transition:max-width .45s,padding .45s,margin .45s,opacity .3s,background .3s,color .3s}
+.pb-ch.k{margin-left:0;padding:0 13px 0 9px;border-radius:14px 0 0 14px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 50%,calc(100% - 8px) 100%,0 100%,0 50%)}
+.pb-ch.k i{display:grid;place-items:center;width:16px;height:16px;border-radius:50%;border:1.3px solid transparent;transition:border-color .3s}
+.pb-ch.end{padding-right:15px;border-radius:0 14px 14px 0;clip-path:polygon(0 0,100% 0,100% 50%,100% 100%,0 100%,8px 50%)}
+.pb-ch.off{max-width:0;padding-left:0;padding-right:0;margin-left:0;opacity:0}
+.pb-row.own .pb-ch{background:#e3ecff;color:var(--bl)}
+.pb-row.own .pb-ch.k i{border-color:currentColor}
+.pb-po:not(.live) .pb-tb{opacity:.75}
+.pb-tb{transition:opacity .3s}
+.pb-opt{display:flex;gap:12px;align-items:center;padding:7px 0}
+.pb h4+.pb-opt{padding-top:0}
+.pb h4 span{font-weight:400;color:var(--g);margin-left:4px}
+.pb h4.pb-h2{margin-top:22px}
+.pb-rule{max-height:64px;margin-bottom:8px;padding:10px 12px;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:8px;transition:max-height .5s,padding .5s,margin .5s,opacity .4s,border-color .4s,box-shadow .4s}
+.pb-rule.off{max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0;border-color:transparent;opacity:0}
+.pb-rule.flash{border-color:var(--bl);box-shadow:0 0 0 3px rgba(0,85,255,.12)}
+.pb-rule code{font:12px/1.4 'Geist Mono',ui-monospace,monospace;color:var(--ink)}
+.pb-rule div{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:5px}
+.pb-rule span{display:flex;gap:4px}
+.pb-rule em{font-style:normal;font-size:11.5px;line-height:1;padding:4px 8px;border-radius:10px;background:#f1f1f1;color:#444;white-space:nowrap}
+@container (max-width:1000px){.pb{grid-template-columns:270px minmax(0,1fr)}.pb>.pb-ro{display:none}}
+@container (max-width:720px){.pb{grid-template-columns:1fr;height:auto}.pb>*{padding:18px 16px}.pb>*+*{border-left:0}.pb>.pb-an{order:2;border-top:1px solid #ededed}}
+@container (max-width:480px){.pb-row{flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;height:auto;padding:10px}.pb-row.hd span{display:none}.pb-ch{font-size:12px;padding:0 9px 0 14px}.pb-ch.k{padding:0 11px 0 8px}.pb-ch.end{padding-right:12px}}
 @container (max-width:860px){.dx,.dx.px,.dx.ex{grid-template-columns:1fr;height:auto}.ex-side{border-left:0;border-top:1px solid #ededed}.dx-side{border-left:0;border-top:1px solid #ededed}.px>.sx-win+.sx-win{border-left:0;border-top:1px solid #ededed}}
 `;
   const sceneBand = (host, o = {}) => {
@@ -1940,7 +2055,7 @@
     if (!document.getElementById('css-sxb')) document.head.appendChild(h('style', { id: 'css-sxb' }, SXB_CSS));
     const root = h('div', { class: `demo sx-band sx-band-${o.prod}`, style: `--pm:${PROD[o.prod].main}` }); host.appendChild(root);
     const seen = inView(root);
-    const STAGE = { data: dataStage, preview: previewStage };
+    const STAGE = { data: dataStage, preview: previewStage, pub: pubStage };
     const un = STAGE[o.prod] ? STAGE[o.prod](root.appendChild(h('div', { class: 'sx sx-large' }))) : DEMOS.get(SCENE_BAND[o.prod]).mount(root);
     const head = root.querySelector('.sx-head'); if (head) head.remove();
     return () => { seen.disconnect(); if (typeof un === 'function') un(); root.remove(); };
