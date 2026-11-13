@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import PickButton from '#lib/PickButton.svelte';
+	import TrashButton from '#lib/TrashButton.svelte';
 	import { allEntries, entry, frameGroup } from '#lib/lab.ts';
 
 	// Full screen, one demo at a time (the old demo.html): back to its card, previous / next through every demo, the pick.
@@ -34,6 +35,7 @@
 		<span><code>{e.code}</code> {e.d.title}</span>
 		<a href={`/demo/${next.d.name}`} title="next (Alt →)">›</a>
 		<PickButton name={e.d.name} />
+		<TrashButton name={e.d.name} />
 	</nav>
 	{#key e.d.name}
 		<div class="frame g-{frameGroup(e)}" bind:this={frame}></div>

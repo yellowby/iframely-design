@@ -18,7 +18,7 @@
 
 <article class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
 	<nav class="text-sm text-ink-500"><a href="/docs">Docs</a> / <a href="/docs#guides">Guides</a> / YouTube start and end time</nav>
-	<h1 class="t-hero mt-3 text-balance">How to start a YouTube embed at a specific time</h1>
+	<h1 class="t-hero mt-3">How to start a YouTube embed at a specific time</h1>
 	<p class="mt-1 text-sm text-ink-500">Last updated 2026-10-15 · 2 minute read</p>
 
 	<div class="mt-6 rounded-lg border-l-4 border-brand-500 bg-brand-50 p-4 text-ink-800">

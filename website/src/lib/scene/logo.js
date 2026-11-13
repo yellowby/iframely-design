@@ -14,7 +14,7 @@
 
 /* L01 address bar */
 .ab{position:absolute;inset:0;display:grid;place-items:center}
-.ab-row{font-size:clamp(26px,6.4cqw,88px);padding:.32em .62em;border-radius:.42em;border:3px solid var(--lg-line);background:#fff;box-shadow:0 4px 30px -12px rgba(0,0,0,.18);transform:scale(.42);transition:transform .9s cubic-bezier(.6,0,.2,1),border-color .6s,box-shadow .6s,background .6s;display:flex;align-items:baseline}
+.ab-row{font-size:clamp(26px,6.4cqw,88px);padding:.32em .62em;border-radius:.42em;border:3px solid var(--lg-line);background:#fff;box-shadow:0 4px 30px -12px rgba(0,0,0,calc(.18*var(--drop,1)));transform:scale(.42);transition:transform .9s cubic-bezier(.6,0,.2,1),border-color .6s,box-shadow .6s,background .6s;display:flex;align-items:baseline}
 .ab-row span,.ab-row .sl{font-weight:400;color:#3a3a3a;transition:font-weight .7s,color .7s}
 .ab-row .cx{display:inline-block;overflow:hidden;vertical-align:bottom;transition:max-width .75s cubic-bezier(.6,0,.2,1),opacity .45s}
 .ab-row .ic{display:inline-block;width:.62em;height:.62em;margin-right:.45em;border-radius:50%;border:.09em solid #b9b9b9;align-self:center;transition:opacity .4s,width .7s,margin .7s}
@@ -94,7 +94,7 @@
 @container (max-width:620px){.sp{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.sp-cell.big{grid-row:auto}.sp-cell.fav{display:none}}
 
 /* L07 code */
-.cd{position:absolute;inset:clamp(16px,4cqw,48px) clamp(16px,6cqw,90px) clamp(44px,6cqw,64px);border:1px solid var(--lg-line);border-radius:14px;background:#fff;box-shadow:0 10px 40px -24px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column}
+.cd{position:absolute;inset:clamp(16px,4cqw,48px) clamp(16px,6cqw,90px) clamp(44px,6cqw,64px);border:1px solid var(--lg-line);border-radius:14px;background:#fff;box-shadow:0 10px 40px -24px rgba(0,0,0,calc(.3*var(--drop,1)));overflow:hidden;display:flex;flex-direction:column}
 .cd-bar{height:34px;flex:none;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--lg-line);background:#fbfbfb;font:500 11px ${JB};color:#8a8a8a}.cd-bar i{width:9px;height:9px;border-radius:50%;background:#e2e2e2}.cd-bar span{margin-left:8px}
 .cd-body{flex:1;padding:16px 0;font:400 clamp(11px,1.45cqw,17px)/1.85 ${JB};white-space:pre;overflow:hidden}
 .cd-ln{display:flex}.cd-ln .n{width:3.2em;text-align:right;padding-right:1.2em;color:#c4c4c4;flex:none}

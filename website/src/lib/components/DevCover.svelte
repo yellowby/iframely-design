@@ -11,14 +11,19 @@
 	//   single:   three players in a feed, one playing
 	// Decorative: the card's own text says what it shows.
 	export type DevScene = 'oembed' | 'editor' | 'script' | 'template' | 'play' | 'lazy' | 'height' | 'single';
-	let { scene }: { scene: DevScene } = $props();
+	// bare: the cover at the top of a card, over the text (the "For your developers" cards on /embeds, drawn as the
+	// windows of the hero wall): a fixed 232px, the window set in by 24px, as the card's text.
+	// pattern: the bare cover's ground, one of four drawing papers: 0 squared, 1 dotted, 2 graph (every fourth line
+	// darker), 3 small crosses.
+	let { scene, bare = false, pattern = 0 }: { scene: DevScene; bare?: boolean; pattern?: number } = $props();
 
-	const OUT = ['platform.twitter.com', 'www.instagram.com', 'www.tiktok.com', 'embed.reddit.com'];
+	const OUT =['platform.twitter.com', 'www.instagram.com', 'www.tiktok.com', 'embed.reddit.com'];
 </script>
 
 <!-- 5:2 as the placeholder it replaces; on a phone that is too low for the scene's key line, so the cover is 230px there -->
-<div class="relative h-[230px] overflow-hidden bg-[#f2f2f2] md:aspect-[5/2] md:h-auto" aria-hidden="true">
-	<div class="win absolute inset-x-6 top-6 bottom-[-40px] overflow-hidden rounded-t-lg bg-white">
+<div class="relative overflow-hidden {bare ? 'paper mx-3 mb-3 rounded-md' : 'h-[230px] bg-[#f2f2f2] md:aspect-[5/2] md:h-auto'}" aria-hidden="true">
+	{#if bare}<div class="squared" class:dots={pattern === 1} class:graph={pattern === 2} class:plus={pattern === 3}></div>{/if}
+	<div class="win absolute overflow-hidden rounded-t-lg bg-white {bare ? 'on-paper' : 'inset-x-8 top-8 bottom-[-40px]'}">
 		{#if scene === 'oembed'}
 			<div class="bar"><span class="verb">GET</span><span class="truncate">iframe.ly/api/oembed?url=<b>https://youtu.be/9bZkp7q19f0</b></span></div>
 			<pre class="code">{'{'}
@@ -38,8 +43,8 @@
 				<div class="h-2 w-[72%] rounded-full bg-black/8"></div>
 				<div class="h-2 w-[54%] rounded-full bg-black/8"></div>
 				<!-- the pasted link, now a player -->
-				<div class="relative mt-3! h-40 overflow-hidden rounded-md bg-[#111]">
-					<span class="absolute top-2.5 left-3 font-mono text-[11px] text-white/60">vimeo.com/76979871</span>
+				<div class="relative mt-3! h-40 overflow-hidden rounded-md bg-black/7">
+					<span class="absolute top-2.5 left-3 font-mono text-[11px] text-mute">vimeo.com/76979871</span>
 					<span class="absolute top-[42px] left-1/2 grid size-11 -translate-x-1/2 place-items-center rounded-full bg-rich">
 						<svg width="14" height="14" viewBox="0 0 14 14" fill="#fff"><path d="M3 1.5v11l9-5.5z" /></svg>
 					</span>
@@ -96,7 +101,7 @@
 			<div class="grid grid-cols-3 gap-3 p-4">
 				{#each [0, 1, 2] as n (n)}
 					<div>
-						<div class="relative h-[88px] overflow-hidden rounded-md {n === 1 ? 'bg-[#111]' : 'bg-black/7'}">
+						<div class="relative h-[88px] overflow-hidden rounded-md bg-black/7">
 							<span class="absolute top-1/2 left-1/2 grid size-8 -translate-1/2 place-items-center rounded-full {n === 1 ? 'bg-rich' : 'bg-black/15'}">
 								<svg width="11" height="11" viewBox="0 0 14 14" fill="#fff"><path d={n === 1 ? 'M3 2h3v10H3zM8 2h3v10H8z' : 'M3 1.5v11l9-5.5z'} /></svg>
 							</span>
@@ -118,10 +123,68 @@
 </div>
 
 <style>
+	/* the bare cover's ground: squared paper, thin grey lines on a near-white. The squares fit the cover a whole number
+	   of times: --n of them across (about 12px each), 19 down, and the window sits on the lines, two squares in from
+	   the top and the sides (about 24px, the card's text inset). */
+	.paper {
+		container-type: inline-size;
+		--n: 28;
+		--c: calc(100cqw / var(--n));
+	}
+	@media (min-width: 768px) {
+		.paper {
+			--n: 48;
+		}
+	}
+	.squared {
+		/* the papers are matched by eye, not by value: full lines carry far more ink than dots or crosses, so the
+		   lines are the lightest (--ln) and the small marks are a little stronger (--mark; the crosses' SVG repeats it) */
+		--ln: rgb(0 0 0 / 0.035);
+		--mark: rgb(0 0 0 / 0.1);
+		height: calc(var(--c) * 19);
+		background-color: #fafafa;
+		background-image: linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px);
+		background-size: var(--c) var(--c);
+		/* up by the line's 1px: no line along the cover's top edge, the first one is a square down */
+		background-position: 0 -1px;
+		/* and none along the left and right edges: the ground's colour over the outermost pixel on each side (the
+		   squares are a fraction of a pixel wide, so a line could otherwise show at the right edge) */
+		box-shadow:
+			inset 1px 0 #fafafa,
+			inset -1px 0 #fafafa;
+	}
+	/* the other papers, on the same squares */
+	/* dotted: a dot in the middle of each square */
+	.squared.dots {
+		background-image: radial-gradient(circle, var(--mark) 1px, transparent 1.5px);
+		background-position: 0 0;
+	}
+	/* graph: lighter squared lines, with every fourth one drawn twice, so it reads a step darker; lighter overall, as
+	   its heavier lines would otherwise make it the darkest paper */
+	.squared.graph {
+		--ln: rgb(0 0 0 / 0.025);
+		background-image:
+			linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px),
+			linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px);
+		background-size:
+			calc(var(--c) * 4) calc(var(--c) * 4),
+			calc(var(--c) * 4) calc(var(--c) * 4),
+			var(--c) var(--c),
+			var(--c) var(--c);
+	}
+	/* crosses: a small plus where every second pair of lines would cross */
+	.squared.plus {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 12.5h7M12.5 9v7' stroke='%23000' stroke-opacity='.1' fill='none'/%3E%3C/svg%3E");
+		background-size: calc(var(--c) * 2) calc(var(--c) * 2);
+		background-position: 0 0;
+	}
+	.on-paper {
+		inset: calc(var(--c) * 2) calc(var(--c) * 2) -40px;
+	}
 	.win {
 		box-shadow:
 			0 0 0 1px rgb(0 0 0 / 0.08),
-			0 8px 24px rgb(0 0 0 / 0.06);
+			0 8px 24px rgb(0 0 0 / calc(0.06 * var(--drop, 1)));
 	}
 	.bar {
 		display: flex;

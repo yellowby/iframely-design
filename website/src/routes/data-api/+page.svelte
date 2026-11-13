@@ -10,6 +10,8 @@
 	import Cta from '#lib/components/Cta.svelte';
 	import PricingBlock from '#lib/components/PricingBlock.svelte';
 	import PageMeta from '#lib/components/PageMeta.svelte';
+	import Scene from '#lib/components/Scene.svelte';
+	import CtaWindow from '#lib/components/CtaWindow.svelte';
 	import {
 		accessSample,
 		blockedSample,
@@ -27,14 +29,27 @@
 
 <Hero
 	eyebrow="Data API"
+	product
+	endpoint="iframe.ly/api/data"
 	title="The web reader that can show its permissions"
 	sub="Tell us why you are reading a URL. We read it once, as a signed and named agent, and return what the publisher allows for that purpose: metadata, links, entities, an excerpt, Markdown full text. With every result comes the <code>access</code> object, the record of why."
 >
 	<Button href="#signup">Get an API key</Button>
 	<Button href="/try" variant="secondary">Try a link</Button>
-	{#snippet after()}
-	{/snippet}
+	<!-- the home page's Data API scene, under the copy, as the wall of embeds on /embeds -->
+	{#snippet below()}<Scene scene="data" class="min-h-[480px]" />{/snippet}
 </Hero>
+
+<!-- the call to action straight after the hero scene, as on /embeds (components/CtaWindow.svelte) -->
+<div class="hero-cta wrap -mt-7 mb-10 md:-mt-13">
+	<CtaWindow
+		title="Start with one URL"
+		buttons={[
+			['Get an API key', '#signup'],
+			['Try a link', '/try']
+		]}
+	/>
+</div>
 
 <Section
 	id="modes"
