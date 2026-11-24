@@ -15,6 +15,8 @@ export const header: NavGroup[] = [
 		label: 'Product',
 		columns: [
 			{
+				// (no heading. "Features" was back for an hour on 2026-11-24, without the Solutions column beside it: with
+				// one column it separated nothing, and it cost the menu 32px.)
 				items: [
 					{ label: 'Rich Media', href: '/embeds', icon: 'rich', note: 'Embeds for 1,900 providers, kept up to date' },
 					{ label: 'Preview API', href: '/preview-api', icon: 'preview', note: 'Link previews and metadata for any URL' },

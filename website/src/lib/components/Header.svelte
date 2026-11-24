@@ -41,9 +41,14 @@
 	// product's card on the home page. (2026-11-24. The tiles had gone to greys, pale grey with a dark icon and black
 	// with a white icon when selected: the black was too loud, and four grey tiles told the products apart no better
 	// than no tiles.)
-	const TILE = { rich: 'bg-rich/8 text-rich', preview: 'bg-preview/8 text-preview', data: 'bg-data/8 text-data', pub: 'bg-pub/8 text-pub' };
-	// the selected row's tile: half as much tint again (on the row's grey fill 8% was all but lost; 16% was a bit much)
-	const TILE_ON = { rich: 'bg-rich/12 text-rich', preview: 'bg-preview/12 text-preview', data: 'bg-data/12 text-data', pub: 'bg-pub/12 text-pub' };
+	// (Later on 2026-11-24, a try: no product colours in the menu, the one accent is the site's blue. The four tiles
+	// are the same pale blue, and the scenes' labels, lines and ticks are blue too. Until then each row had its
+	// product's colour: 'bg-rich/8 text-rich', 'bg-preview/8 text-preview', 'bg-data/8 text-data', 'bg-pub/8
+	// text-pub', and /12 when selected; the scenes followed. The maps are kept by product, to go back in one line.)
+	const TILE = { rich: 'bg-blue/8 text-blue', preview: 'bg-blue/8 text-blue', data: 'bg-blue/8 text-blue', pub: 'bg-blue/8 text-blue' };
+	// (The selected row's tile had half as much tint again, a TILE_ON map at /12, after tries at /8, "all but lost" on
+	// the row's grey fill, and /16, "a bit much". Dropped on the user's word, 2026-11-24: the tile is the same,
+	// selected or not, and the row's fill alone says which is selected.)
 	let sel = $state(0);
 	const SCENES = ['rich', 'preview', 'data', 'pub'] as const;
 	const glyph = (d: string) =>
@@ -107,24 +112,32 @@
 									{#each group.columns ?? [] as col, i (i)}
 										<!-- the products' column is as wide as its longest line of text (it was a fixed 23rem) -->
 										<div class={col.items.some((i) => i.icon) ? 'whitespace-nowrap' : col.items.some((i) => i.note) ? 'w-[19rem]' : 'w-56'}>
-											{#if col.title}<p class="{col.items.some((i) => i.icon) ? 'px-2' : 'px-3'} pt-1 pb-1 text-[13px] leading-[1.5] font-medium text-faint">{col.title}</p>{/if}
+											<!-- The products' rows are on one grid (2026-11-24). A row is 56px: a 40px tile with 8px over, under
+											     and before it, 12px to the text, 16px after the text. The text is as tall as the tile: the name and
+											     the note are a 20px line each. A heading, if the column has one, starts on the tile's left edge and
+											     is 32px (4px, a 20px line, 8px).
+											     (The tile had 12px on its three sides at first, a row of 64px: the menu was too tall. Then 8px over
+											     and under and 12px before it, which put its left edge on the "Product" label's in the bar above:
+											     now it is 4px left of that, for the same 8px on all three sides.
+											     Before the grid: a 36px tile 13px in, 20px after the text, lines of 19.5px, a row of 62px.) -->
+											{#if col.title}<p class="{col.items.some((i) => i.icon) ? 'px-2 pt-1 pb-2 leading-5' : 'px-3 pt-1 pb-1 leading-[1.5]'} text-[13px] font-medium text-faint">{col.title}</p>{/if}
 											{#each col.items as item, n (item.href)}
 												{#if item.icon}
 													<!-- a product: its tile (in the product's colour), then the name and the note -->
 													<a
 														href={item.href}
-														class="flex items-center gap-3 rounded-md p-3 pr-5 pl-[13px] {n === sel ? 'bg-fg/[0.045]' : ''}"
+														class="flex items-center gap-3 rounded-md p-2 pr-4 {n === sel ? 'bg-fg/[0.045]' : ''}"
 														onmouseenter={() => (sel = n)}
 														onfocus={() => (sel = n)}
 													>
 														<!-- no transition on the row or the tile: the selection changes at once; the scene on the right cross-fades -->
 														<!-- (2026-11-24: the selected tile was black with a white icon, the loudest thing in the menu. Now the row's pale fill alone says which is selected, and the tile is in its product's colour, selected or not.) -->
-														<span class="grid size-9 shrink-0 place-items-center rounded-lg {(n === sel ? TILE_ON : TILE)[item.icon]}">
-															<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html GLYPH[item.icon]}</svg>
+														<span class="grid size-10 shrink-0 place-items-center rounded-lg {TILE[item.icon]}">
+															<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html GLYPH[item.icon]}</svg>
 														</span>
 														<span class="min-w-0">
-															<span class="t-nav block font-medium! text-fg">{item.label}</span>
-															{#if item.note}<span class="t-small block text-[13px]! text-soft">{item.note}</span>{/if}
+															<span class="t-nav block leading-5! font-medium! text-fg">{item.label}</span>
+															{#if item.note}<span class="t-small block text-[13px]! leading-5! text-soft">{item.note}</span>{/if}
 														</span>
 													</a>
 												{:else}
@@ -140,56 +153,104 @@
 											<!-- The whole area is a link to the selected product (it had a line under the scene, "Explore Rich
 											     Media →"). It is the same link as the row's, so it is kept from the keyboard and screen readers. -->
 											<a href={col.items[sel].href} tabindex="-1" aria-hidden="true" class="pane group/pane flex w-[20rem] flex-col self-stretch rounded-lg bg-[#f4f4f5]">
-												<div class="relative m-5 grow">
+												<!-- (12px of grey around the window, as the rows have before their tiles. It was 20px while the rows
+												     were taller: in a menu of four 56px rows that left the window 184px, and the Data API's answer
+												     needs 195px: its bar was squeezed.) -->
+												<div class="relative m-3 grow">
+												<!-- The window itself (white, with its outline and shadow) stands still: one for the four scenes, which
+												     are all its size. Only what is in it changes: the scene going out fades in 150ms, the one coming
+												     in fades in over 250ms and starts 75ms later, so the two are hardly seen at once.
+												     (Until 2026-11-24 each scene was a window of its own, and the windows cross-faded in 130ms, each
+												     moving 8px down as it went and up as it came: the white dipped to grey midway and the frame
+												     jumped.) -->
+												<div class="win absolute inset-0 rounded-md bg-white"></div>
 												{#each SCENES as s, n (s)}
-													<!-- the scene coming in rises a few pixels as it fades in; the windows are all one height -->
-													<div class="absolute inset-0 transition-[opacity,translate] duration-130 ease-out motion-reduce:transition-none {n === sel ? '' : 'translate-y-2 opacity-0'}">
-														<div class="win flex h-full w-full flex-col overflow-hidden rounded-md bg-white">
+													<div class="absolute inset-0 transition-opacity ease-out motion-reduce:transition-none {n === sel ? 'delay-75 duration-250' : 'opacity-0 duration-150'}">
+														<div class="flex h-full w-full flex-col overflow-hidden rounded-md">
 															{#if s === 'rich'}
-																<!-- an embed: a player -->
-																<div class="bar">youtu.be/9bZkp7q19f0</div>
-																<div class="flex grow flex-col p-2.5">
+																<!-- Rich Media and the Preview API are one API (2026-11-24): the two scenes are a pair, the same box over the
+																     same 44px foot. Here the box is a supported provider's embed, ready to show: its player, and in the
+																     foot the provider's own options, as the chips of /embeds' options block (two of them on).
+																     (It had the link in a bar over the player and a progress line under it.) -->
+																<div class="flex grow flex-col px-3 pt-3">
 																	<div class="relative grow overflow-hidden rounded-sm bg-black/7">
 																		<!-- YouTube's own play button shape (as in the hero's video tile), in the page's blue, not its red -->
 																		<svg class="absolute top-1/2 left-1/2 -translate-1/2 text-rich" width="44" height="31" viewBox="0 0 68 48">
 																			<path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.950-1.480-16.260z" fill="currentColor" />
 																			<path d="M45 24 27 14v20z" fill="#fff" />
 																		</svg>
-																		<span class="absolute inset-x-0 bottom-0 h-[3px] bg-black/10"><span class="block h-full w-[34%] bg-rich"></span></span>
+																		<!-- (no progress line) -->
 																	</div>
 																</div>
-															{:else if s === 'preview'}
-																<!-- a link's card: the picture, the title, where it is from -->
-																<!-- (a skeleton: grey bars for the title; it had a written title and a line of text) -->
-																<!-- on the picture, barely there: the data the card is made from (JSON5; illustrative) -->
-																<div class="relative grow overflow-hidden bg-black/7">
-																	<pre class="absolute inset-0 m-0 px-3 py-2.5 font-mono text-[10px] leading-[1.55] text-fg/25">{'{'}
-  title: 'Page title',
-  description: 'A short…',
-  site: 'example.com',
-  thumbnail: {'{'} … {'}'}
-{'}'}</pre>
+																<div class="mx-3 mt-2.5 mb-3 flex h-11 flex-none flex-col justify-between">
+																	<p class="font-mono text-[10px] leading-none text-mute"><span class="text-fg">youtube.com</span> · options</p>
+																	<p class="flex gap-1.5">
+																		<!-- (quiet chips: grey words in a grey outline, and only the dot says which are on. At first the two
+																		     that are on were blue, tint, outline and words: too much beside the play button. The first was
+																		     "Start at 0:42"; a third, "Dark theme", switched off, went the same day.) -->
+																		<!-- (Then the user's: the tick of the other scenes' chips, not a dot, and Captions not ticked. An
+																		     option that is off has no mark and paler words. Both were on, each with a blue dot.) -->
+																		{#each [['Player controls', true], ['Captions', false]] as [label, on] (label)}
+																			<span class="flex items-center gap-[5px] rounded-full py-[5px] text-[11px] leading-none ring-1 ring-black/10 ring-inset {on ? 'pr-2 pl-1.5 text-mute' : 'px-2 text-faint'}">
+																				{#if on}<svg class="text-blue" width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.8l4.5-5.3" /></svg>{/if}{label}
+																			</span>
+																		{/each}
+																	</p>
 																</div>
-																<div class="p-3">
-																	<div class="h-2 w-[88%] rounded-full bg-black/12"></div>
-																	<div class="mt-2 h-2 w-[60%] rounded-full bg-black/12"></div>
-																	<!-- the one blue detail: the site's icon before its name -->
-																	<p class="mt-3 flex items-center gap-1.5 font-mono text-[11px] leading-none text-mute"><i class="size-2.5 rounded-[3px] bg-rich"></i>example.com</p>
+															{:else if s === 'preview'}
+																<!-- The Preview API gives the metadata of any link, and the customer makes a card of their own from it.
+																     So the card here is not made: an outline of its parts, each named by the field it comes from
+																     (thumbnail, title, description, site), the names in the product's colour.
+																     (It was a made card, a grey picture with the fields' JSON barely seen on it: decoration.) -->
+																<div class="mx-3 mt-3 grid grow place-items-center rounded-sm border border-dashed border-black/20 bg-black/[0.03]">
+																	<span class="font-mono text-[10px] leading-none text-blue">thumbnail</span>
+																</div>
+																<div class="mx-3 mt-2.5 mb-3 flex h-11 flex-none flex-col justify-between font-mono text-[10px] leading-none text-blue">
+																	<!-- a part of the card as a grey bar, and after it the field it is made from -->
+																	<p class="flex h-3 items-center"><i class="h-2 w-[46%] rounded-full bg-black/12"></i><span class="ml-auto">title</span></p>
+																	<p class="flex h-3 items-center"><i class="h-2 w-[64%] rounded-full bg-black/12"></i><span class="ml-auto">description</span></p>
+																	<p class="flex h-3 items-center gap-1.5"><i class="size-2.5 rounded-[3px] bg-black/20"></i><i class="h-2 w-[22%] rounded-full bg-black/12"></i><span class="ml-auto">site</span></p>
 																</div>
 															{:else if s === 'data'}
 																<!-- the Data API's answer: the content itself (the title, the excerpt, the full text as
 																     Markdown: that whole line on a pale blue band, as an added line in a diff), and one line of the access part: the decision on the full text. In the
 																     shape of the site's own sample (lib/data/samples.ts); not yet checked against a live
 																     response. Written as JSON5, as all the answers shown on the site: keys without quotes. -->
-																<div class="bar">GET iframe.ly/api/data<span class="text-mute">?url=…</span></div>
-																<pre class="m-0 px-3 py-2.5 font-mono text-[11px] leading-[1.5] text-mute">{'{'}
-  meta: {'{'} title: <span class="text-fg">'Page title'</span> {'}'},
-  entities: {'{'} … {'}'},
-  excerpt: <span class="text-fg">'A short summary…'</span>,
-<span class="-mx-3 block bg-rich/10 px-3 text-rich">  fulltext: '# Page title…',</span>  access: {'{'} decision: {'{'}
-    fulltext: {'{'} allowed: <span class="text-fg">true</span> {'}'}
-  {'}'} {'}'}
-{'}'}</pre>
+																<!-- (2026-11-24: one of the family. The Data API is the Preview API with one more layer, the page's full
+																     text, given where its publisher allows it. So: the box is that layer, lines of text in the product's
+																     colour under the field's name; the foot names the Preview API's fields, which come too, and has
+																     the publisher's consent as a chip, as the options of the Rich Media scene.
+																     Until then it was the answer written out: a request bar and nine lines of JSON5.) -->
+																<div class="mx-3 mt-3 flex grow flex-col justify-center gap-[7px] rounded-sm bg-black/[0.04] px-3">
+																	<!-- (Later still: a grey box, the excerpt in greys, as the Preview API's bars, and only the full text
+																	     in blue: the layer that is the point. The whole box was tinted, and both parts in the accent. The blue lines are 25% on the grey; they
+																	     were 15% on the tint.) -->
+																	<!-- (In the product's own words, the user's on 2026-11-24: excerpt, content policy, Content Signals.
+																	     The box has the two layers the Data API adds, the excerpt and under it the full text. The foot
+																	     says what the reading is for and what allowed it: the page's Content Signals and the
+																	     site's robots.txt, as quiet chips with a tick in the product's colour, as the Rich
+																	     Media scene's options.
+																	     Before: "fulltext" alone over six lines; the foot listed the Preview API's fields, "thumbnail ·
+																	     title · description · site", and had one tinted chip, "Publisher allows full text".) -->
+																	<span class="font-mono text-[10px] leading-none text-mute">excerpt</span>
+																	{#each [96, 62] as w (w)}<i class="h-1.5 rounded-full bg-black/12" style="width:{w}%"></i>{/each}
+																	<span class="mt-1.5 font-mono text-[10px] leading-none text-blue">fulltext</span>
+																	{#each [94, 100, 58] as w (w)}<i class="h-1.5 rounded-full bg-blue/25" style="width:{w}%"></i>{/each}
+																</div>
+																<div class="mx-3 mt-2.5 mb-3 flex h-11 flex-none flex-col justify-between">
+																	<!-- (the user, the same day: metadata is not what the Data API is about; it is automated processing
+																	     and the publisher's signals and consent. So the line has the declared purpose of the reading,
+																	     the request's mode, and no domain: "example.com" stood there for a minute.) -->
+																	<p class="font-mono text-[10px] leading-none text-mute"><span class="text-fg">mode=ai-input</span> · allowed by</p>
+																	<p class="flex gap-1.5">
+																		<!-- (the second was "Content policy" until the user asked for robots.txt, the same day) -->
+																		{#each ['Content Signals', 'robots.txt'] as label (label)}
+																			<span class="flex items-center gap-[5px] rounded-full py-[5px] pr-2 pl-1.5 text-[11px] leading-none text-mute ring-1 ring-black/10 ring-inset">
+																				<svg class="text-blue" width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.8l4.5-5.3" /></svg>{label}
+																			</span>
+																		{/each}
+																	</p>
+																</div>
 															{:else}
 																<!-- a publisher's settings: what each kind of app receives -->
 																<!-- After the /publishers hero scene (lib/scene/sec.js, pubStage): the window's bar (the domain,
@@ -197,22 +258,42 @@
 																     rules by path, in the scene's own words: a path, a processing mode (Assist, AI-Input,
 																     AI-Train) and the content types allowed (Meta, Links, Fulltext).
 																     (It was a list of switches: Link previews, Excerpts, Full text, AI training.) -->
-																<div class="bar">your-site.com<span class="ml-auto flex items-center gap-1 text-mute"><svg class="text-rich" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.8l4.5-5.3" /></svg>DNS verified</span></div>
-																<div class="flex grow flex-col px-3 pt-2.5">
-																	<p class="font-mono text-[10px] leading-none text-mute">Content policy</p>
-																	<div class="mt-1 flex grow flex-col divide-y divide-black/7">
-																		<!-- a rule: a path, a processing mode, and the content types that mode is allowed there -->
-																		{#each [['/blog/*', 'Assist', 'Fulltext'], ['/members/*', 'AI-Input', 'Meta · Links'], ['/*', 'AI-Train', 'No access']] as [path, mode, gets], k (path)}
-																			<p class="flex grow items-center gap-2 text-[12px] leading-none">
-																				<code class="rounded-sm bg-black/6 px-1.5 py-1 font-mono text-[11px] text-fg">{path}</code>
-																				<span class="ml-auto text-mute">{mode}</span>
-																				<!-- what it receives, as the console's select -->
-																				<span class="flex w-[98px] items-center justify-between rounded-sm px-2 py-1.5 ring-1 ring-black/12 ring-inset {k ? 'text-fg' : 'text-rich'}">
-																					{gets}<svg width="8" height="8" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" class="text-mute"><path d="M9 4.5 6 7.5 3 4.5" /></svg>
-																				</span>
-																			</p>
-																		{/each}
-																	</div>
+																<!-- (2026-11-24, one of the family: the rules are the box, and the domain and "DNS verified" went from a bar
+																     over them to the foot, the second as a chip. Gone: the "Content policy" label over the rules and
+																     the processing mode in each, Assist, AI-Input, AI-Train.) -->
+																<!-- (Later the same day, "too busy": it was the console's own controls, each path in a grey code chip,
+																     each answer in an outlined select with a chevron, hairlines between the rules, and a tinted
+																     "DNS verified" chip. Now it is drawn as the Data API's box beside it: a tinted box, the
+																     policy's name in the product's colour, and three plain lines, a path and what is given there.
+																     The second rule gives an excerpt, in the Data API scene's word; it was "Meta · Links".
+																     The foot's chip is quiet, as the others'.) -->
+																<!-- (Then, the user's: a grey box as the other three, and another layout. Each rule is a white row on
+																     the grey, as a row of settings: the path, and at its end what is given there; only "Fulltext" is
+																     blue, as the full text of the Data API's scene. The policy's name went back to the foot.
+																     It was a tinted box with "content policy" in blue over three bare lines, the path at one edge
+																     and the answer at the other with nothing to hold them together.) -->
+																<div class="mx-3 mt-3 flex grow flex-col justify-center gap-1.5 rounded-sm bg-black/[0.04] px-3">
+																	<!-- a rule: a path, and what the apps receive there -->
+																	{#each [['/blog/*', 'Fulltext'], ['/members/*', 'Excerpt'], ['/*', 'No access']] as [path, gets], k (path)}
+																		<!-- (the first rule, the one that gives the full text, is the blue of the scene: the whole row, a
+																		     pale blue in place of the white, with its path and its answer in blue. Only the word
+																		     "Fulltext" was blue: too little to be seen as the accent.) -->
+																		<p class="flex items-center justify-between rounded-sm px-2 py-2 text-[11px] leading-none bg-white">
+																			<!-- (the first row is white again, on the user's word: for a while it had a pale blue fill, 10% of
+																			     the blue on white. Its path and its answer stay blue.) -->
+																			<!-- (a span, not code: the site's code has a grey chip of its own) -->
+																			<span class="font-mono {k ? 'text-fg' : 'text-blue'}">{path}</span>
+																			<span class={k ? 'text-mute' : 'font-medium text-blue'}>{gets}</span>
+																		</p>
+																	{/each}
+																</div>
+																<div class="mx-3 mt-2.5 mb-3 flex h-11 flex-none flex-col justify-between">
+																	<p class="font-mono text-[10px] leading-none text-mute"><span class="text-fg">your-site.com</span> · content policy</p>
+																	<p class="flex">
+																		<span class="flex items-center gap-[5px] rounded-full py-[5px] pr-2 pl-1.5 text-[11px] leading-none text-mute ring-1 ring-black/10 ring-inset">
+																			<svg class="text-blue" width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.8l4.5-5.3" /></svg>DNS verified
+																		</span>
+																	</p>
 																</div>
 															{/if}
 														</div>
@@ -283,6 +364,7 @@
 	}
 	.pane .bar {
 		display: flex;
+		flex: none; /* a scene too tall for the window is cut at its foot: the bar is not squeezed */
 		align-items: center;
 		height: 30px;
 		padding: 0 12px;

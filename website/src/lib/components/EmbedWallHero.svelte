@@ -327,7 +327,9 @@
 			<span class="absolute inset-x-0 top-0 flex items-center gap-2.5 px-3.5 pt-3 pb-9 text-left transition-opacity duration-200 {cover ? '' : 'bg-linear-to-b from-black/60 to-transparent'} {playing ? 'opacity-0 group-hover:opacity-100' : ''}">
 				<i class="grid size-7 flex-none place-items-center rounded-full font-serif text-[15px] leading-none font-semibold not-italic {cover ? 'bg-fg text-white' : 'bg-white text-black'}">M</i>
 				<!-- (a line of 1.5: with a line of 1 the cut-off for long titles also cut the letters' tails and accents) -->
-				<span class="truncate text-[14px] leading-[1.5] font-medium {cover ? 'text-fg' : 'text-white'}">A Trip to the Moon (1902) - Georges Méliès</span>
+				<!-- (on the poster the title is in grey, #666, since 2026-11-24; it was near-black, text-fg, and the body's
+				     #333 was no different to the eye) -->
+				<span class="truncate text-[14px] leading-[1.5] font-medium {cover ? 'text-mute' : 'text-white'}">A Trip to the Moon (1902) - Georges Méliès</span>
 			</span>
 			{#if !playing}
 				<svg class="absolute top-1/2 left-1/2 -translate-1/2" width="68" height="48" viewBox="0 0 68 48" aria-hidden="true">
