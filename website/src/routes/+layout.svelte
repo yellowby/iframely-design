@@ -3,7 +3,6 @@
 	import favicon from '#lib/assets/favicon.svg';
 	import Header from '#lib/components/Header.svelte';
 	import Footer from '#lib/components/Footer.svelte';
-	import TypeTweaks from '#lib/components/TypeTweaks.svelte';
 	import { typeCss } from '#lib/type/type.ts';
 	import type { LayoutProps } from './$types';
 
@@ -28,4 +27,3 @@
 	{@render children()}
 </main>
 <Footer />
-<TypeTweaks />

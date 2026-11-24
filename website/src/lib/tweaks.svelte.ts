@@ -19,7 +19,10 @@ export const look = $state<{
 	shadows: 'on' | 'off';
 	accent: 'on' | 'off'; // 'off' sets the headings' blue words in the heading's colour (html[data-accent='off'] in routes/layout.css); "one URL at a time" on the home page stays
 	heroCta: 'on' | 'off'; // 'off' removes the blue call-to-action window under the product heroes (html[data-hero-cta='off'] in routes/layout.css)
-	tag: 'regular' | 'measure' | 'badge' | 'endpoint' | 'outline' | 'off'; // 'off' hides the tag
+	// 'tick', 'corner', 'cross' and 'slash' are the name after a small drawing mark on the container's left edge: a
+	// tick and a short line, a frame's corner, a registration cross, a comment's two slashes (2026-11-24, for
+	// /embeds, whose wall under the hero already uses the measure lines); 'off' hides the tag
+	tag: 'regular' | 'measure' | 'tick' | 'corner' | 'cross' | 'slash' | 'badge' | 'endpoint' | 'outline' | 'off';
 }>({
 	corners: 'rounded',
 	shadows: 'on',

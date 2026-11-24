@@ -53,7 +53,7 @@
 			if (saved?.cta) Object.assign(cta, saved.cta);
 			if (saved?.look) Object.assign(look, saved.look);
 			// a saved tag variant that no longer exists (the dropped "leader" and "corners") falls back to the default
-			if (!['regular', 'measure', 'badge', 'endpoint', 'outline', 'off'].includes(look.tag)) look.tag = 'measure';
+			if (!['regular', 'measure', 'tick', 'corner', 'cross', 'slash', 'badge', 'endpoint', 'outline', 'off'].includes(look.tag)) look.tag = 'measure';
 		} catch {
 			// no storage, or nothing usable in it: the defaults stand
 		}
@@ -130,13 +130,15 @@
 			});
 			// the tag over a product hero's heading (/embeds): a light blue pill, a numbered blueprint measure line, or the API call
 			// (in two rows of three: Regular is the plain blue tag the home page's sections have)
-			const TAG: [string, string][] = [['Regular', 'regular'], ['Badge', 'badge'], ['Measure', 'measure'], ['Endpoint', 'endpoint'], ['Outline', 'outline'], ['Off', 'off']];
+			// (ten, in five rows of two, since 2026-11-24: the four marks, Tick, Corner, Cross and Slash, came for /embeds,
+			// which shows its own style while this is on Measure)
+			const TAG: [string, string][] = [['Measure', 'measure'], ['Regular', 'regular'], ['Tick', 'tick'], ['Corner', 'corner'], ['Cross', 'cross'], ['Slash', 'slash'], ['Badge', 'badge'], ['Outline', 'outline'], ['Endpoint', 'endpoint'], ['Off', 'off']];
 			p.addFolder({ title: 'Hero tag' }).addBinding(look, 'tag', {
 				label: undefined,
 				view: 'radiogrid',
 				groupName: 'look-tag',
-				size: [3, 2],
-				cells: (x: number, y: number) => ({ title: TAG[y * 3 + x][0], value: TAG[y * 3 + x][1] })
+				size: [2, 5],
+				cells: (x: number, y: number) => ({ title: TAG[y * 2 + x][0], value: TAG[y * 2 + x][1] })
 			});
 			// the home page's four product cards: the cover's colours and how it sits in the card
 			const c = p.addFolder({ title: 'Product cards' });

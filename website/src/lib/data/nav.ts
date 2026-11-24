@@ -5,27 +5,21 @@ export type NavLink = { label: string; href: string; note?: string; divider?: bo
 export type NavColumn = { title?: string; items: NavLink[] };
 export type NavGroup = { label: string; href?: string; columns?: NavColumn[] };
 
-// Home01 header: Product (two columns, Features and Solutions), Resources (developers, then company), Domains, Pricing
+// Home01 header: Product (the four products, with a small scene of the one pointed at on the right, drawn in
+// components/Header.svelte), Resources (developers, then company), Domains, Pricing
+// (Product had two columns with headings, "Features" and "Solutions"; the Solutions pages are still in the footer:
+//  /for/agents "AI agents and RAG", /for/chat-apps "Chat and collaboration apps", /for/cms "CMS, editors and site
+//  builders", /for/newsrooms "Publishers and newsrooms")
 export const header: NavGroup[] = [
 	{
 		label: 'Product',
 		columns: [
 			{
-				title: 'Features',
 				items: [
 					{ label: 'Rich Media', href: '/embeds', icon: 'rich', note: 'Embeds for 1,900 providers, kept up to date' },
 					{ label: 'Preview API', href: '/preview-api', icon: 'preview', note: 'Link previews and metadata for any URL' },
 					{ label: 'Data API', href: '/data-api', icon: 'data', note: 'Readable content, with publisher permissions' },
 					{ label: 'Publisher Console', href: '/publishers', icon: 'pub', note: 'Set what each app receives from your pages' }
-				]
-			},
-			{
-				title: 'Solutions',
-				items: [
-					{ label: 'AI agents and RAG', href: '/for/agents', note: 'Ground assistants on URLs you may use' },
-					{ label: 'Chat and collaboration apps', href: '/for/chat-apps', note: 'Link previews people trust, at chat volume' },
-					{ label: 'CMS, editors and site builders', href: '/for/cms', note: 'Paste a URL, get an embed that lasts' },
-					{ label: 'Publishers and newsrooms', href: '/for/newsrooms', note: 'Embeds in stories, control over your links' }
 				]
 			}
 		]
@@ -62,25 +56,25 @@ export const header: NavGroup[] = [
 
 export const footer: { label: string; items: NavLink[] }[] = [
 	{
-		label: 'Products',
+		label: 'Product',
 		items: [
 			{ label: 'Rich Media', href: '/embeds' },
 			{ label: 'Preview API', href: '/preview-api' },
 			{ label: 'Data API', href: '/data-api' },
 			{ label: 'Publisher Console', href: '/publishers' },
-			{ label: 'Integrations', href: '/integrations' },
-			{ label: 'WordPress plugin', href: '/wordpress' },
 			{ label: 'Pricing', href: '/pricing' }
 		]
 	},
 	{
-		// same pages as the header's Solutions column (G42 footer, motion lab)
+		// same pages as the header's Solutions column (G42 footer, motion lab), under short names that fit a footer
+		// column on one line (they were "AI agents and RAG", "Chat and collaboration apps", "CMS, editors and site
+		// builders", "Publishers and newsrooms")
 		label: 'Solutions',
 		items: [
-			{ label: 'AI agents and RAG', href: '/for/agents' },
-			{ label: 'Chat and collaboration apps', href: '/for/chat-apps' },
-			{ label: 'CMS, editors and site builders', href: '/for/cms' },
-			{ label: 'Publishers and newsrooms', href: '/for/newsrooms' }
+			{ label: 'AI agents', href: '/for/agents' },
+			{ label: 'Chat apps', href: '/for/chat-apps' },
+			{ label: 'CMS and editors', href: '/for/cms' },
+			{ label: 'Newsrooms', href: '/for/newsrooms' }
 		]
 	},
 	{
@@ -88,30 +82,33 @@ export const footer: { label: string; items: NavLink[] }[] = [
 		items: [
 			{ label: 'Embed code generator', href: '/try' },
 			{ label: 'URL debugger', href: '/tools/url-debugger' },
-			{ label: 'All free tools', href: '/tools' },
 			{ label: 'Supported providers', href: '/domains' },
-			{ label: 'Domains widget', href: '/docs/domains-widget' }
+			{ label: 'Domains widget', href: '/docs/domains-widget' },
+			{ label: 'All free tools', href: '/tools' }
 		]
 	},
 	{
+		// (Integrations and the WordPress plugin came from Products; "For agents" went, it is Solutions' "AI agents";
+		// the help center is under Company)
 		label: 'Developers',
 		items: [
 			{ label: 'Docs', href: '/docs' },
-			{ label: 'For agents', href: '/for/agents' },
 			{ label: 'MCP server', href: '/mcp' },
-			{ label: 'Changelog and provider news', href: '/updates' },
+			{ label: 'Integrations', href: '/integrations' },
+			{ label: 'WordPress plugin', href: '/wordpress' },
+			{ label: 'Changelog', href: '/updates' }, // (the header's "Changelog and provider news", short enough for one line)
 			{ label: 'Verify our agents', href: '/verification' },
-			{ label: 'Help center', href: '/help' },
 			{ label: 'Status', href: '#status' }
 		]
 	},
 	{
+		// (Security and the Trust center came from Legal; "Contact support", /help#contact, went: the help center has it)
 		label: 'Company',
 		items: [
 			{ label: 'About', href: '/about' },
-			{ label: 'Careers', href: '/careers' },
-			{ label: 'Compare', href: '/compare' },
-			{ label: 'Contact support', href: '/help#contact' }
+			{ label: 'Help center', href: '/help' },
+			{ label: 'Security', href: '#security' },
+			{ label: 'Trust center', href: '#trust' }
 		]
 	},
 	{
@@ -121,9 +118,7 @@ export const footer: { label: string; items: NavLink[] }[] = [
 			{ label: 'Automated processing', href: '#automated-processing' },
 			{ label: 'Privacy policy', href: '#privacy' },
 			{ label: 'Publisher policy', href: '#publisher-policy' },
-			{ label: 'Security', href: '#security' },
-			{ label: 'GDPR', href: '#gdpr' },
-			{ label: 'Trust center', href: '#trust' }
+			{ label: 'GDPR', href: '#gdpr' }
 		]
 	}
 ];

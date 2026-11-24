@@ -13,6 +13,8 @@
 	--color-page: #fafafa;
 	--color-fg: #111111;
 	--color-body: #333333;
+	/* a block's tagline (the paragraph beside its heading): a step lighter than body, a step darker than the cards' mute */
+	--color-tagline: #555555;
 	--color-mute: #666666;
 	--color-soft: #777777;
 	--color-faint: #7a7a7a;
@@ -88,7 +90,6 @@ h6,
 .t-h2 {
 	text-wrap: pretty;
 }
-
 /* Corners: Square in the Tweakpane panel (lib/tweaks.svelte.ts, look.corners) removes every rounded corner on the site:
    buttons, cards, pills, the product scenes (their radii are set in the lab's own CSS and inline styles, hence
    !important) and circles. The panel itself keeps its corners. */
@@ -135,6 +136,29 @@ html[data-hero-cta='off'] .hero-cta {
 /* Grid and flex items holding code blocks must be allowed to shrink below their content width */
 .grid > * {
 	min-width: 0;
+}
+
+/* A link in a block's tagline (an <a> straight inside a p.t-body): the headings' black on the tagline's grey, over a
+   subtle light grey underline, which turns black when pointed at. For a light ground. In the components layer, so a link with
+   utility classes of its own keeps them. (Not a:not([class]): Svelte gives the link a scoping class.)
+   The same link anywhere else in grey copy is marked .copy-link (the timeline's columns, components/UpkeepTimeline.svelte). */
+@layer components {
+	p.t-body > a,
+	a.copy-link {
+		color: var(--color-fg);
+		text-decoration: underline;
+		text-decoration-color: rgb(0 0 0 / 0.2);
+		text-decoration-thickness: 1px;
+		/* in the text's own measure, so the line keeps its distance in smaller copy: 3.6px under an 18px tagline, 3px
+		   under the 15px columns (it was 4px for both, which hung low under the smaller text) */
+		text-underline-offset: 0.2em;
+		transition: text-decoration-color 0.15s;
+	}
+	/* pointed at: no blue; the underline darkens from light grey to the heading's black, the text's own colour */
+	p.t-body > a:hover,
+	a.copy-link:hover {
+		text-decoration-color: currentColor;
+	}
 }
 
 /* Inline links inside copy rendered with {@html} */

@@ -5,7 +5,8 @@
 	import LogoWall from '#lib/components/LogoWall.svelte';
 	import Pill from '#lib/components/Pill.svelte';
 	import PricingBlock from '#lib/components/PricingBlock.svelte';
-	import GlyphSection from '#lib/components/GlyphSection.svelte';
+	import CtaWindow from '#lib/components/CtaWindow.svelte';
+	import AskStrip from '#lib/components/AskStrip.svelte';
 	import DitherHead from '#lib/components/DitherHead.svelte';
 	import BlueprintCards from '#lib/components/BlueprintCards.svelte';
 	import type { IconName } from '#lib/data/icons.ts';
@@ -181,7 +182,8 @@
 
 <section class="wrap mt-14">
 	<p class="t-label mb-4 text-faint">Trusted by products where real people share URLs</p>
-	<LogoWall step={cycle} lead={hero} />
+	<!-- since: the strip begins with "Serving since 2012", as /embeds' (it had three figures here until 2026-11-24) -->
+	<LogoWall step={cycle} lead={hero} since />
 </section>
 
 <section class="wrap mt-28">
@@ -230,7 +232,7 @@
 					</div>
 				</div>
 				<div>
-					<p class="t-body text-body">{p.text}</p>
+					<p class="t-body text-tagline">{p.text}</p>
 					<div class="mt-[18px] flex items-center gap-3.5">
 						{#if p.marks}
 							<span class="flex shrink-0 items-center gap-2.5"
@@ -259,4 +261,20 @@
 	</div>
 </section>
 
-<div class="wrap mb-24"><GlyphSection sub="Get a free key and try your first URL in a minute, or check a link without signing up." /></div>
+<!-- The closing call to action: /embeds' blue block (components/CtaWindow.svelte, plain and stacked, the AI
+     assistants at its right), with this page's own heading, tagline and buttons. (It was GlyphSection: the blue block
+     with the glyph clouds and the dissolving edge.) -->
+<div class="wrap mb-16">
+	<CtaWindow
+		plain
+		stack
+		title="Start with one URL"
+		text="Get a free key and try your first URL in a minute, or check a link without signing up."
+		buttons={[
+			['Get API key', '#signup'],
+			['Check URL', '/try']
+		]}
+	>
+		{#snippet aside()}<AskStrip />{/snippet}
+	</CtaWindow>
+</div>

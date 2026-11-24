@@ -9,12 +9,16 @@
 	// buttons: [label, href]; the first is the main one and sits last, at the right edge.
 	let {
 		title,
+		text,
 		verb,
 		label,
 		query,
 		note,
+		plain = false,
+		stack = false,
+		aside,
 		buttons
-	}: { title: string; verb?: string; /* the bar's text; without it the window has no bar */ label?: string; query?: string; note?: string; buttons: [string, string][] } = $props();
+	}: { /* stack: the buttons stand under the tagline, the main one first, not at the block's right (/embeds) */ stack?: boolean; /* something for the block's right side, level with the buttons of a stacked block */ aside?: import('svelte').Snippet; /* plain: flat blue, without the drawing behind the heading (/embeds-3) */ plain?: boolean; title: string; /* a tagline under the heading */ text?: string; verb?: string; /* the bar's text; without it the window has no bar */ label?: string; query?: string; note?: string; buttons: [string, string][] } = $props();
 	const BLUE = $derived(CTA_BG[cta.bg]);
 </script>
 
@@ -30,17 +34,16 @@
 	</div>{/if}
 	<!-- A little drawing on the left, behind the heading, in thin white lines as the wall's blue measures: a squared
 	     grid that fades out towards the buttons, and construction arcs swung from the bottom-left corner. -->
-	<div class="draft pointer-events-none absolute inset-y-0 left-0 w-[58%]" aria-hidden="true">
+	{#if !plain}<div class="draft pointer-events-none absolute inset-y-0 left-0 w-[58%]" aria-hidden="true">
 		<svg class="absolute bottom-0 left-0" width="260" height="260" viewBox="0 0 260 260" fill="none" stroke="#fff" stroke-width="1">
 			<circle cx="0" cy="260" r="72" stroke-opacity=".28" />
 			<circle cx="0" cy="260" r="132" stroke-opacity=".22" stroke-dasharray="2 5" />
 			<circle cx="0" cy="260" r="192" stroke-opacity=".18" />
 			<path d="M0 260L200 190M0 260L130 60" stroke-opacity=".18" />
 		</svg>
-	</div>
-	<div class="relative flex flex-wrap items-center justify-between gap-x-12 gap-y-5 px-6 py-7 md:px-8 md:py-8">
-		<h2 class="t-h2">{title}</h2>
-		<div class="flex flex-row-reverse flex-wrap justify-end gap-4">
+	</div>{/if}
+	{#snippet row()}
+		<div class="flex flex-wrap gap-4 {stack ? 'mt-6' : 'flex-row-reverse justify-end'}">
 			{#each buttons as [text, to], i (text)}
 				<a
 					href={to}
@@ -51,11 +54,28 @@
 				>
 			{/each}
 		</div>
+	{/snippet}
+	<div class="relative flex flex-wrap {stack ? 'items-end' : 'items-center'} justify-between gap-x-12 gap-y-5 px-6 py-7 md:px-8 md:py-8">
+		{#if stack}
+			<div class="max-w-[640px]">
+				<h2 class="t-h2">{title}</h2>
+				{#if text}<p class="t-small mt-3 text-[15px]! text-pretty text-white/80">{text}</p>{/if}
+				{@render row()}
+			</div>
+			{@render aside?.()}
+		{:else if text}
+			<div class="max-w-[640px]">
+				<h2 class="t-h2">{title}</h2>
+				<p class="t-small mt-3 text-[15px]! text-pretty text-white/80">{text}</p>
+			</div>
+		{:else}
+			<h2 class="t-h2">{title}</h2>
+		{/if}
+		{#if !stack}{@render row()}{/if}
 	</div>
 </section>
 
-<style>
-	/* the grid: 24px squares counted from the block's left edge, fading to nothing on the right */
+<style>	/* the grid: 24px squares counted from the block's left edge, fading to nothing on the right */
 	.draft {
 		--ln: rgb(255 255 255 / 0.14);
 		background-image: linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px);
