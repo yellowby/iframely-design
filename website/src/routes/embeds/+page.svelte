@@ -91,16 +91,19 @@
      product pages and on /embeds-1..3: it repeated the measures of the wall under it). Tried in its place the same
      day and dropped: the plain blue tag, a leader line, a bracket down the copy's left side, and a small drawing
      mark before the name (Hero's tag="tick" | "corner" | "cross" | "slash", still in the panel's Hero tag for the
-     other product pages). -->
+     other product pages).
+     Tried and dropped later the same day: the tag set as the blocks' tags are ("01 Developers"), with the product's
+     icon in the chip where they have the number. -->
 <Hero
 	product
 	endpoint="iframe.ly/api/iframely"
 	title="Perfect embeds, every time"
 	sub="Send us a URL, get the embed code back. Today and tomorrow. Videos play, posts appear and maps move, the way people expect from the apps they love, wherever your users write, post and chat."
-	split
 >
-	<!-- split (2026-11-24): the tag, the heading and the buttons under it on the left, the text on the right, as a
-	     section's head on the home page. (/embeds-1..3 have the copy in one column, the buttons under the text.) -->
+	<!-- The copy in one column, as on /embeds-1..3 and the other product pages: heading, text, buttons.
+	     (For some hours of 2026-11-24 it was Hero's `split`: the heading and the buttons under it on the left, the
+	     text on the right. It put the wall 100px higher, but the hero then looked like one more of the blocks'
+	     heads under it, and the buttons came before the text.) -->
 	<Button href="#signup">Get an API key</Button>
 	<Button href="/try" variant="secondary">Try a link</Button>
 	<!-- V15 from the motion lab: a wall of the kinds of embeds, under the copy. This page's own fork of it

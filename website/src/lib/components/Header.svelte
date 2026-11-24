@@ -37,8 +37,13 @@
 
 	// The Product dropdown: the four products on the left, and on the right a grey area with a small scene of the one
 	// that is selected. A product is selected by pointing at it or by the keyboard's focus; when the menu opens it is
-	// the first. Its tile is in greys only: pale grey with a dark icon, and black with a white icon when selected.
-	// (The tiles were in the products' colours: bg-rich/8 text-rich, and so on.)
+	// the first. Its tile is in the product's colour, the icon on an 8% tint of it: the same icon and colour as the
+	// product's card on the home page. (2026-11-24. The tiles had gone to greys, pale grey with a dark icon and black
+	// with a white icon when selected: the black was too loud, and four grey tiles told the products apart no better
+	// than no tiles.)
+	const TILE = { rich: 'bg-rich/8 text-rich', preview: 'bg-preview/8 text-preview', data: 'bg-data/8 text-data', pub: 'bg-pub/8 text-pub' };
+	// the selected row's tile: half as much tint again (on the row's grey fill 8% was all but lost; 16% was a bit much)
+	const TILE_ON = { rich: 'bg-rich/12 text-rich', preview: 'bg-preview/12 text-preview', data: 'bg-data/12 text-data', pub: 'bg-pub/12 text-pub' };
 	let sel = $state(0);
 	const SCENES = ['rich', 'preview', 'data', 'pub'] as const;
 	const glyph = (d: string) =>
@@ -105,7 +110,7 @@
 											{#if col.title}<p class="{col.items.some((i) => i.icon) ? 'px-2' : 'px-3'} pt-1 pb-1 text-[13px] leading-[1.5] font-medium text-faint">{col.title}</p>{/if}
 											{#each col.items as item, n (item.href)}
 												{#if item.icon}
-													<!-- a product: its tile (grey; black with a white icon when selected), then the name and the note -->
+													<!-- a product: its tile (in the product's colour), then the name and the note -->
 													<a
 														href={item.href}
 														class="flex items-center gap-3 rounded-md p-3 pr-5 pl-[13px] {n === sel ? 'bg-fg/[0.045]' : ''}"
@@ -113,7 +118,8 @@
 														onfocus={() => (sel = n)}
 													>
 														<!-- no transition on the row or the tile: the selection changes at once; the scene on the right cross-fades -->
-														<span class="grid size-9 shrink-0 place-items-center rounded-lg {n === sel ? 'bg-fg text-white' : 'bg-fg/6 text-body'}">
+														<!-- (2026-11-24: the selected tile was black with a white icon, the loudest thing in the menu. Now the row's pale fill alone says which is selected, and the tile is in its product's colour, selected or not.) -->
+														<span class="grid size-9 shrink-0 place-items-center rounded-lg {(n === sel ? TILE_ON : TILE)[item.icon]}">
 															<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">{@html GLYPH[item.icon]}</svg>
 														</span>
 														<span class="min-w-0">

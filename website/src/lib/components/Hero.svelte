@@ -18,7 +18,9 @@
 	}: {
 		/* this page's own style of the product tag, in place of the panel's default measure line (/embeds,
 		   2026-11-24: the measure line says the same thing as the measures of the wall right under it). Any other
-		   style picked in the panel wins. */
+		   style picked in the panel wins.
+		   (Tried and dropped the same day: 'chip', the product's icon in the small chip the blocks' tags have their
+		   number in, "01 Developers", then the name.) */
 		tag?: typeof look.tag;
 		eyebrow?: string;
 		/* a product page: the eyebrow is drawn as a measure line, or the variant picked in the Tweakpane panel */
